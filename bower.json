@@ -1,0 +1,20 @@
+{
+  "name": "project_name",
+  "version": "0.0.0",
+  "homepage": "https://bitbucket.com/wearecactus/project_name",
+  "authors": [
+    "WeAreCactus Agency <hello@wearecactus.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "btp/static/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.0"
+  }
+}

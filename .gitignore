@@ -1,0 +1,84 @@
+
+#Principal for readbug project
+
+env
+__init__.pyc
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyc
+# C extensions
+*.so
+.codeintel/
+.codeintel
+.codeintel/*
+# Distribution / packaging
+
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+*.db
+*.sqlite3
+*.sql
+.migrations/*
+
+*.pyc
+
+wifibytes/wifibytes/default.db
+wifibytes/rest_framework_jwt/compat.pyc
+wifibytes/rest_framework_jwt/serializers.pyc
+wifibytes/rest_framework_jwt/settings.pyc
+wifibytes/rest_framework_jwt/utils.pyc
+wifibytes/rest_framework_jwt/views.pyc
+wifibytes/media
+wifibytes/assets
+ve-altrebit/
+
+../.DS_Store
+*.DS_Store*
+
+.vscode/*

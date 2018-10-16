@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="URN:IONMOBILEWS_2" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="URN:IONMOBILEWS_2">
+   <types>
+     <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+     <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <xsd:schema targetNamespace="URN:IONMOBILEWS_2">
+         <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+         <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      </xsd:schema>
+   </types>
+   <message name="getTarifasRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="getTarifasResponse">
+      <part name="return" type="xsd:Array" />
+   </message>
+   <portType name="AIREMOVIL_2PortType">
+      <operation name="getTarifas">
+         <input message="tns:getTarifasRequest" />
+         <output message="tns:getTarifasResponse" />
+      </operation>
+   </portType>
+   <binding name="AIREMOVIL_2Binding" type="tns:AIREMOVIL_2PortType">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+      <operation name="getTarifas">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#getTarifas" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+   </binding>
+   <service name="AIREMOVIL_2">
+      <port name="AIREMOVIL_2Port" binding="tns:AIREMOVIL_2Binding">
+         <soap:address location="http://optel.airenetworks.es:6547/ws_desarrollo/mv/gestMOVIL_2.php" />
+      </port>
+   </service>
+</definitions>

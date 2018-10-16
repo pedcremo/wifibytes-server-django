@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+{% spaceless %}
+{% for route in routes %}
+  <url>
+    <loc>{{ route }}</loc>
+    <changefreq>weekly</changefreq>
+   </url>
+{% endfor %}
+{% endspaceless %}
+</urlset>

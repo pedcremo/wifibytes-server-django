@@ -1,0 +1,130 @@
+<!-- {% load static %} -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>Contrato SEPA</title>
+    <style type="text/css">
+    /* CSS code for printing */
+      @page {
+        size: a4;
+        margin: 60px;
+        margin-top: 60px;
+      }
+
+      table {
+        width: 100%;
+        padding: 30rem;
+        padding-top: 0;
+      }
+      table td {
+
+      }
+      table td img {
+        float: right;
+      }
+      table th.title {
+        text-align: center;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      .padTopBot {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+      }
+      table td.bankData {
+        padding-bottom: 3rem;
+      }
+      @media print {
+          *{
+            border: none;
+          }
+          table {
+            width: 100%;
+            /*padding: 30rem;*/
+            /*padding-top: 0;*/
+            /*border:1px solid red;*/
+          }
+
+          table th.title {
+            text-align: center;
+          }
+          .padTopBot {
+            padding-top: 25px;
+            padding-bottom: 25px;
+          }
+          .bankData {
+            padding-bottom: 25px;
+          }
+      }
+    </style>
+</head>
+<body>
+    <table width="100%">
+      <tr>
+        <td width="50%">
+
+        </td>
+        <th width="50%" align="right">
+          <img style="width:100px; height:75px;" src="{% static company.logo %}" alt="logo-company" />
+        </th>
+      </tr>
+      <tr>
+        <th class="title" style="padding-bottom:10px;" colspan="2" width="50%">
+          <h1>AUTORIZACION CUENTA BANCARIA PARA ADEUDOS</h1>
+        </th>
+      </tr>
+      <tr>
+        <td width="50%" colspan="2">
+          <p>
+            D. {% if cliente.tipo_cliente == 1 %} {{ direccion.nombre }}
+            {% else %}{{ cliente.nombre }} {{ cliente.apellido }} {% endif %} con no NIF {% if cliente.tipo_cliente == 1 %} {{ direccion.cifnif }}
+            {% else %} {{ cliente.cifnif }} {% endif %} y domicilio en
+            {{direccion.direccion}}, de {{ direccion.ciudad }}, provincia de {{ direccion.provincia }} declara
+            subsistentes las facultades con las que interviene que en modo alguno le han sido revocadas,
+            modificadas ni suspendidas y , en la calidad que actúa,
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <th class="title padTopBot" colspan="2" width="50%">
+          <h1>AUTORIZA</h1>
+        </th>
+      </tr>
+      <tr>
+        <td width="50%" colspan="2">
+          <p>
+            a la empresa <strong>{{ company.name }}</strong> , provista de <strong>CIF {{ company.CIF }}</strong> a que desde la fecha de la presente
+            y con carácter indefinido en tanto continúen las relaciones comerciales entre la empresa y el
+            cliente, a que gire en el número de cuenta bancaria especificada en la presente autorización,
+            todos los recibos correspondientes a las facturas que se originen como consecuencia de
+            conexión de internet establecida, según lo exigido por la Ley de Servicios de Pago 16/2009
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <th class="padTopBot" width="50%" colspan="2">
+          <h1>DATOS DE CONFIRMACION DE LA ENTIDAD BANCARIA</h1>
+        </th>
+      </tr>
+      <tr>
+        <td class="bankData" width="50%" colspan="2">
+            <p>
+              Nombre de la Entidad Bancaria: {% if cuenta.entidad %}{{ cuenta.entidad }}{% endif %}<br />
+              Domicilio de la Entidad Bancaria: {% if cuenta.entidad %}{{ cuenta.direntidad }}{% endif %}<br />
+              Nº de cuenta: {{ cuenta.codiban }} - {{ cuenta.ctaentidad }} - {{ cuenta.ctaagencia }} - {{ cuenta.ctadc }} - {{ cuenta.cuenta }}<br />
+              Confirma mediante firma:<br />
+            </p>
+        </td>
+      </tr>
+      <tr>
+        <td width="50%" colspan="2">
+          <p>
+            Fecha: El {{date.day}} de {{date.month}} de {{date.year}}
+          </p>
+        </td>
+      </tr>
+    </table>
+</body>
+</html>

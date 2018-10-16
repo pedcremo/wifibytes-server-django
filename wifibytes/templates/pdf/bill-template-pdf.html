@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Factura Wifibytes</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--<link rel="stylesheet" href=" {% static 'css/pdf/style-bill-pdf.css' %}" media="all" />--->
+    <link rel="stylesheet" href="/static/css/pdf/style-bill-pdf.css" media="all" />
+    <style type="text/css">
+        @page {
+            size: A4;
+            margin: 1cm;
+            @frame footer {
+                -pdf-frame-content: footerContent;
+                bottom: 0cm;
+                margin-left: 9cm;
+                margin-right: 9cm;
+                height: 1cm;
+                font-family: "Microsoft JhengHei";
+            }
+        }
+    </style>
+  </head>
+  <body>
+    <header class="clearfix">
+
+
+      <div class="">
+        <img style="width: 50px; height: 50px;" src="{% static 'img/logo-wifibytes.png' %}">
+        <span style="font-size:25pt; float:right;"> &nbsp;&nbsp;&nbsp;{{ company.name }} </span>
+      </div>
+
+      <div id="company" class="clearfix">
+        <div>
+          <h2> <br><b>FACTURA #{{ factura.numero }} </b><br /> {{ factura.direccion }} </h2>
+        </div>
+      </div>
+      <div id="project" style="font-size:12pt;">
+        <div><span>EMPRESA</span> {{ company.name }}</div>
+        <div><span>CLIENTE</span> {{factura.codcliente.nombre}}</div>
+        <div><span>NIF</span> {{factura.codcliente.cifnif}}</div>
+        <div><span>DIRECCION</span> {{ factura.direccion }} | {{factura.ciudad}} | {{factura.codpostal}}</div>
+        <div><span>EMAIL</span> <a href="mailto:{{factura.codcliente.email}}">{{factura.codcliente.email}}</a></div>
+        <div><span>FECHA</span> {{factura.fecha}}</div>
+      </div>
+    </header>
+    <main>
+      <table style="font-size:12pt;">
+        <thead>
+          <tr class="tdbold">
+            <td class="">REFERENCIA</td>
+            <td class="desc">ARTICULO</td>
+            <td>PRECIO</td>
+            <td>CANTIDAD</td>
+            <td>TOTAL</td>
+          </tr>
+        </thead>
+        <tbody>
+          <br>
+          {% for linea in lineas %}
+          <tr>
+            <td class="service">{{linea.idlinea}}</td>
+            <td class="desc">{{linea.referencia.descripcion}}</td>
+            <td class="unit">{{linea.pvpunitario}} €</td>
+            <td class="qty">{{linea.cantidad}}</td>
+            <td class="total">{{linea.pvptotal}} €</td>
+          </tr>
+          {% endfor %}
+          <tr>
+            <td class=""><hr></td>
+          </tr>
+          <tr>
+            <td colspan="4">SUBTOTAL</td>
+            <td class="total">{{factura.total}} €</td>
+          </tr>
+          <tr>
+            <td colspan="4">IVA 21%</td>
+            <td class="total">{{factura.totaliva}} €</td>
+          </tr>
+          <tr>
+            <td colspan="4" class="grand total"> <b>TOTAL</b></td>
+            <td class="grand total"><b>{{factura.total}} €</b></td>
+          </tr>
+        </tbody>
+      </table>
+      <br><hr><br>
+      <div id="notices">
+        <div>OBSERVACIONES:</div>
+
+        <div class="notice">
+          {% if factura.observaciones %}
+            {{factura.observaciones|safe}}
+          {% else %}
+            No hay observaciones
+          {% endif %}
+
+        </div>
+      </div>
+    </main>
+    <footer>
+
+    </footer>
+  </body>
+</html>

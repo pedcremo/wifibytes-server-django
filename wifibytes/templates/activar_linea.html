@@ -1,0 +1,107 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+
+{% block extrastyle %}{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />
+<style>
+    #center_content{
+        max-width: 1000px;
+        position: relative;
+        float: left;
+        width: 100%;
+    }
+    .fields-container{
+        margin-top:30px;
+        position: relative;
+        float: left;
+        width: 45%;
+        border: 1px solid #CCCCCC;
+        margin-left: 20px;
+        margin-right: 20px;
+        padding: 0 20px;
+        box-sizing: border-box;
+    }
+    h4{
+        margin-bottom: 20px;
+    }
+    .field{
+        padding-left: 20px;
+        height: 20px;
+        margin-bottom: 15px;
+    }
+    .field input{
+        float: right;
+        margin-top: -4px;
+    }
+    .button{
+        position: relative;
+        float: left;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        margin-top: 30px;
+    }
+</style>
+{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+
+{% block header_content %}{{ block.super }}{% endblock %}
+
+
+{% block content %}
+<div id="center_content">
+        {% if message %}
+        <div class="alert {% if activa %}alert-success{% else %}alert-error{% endif %}">{{ message | safe }}</div>
+        {% endif %}
+    <form action="/admin/activar_linea/{{ id_linea }}" method="post" name="dar de alta">
+        <h2>Confirmar Alta de línea</h2>
+        <div class="fields-container">
+            <h4>Datos personales</h4>
+            <div class="field"><b>Nombre:</b> {{ info.contactName }}</div>
+            <div class="field"><b>Apellidos:</b> {{ info.contactFamilyName1 }}</div>
+            <div class="field"><b>CIF / NIF:</b> {{ info.fiscalId }}</div>
+            <div class="field"><b>Teléfono:</b> {{ info.contactPhone }}</div>
+            <div class="field"><b>Email:</b> {{ info.emailAddress }}</div>
+            <div class="field"><b>Fecha Nacimiento:</b> {{ info.birthday }}</div>
+        </div>
+
+        <div class="fields-container">
+            <h4>Datos de facturación</h4>
+            <div class="field"><b>Dirección:</b> {{ info.addressStreet }}</div>
+            <div class="field"><b>Número:</b> {{ info.addressNumber }}</div>
+            <div class="field"><b>Localidad:</b> {{ info.addressCity }}</div>
+            <div class="field"><b>Provincia:</b> {{ info.addressProvince }}</div>
+            <div class="field"><b>Comunidad:</b> {{ info.addressRegion }}</div>
+            <div class="field"></div>
+        </div>
+
+        <div class="fields-container">
+            <h4>Datos tarjeta sim</h4>
+            <div class="field"><b>ICC (Sin DC)</b> <input type="text" name="icc" required/></div>
+            <div class="field"><b>Dígito de Control</b> <input type="text" name="dc" required/></div>
+        </div>
+
+
+        {% if not message %}
+            <div class="button">
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-success" value="Dar de alta" />
+            </div>
+        {% endif %}
+
+    </form>
+
+</div>
+
+{% endblock %}
+
+
+{% block sidebar %}
+
+{% endblock %}

@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="URN:IONMOBILEWS_2" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="URN:IONMOBILEWS_2">
+   <types>
+      <xsd:schema targetNamespace="URN:IONMOBILEWS_2">
+         <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+         <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      </xsd:schema>
+   </types>
+   <message name="setAltaClienteFinalRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="setAltaClienteFinalResponse">
+      <part name="return" type="xsd:String" />
+   </message>
+   <message name="getClienteRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="getClienteResponse">
+      <part name="return" type="xsd:Array" />
+   </message>
+   <message name="editClienteRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="editClienteResponse">
+      <part name="return" type="xsd:String" />
+   </message>
+   <message name="getCDRRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="getCDRResponse">
+      <part name="return" type="xsd:Array" />
+   </message>
+   <message name="getTarifasRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="getTarifasResponse">
+      <part name="return" type="xsd:Array" />
+   </message>
+   <message name="getLineasRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="getLineasResponse">
+      <part name="return" type="xsd:Array" />
+   </message>
+   <message name="setAlertaFacturacionRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="setAlertaFacturacionResponse">
+      <part name="return" type="xsd:Array" />
+   </message>
+   <message name="getLineasSolicitudRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="getLineasSolicitudResponse">
+      <part name="return" type="xsd:Array" />
+   </message>
+   <message name="setAltaLineaNuevaRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="setAltaLineaNuevaResponse">
+      <part name="return" type="xsd:String" />
+   </message>
+   <message name="setAltaLineaPortabilidadRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="setAltaLineaPortabilidadResponse">
+      <part name="return" type="xsd:Array" />
+   </message>
+   <message name="setAltaLineaCambioTitularRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="setAltaLineaCambioTitularResponse">
+      <part name="return" type="xsd:String" />
+   </message>
+   <message name="subirDocumentoRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="subirDocumentoResponse">
+      <part name="return" type="xsd:String" />
+   </message>
+   <message name="obtenerDocumentoRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="obtenerDocumentoResponse">
+      <part name="return" type="xsd:base64Binary" />
+   </message>
+   <message name="solicitud_corte_impagoRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="solicitud_corte_impagoResponse">
+      <part name="return" type="xsd:String" />
+   </message>
+   <message name="cancelar_solicitud_impagoRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="cancelar_solicitud_impagoResponse">
+      <part name="return" type="xsd:String" />
+   </message>
+   <message name="restablecer_corte_impagoRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="restablecer_corte_impagoResponse">
+      <part name="return" type="xsd:String" />
+   </message>
+   <message name="getPoolMsisdnRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="getPoolMsisdnResponse">
+      <part name="return" type="xsd:Array" />
+   </message>
+   <message name="getServiciosRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="getServiciosResponse">
+      <part name="return" type="xsd:Array" />
+   </message>
+   <message name="setServiciosRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="setServiciosResponse">
+      <part name="return" type="xsd:Array" />
+   </message>
+   <message name="cancelLineasSolicitudRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="cancelLineasSolicitudResponse">
+      <part name="return" type="xsd:Array" />
+   </message>
+   <message name="getBonosAdicionalesRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="getBonosAdicionalesResponse">
+      <part name="return" type="xsd:Array" />
+   </message>
+   <message name="setBonosAdicionalesRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="setBonosAdicionalesResponse">
+      <part name="return" type="xsd:Array" />
+   </message>
+   <message name="getPoolSIMRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="getPoolSIMResponse">
+      <part name="return" type="xsd:Array" />
+   </message>
+   <message name="setConsumoMaximoRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="setConsumoMaximoResponse">
+      <part name="return" type="xsd:Array" />
+   </message>
+   <message name="setBajaLineaRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="setBajaLineaResponse">
+      <part name="return" type="xsd:Array" />
+   </message>
+   <message name="setAnotacionesLineaRequest">
+      <part name="datos" type="xsd:Array" />
+   </message>
+   <message name="setAnotacionesLineaResponse">
+      <part name="return" type="xsd:Array" />
+   </message>
+   <portType name="AIREMOVIL_2PortType">
+      <operation name="setAltaClienteFinal">
+         <input message="tns:setAltaClienteFinalRequest" />
+         <output message="tns:setAltaClienteFinalResponse" />
+      </operation>
+      <operation name="getCliente">
+         <input message="tns:getClienteRequest" />
+         <output message="tns:getClienteResponse" />
+      </operation>
+      <operation name="editCliente">
+         <input message="tns:editClienteRequest" />
+         <output message="tns:editClienteResponse" />
+      </operation>
+      <operation name="getCDR">
+         <input message="tns:getCDRRequest" />
+         <output message="tns:getCDRResponse" />
+      </operation>
+      <operation name="getTarifas">
+         <input message="tns:getTarifasRequest" />
+         <output message="tns:getTarifasResponse" />
+      </operation>
+      <operation name="getLineas">
+         <input message="tns:getLineasRequest" />
+         <output message="tns:getLineasResponse" />
+      </operation>
+      <operation name="setAlertaFacturacion">
+         <input message="tns:setAlertaFacturacionRequest" />
+         <output message="tns:setAlertaFacturacionResponse" />
+      </operation>
+      <operation name="getLineasSolicitud">
+         <input message="tns:getLineasSolicitudRequest" />
+         <output message="tns:getLineasSolicitudResponse" />
+      </operation>
+      <operation name="setAltaLineaNueva">
+         <input message="tns:setAltaLineaNuevaRequest" />
+         <output message="tns:setAltaLineaNuevaResponse" />
+      </operation>
+      <operation name="setAltaLineaPortabilidad">
+         <input message="tns:setAltaLineaPortabilidadRequest" />
+         <output message="tns:setAltaLineaPortabilidadResponse" />
+      </operation>
+      <operation name="setAltaLineaCambioTitular">
+         <input message="tns:setAltaLineaCambioTitularRequest" />
+         <output message="tns:setAltaLineaCambioTitularResponse" />
+      </operation>
+      <operation name="subirDocumento">
+         <input message="tns:subirDocumentoRequest" />
+         <output message="tns:subirDocumentoResponse" />
+      </operation>
+      <operation name="obtenerDocumento">
+         <input message="tns:obtenerDocumentoRequest" />
+         <output message="tns:obtenerDocumentoResponse" />
+      </operation>
+      <operation name="solicitud_corte_impago">
+         <input message="tns:solicitud_corte_impagoRequest" />
+         <output message="tns:solicitud_corte_impagoResponse" />
+      </operation>
+      <operation name="cancelar_solicitud_impago">
+         <input message="tns:cancelar_solicitud_impagoRequest" />
+         <output message="tns:cancelar_solicitud_impagoResponse" />
+      </operation>
+      <operation name="restablecer_corte_impago">
+         <input message="tns:restablecer_corte_impagoRequest" />
+         <output message="tns:restablecer_corte_impagoResponse" />
+      </operation>
+      <operation name="getPoolMsisdn">
+         <input message="tns:getPoolMsisdnRequest" />
+         <output message="tns:getPoolMsisdnResponse" />
+      </operation>
+      <operation name="getServicios">
+         <input message="tns:getServiciosRequest" />
+         <output message="tns:getServiciosResponse" />
+      </operation>
+      <operation name="setServicios">
+         <input message="tns:setServiciosRequest" />
+         <output message="tns:setServiciosResponse" />
+      </operation>
+      <operation name="cancelLineasSolicitud">
+         <input message="tns:cancelLineasSolicitudRequest" />
+         <output message="tns:cancelLineasSolicitudResponse" />
+      </operation>
+      <operation name="getBonosAdicionales">
+         <input message="tns:getBonosAdicionalesRequest" />
+         <output message="tns:getBonosAdicionalesResponse" />
+      </operation>
+      <operation name="setBonosAdicionales">
+         <input message="tns:setBonosAdicionalesRequest" />
+         <output message="tns:setBonosAdicionalesResponse" />
+      </operation>
+      <operation name="getPoolSIM">
+         <input message="tns:getPoolSIMRequest" />
+         <output message="tns:getPoolSIMResponse" />
+      </operation>
+      <operation name="setConsumoMaximo">
+         <input message="tns:setConsumoMaximoRequest" />
+         <output message="tns:setConsumoMaximoResponse" />
+      </operation>
+      <operation name="setBajaLinea">
+         <input message="tns:setBajaLineaRequest" />
+         <output message="tns:setBajaLineaResponse" />
+      </operation>
+      <operation name="setAnotacionesLinea">
+         <input message="tns:setAnotacionesLineaRequest" />
+         <output message="tns:setAnotacionesLineaResponse" />
+      </operation>
+   </portType>
+   <binding name="AIREMOVIL_2Binding" type="tns:AIREMOVIL_2PortType">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+      <operation name="setAltaClienteFinal">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#setAltaClienteFinal" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="getCliente">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#getCliente" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="editCliente">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#editCliente" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="getCDR">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#getCDR" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="getTarifas">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#getTarifas" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="getLineas">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#getLineas" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="setAlertaFacturacion">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#setAlertaFacturacion" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="getLineasSolicitud">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#getLineasSolicitud" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="setAltaLineaNueva">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#setAltaLineaNueva" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="setAltaLineaPortabilidad">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#setAltaLineaPortabilidad" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="setAltaLineaCambioTitular">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#setAltaLineaCambioTitular" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="subirDocumento">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#subirDocumento" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="obtenerDocumento">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#obtenerDocumento" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="solicitud_corte_impago">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#solicitud_corte_impago" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="cancelar_solicitud_impago">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#cancelar_solicitud_impago" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="restablecer_corte_impago">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#restablecer_corte_impago" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="getPoolMsisdn">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#getPoolMsisdn" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="getServicios">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#getServicios" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="setServicios">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#setServicios" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="cancelLineasSolicitud">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#cancelLineasSolicitud" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="getBonosAdicionales">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#getBonosAdicionales" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="setBonosAdicionales">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#setBonosAdicionales" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="getPoolSIM">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#getPoolSIM" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="setConsumoMaximo">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#setConsumomaximo" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="setBajaLinea">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#setBajaLinea" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+      <operation name="setAnotacionesLinea">
+         <soap:operation soapAction="URN:IONMOBILEWS_2#setAnotacionesLinea" style="rpc" />
+         <input>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </input>
+         <output>
+            <soap:body use="encoded" namespace="URN:IONMOBILEWS_2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+         </output>
+      </operation>
+   </binding>
+   <service name="AIREMOVIL_2">
+      <port name="AIREMOVIL_2Port" binding="tns:AIREMOVIL_2Binding">
+         <soap:address location="http://optel.airenetworks.es:6547/ws_desarrollo/mv/gestMOVIL_2.php" />
+      </port>
+   </service>
+</definitions>

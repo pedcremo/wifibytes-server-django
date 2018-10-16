@@ -1,0 +1,179 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+
+{% block header_content %}
+    {{ block.super }}
+    <!--
+    <div class="header-content">
+
+        <div class="header-column icon">
+            <i class="icon-home"></i><br>
+            <i class="icon-cog"></i>
+        </div>
+        <div class="header-column" style="margin-right: 20px">
+            <a href="/admin/" class="grey">SASAS {{request.user.groups.all.0}}</a><br>
+            <a href="" class="grey">One more link</a>
+        </div>
+
+        <div class="header-column icon">
+            <i class="icon-comment"></i>
+        </div>
+        <div class="header-column">
+            <a href="" class="grey">5 unassigned tasks</a>
+        </div>
+    </div>
+    -->
+{% endblock %}
+
+
+{% block content %}
+<script type="text/javascript">
+$( document ).ready(function() {
+
+    data = $.ajax({
+        url: "{% url 'pedidosdashboard' %}",
+        dataType:"json",
+        async: false,
+        success: function (data) {
+            console.log(data);
+            info = data.results;
+            for(pedidos in info){
+                pedido = info[pedidos]; 
+                content = "<tr>";
+                content += "<td align='center'><a href='/admin/facturacion/pedidocli/"+pedido.pedidoId+"'>"+pedido.pedidoId+"</a></td>";
+                content += "<td align='left' align='center'><a href='/admin/cliente/cliente/"+pedido.clienteId+"' target='_blank'>"+pedido.clienteEmail+"</a></td>";
+                content += "<td align='center'>"+pedido.total+"&euro;</td>";
+                content += "<td align='center'>"+pedido.estado+"</td>";
+                content += "<td align='center'>"+pedido.fecha+"</td>";
+                content += "</tr>";
+                $("#pedidos-list-table").append(content);
+            }
+        }
+    });
+
+    data = $.ajax({
+        url: "{% url 'lineasdashboard' %}",
+        dataType:"json",
+        async: false,
+        success: function (data) {
+            console.log(data);
+            info = data.results;
+            for(lineas in info){
+                linea = info[lineas]; 
+                content = "<tr>";
+                content += "<td align='center'><a href='/admin/cliente/mobilsclients/"+linea.lineaId+"'>"+linea.lineaId+"</a></td>";
+                content += "<td align='center'><a href='/admin/cliente/mobilsclients/"+linea.lineaId+"' target='_blank'>"+linea.numero+"</a></td>";
+                content += "<td align='left'><a href='/admin/cliente/cliente/"+linea.clienteId+"' target='_blank'>"+linea.clienteEmail+"</a></td>";
+                content += "<td align='center'>"+linea.activa+"</td>";
+                content += "<td align='center'>"+linea.fecha+"</td>";
+                content += "</tr>";
+                $("#lineas-list-table").append(content);
+            }
+        }
+    });
+
+    data = $.ajax({
+        url: "{% url 'clientesdashboard' %}",
+        dataType:"json",
+        async: false,
+        success: function (data) {
+            console.log(data);
+            info = data.results;
+            for(clientes in info){
+                cliente = info[clientes]; 
+                content = "<tr>";
+                content += "<td align='center'><a href='/admin/cliente/cliente/"+cliente.codcliente+"'>"+cliente.codcliente+"</a></td>";
+                content += "<td align='center'>" + cliente.cifnif + "</td>";
+                content += "<td align='left'>" + cliente.nombre + "</td>";
+                content += "<td align='center'>" + cliente.email + "</td>";
+                content += "<td align='center'>" + cliente.telefono + "</td>";
+                content += "<td align='center'>" + cliente.fecha + "</td>";
+                content += "</tr>";
+                $("#clientes-list-table").append(content);
+            }
+        }
+    })
+});
+</script>
+<div id="center_content">
+
+{% if request.user.is_superuser %}
+    <div id="button-container">
+        <div class="button"><a href="facturacion/pedidocli/"><img src="/static/img/icono-pedidos.png" />Pedidos</a></div>
+        <div class="button"><a href="cliente/cliente/"><img src="/static/img/icono-clientes.png" />Clientes</a></div>
+        <div class="button"><a href="catalogo/articulo/"><img src="/static/img/icono-articulos.png" />Artículos</a></div>
+        <div class="button"><a href="catalogo/tarifa/"><img src="/static/img/icono-tarifas.png" />Tarifas</a></div>
+        <div class="button"><a href="causa/causa/"><img src="/static/img/icono-causas.png" />Causas</a></div>
+    </div>
+    <br>
+    <div id="results">
+        <div id="pedidos-list">
+            <h3>Últimos pedidos</h3>
+            <table id="pedidos-list-table" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <thead>
+                    <td width="10%" align="center">Id</td>
+                    <td width="35%" align="left">Cliente</td>
+                    <td width="20%" align="center">Total</td>
+                    <td width="20%" align="center">Estado</td>
+                    <td width="15%" align="center">Fecha</td>
+                </thead>
+            </table>
+        </div>
+        <div id="lineas-list">
+            <h3>Últimas líneas</h3>
+            <table id="lineas-list-table" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <thead>
+                    <td width="10%" align="center">Id</td>
+                    <td width="20%" align="center">Número</td>
+                    <td width="40%" align="left">Cliente</td>
+                    <td width="20%" align="center">Activa</td>
+                    <td width="10%" align="center">Fecha</td>
+                </thead>
+            </table>
+        </div>
+        <div id="clientes-list">
+            <h3>Últimos clientes</h3>
+            <table id="clientes-list-table" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <thead>
+                    <td width="5%" align="center">Id</td>
+                    <td width="10%" align="center">DNI o CIF</td>
+                    <td width="30%" align="left">Nombre y apellidos</td>
+                    <td width="25%" align="center">Email</td>
+                    <td width="15%" align="center">Teléfono</td>
+                    <td width="15%" align="center">Fecha</td>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+{% endif %}
+
+
+</div>
+
+{% for group in user.groups.all %}
+    {% if group.name == 'agent' %}
+        <div id="insuranceTasks">
+            <h2>Current Tasks</h2>
+
+        </div>
+
+    {% endif %}
+{% endfor %}
+
+
+{% endblock %}
+
+
+{% block sidebar %}
+
+{% endblock %}

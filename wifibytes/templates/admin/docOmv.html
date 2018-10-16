@@ -1,0 +1,586 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Documentación OMV - Wifibytes</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default">
+    <div class="row">
+      <div class="col-sm-1">
+      </div>
+
+      <div class="col-sm-10">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/admin"><img style="height:30px; display:inline-block;" src="/static/img/logo-wifibytes.png"/>&nbsp;&nbsp;WifiBytes admin panel</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="active"><a href="/admin">Volver</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-1">
+
+      </div>
+
+    </div>
+  </nav>
+
+  <div class="row">
+    <div class="col-sm-1">
+    </div>
+
+    <div class="col-sm-10">
+      <h1>Documentación OMV - Wifibytes</h1>
+      <p class="lead">Este documento describe las distintas llamadas que se realizan al API del OMV <br>
+        La documentación del sistema OMV completa se puede descargar en el <a href="/static/docs/DOC_OMV_WIFIBYTES.pdf" download>siguiente enlace. </a>
+      </p>
+    </div>
+
+    <div class="col-sm-2">
+    </div>
+
+  </div>
+
+
+  <div class="row">
+
+    <div class="col-sm-1">
+    </div>
+
+    <div class="col-sm-10">
+
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="col-md-1">Nombre Llamada</th>
+            <th class="col-md-3"> Descripción </th>
+            <th class="col-md-1">Parámetros</th>
+            <th class="col-md-4">Salida</th>
+            <th class="col-md-3">Errores</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="active">
+            <td>getPoolMsisdn()</td>
+            <td>
+              Función para ver los números disponibles para un alta nueva.
+            </td>
+            <td>
+              <ul>
+                <li>user (string)</li>
+                <li>pass (string)</li>
+              </ul>
+            </td>
+            <td>
+              La aplicación devolverá un Array con el resultado de los números libres (6) etiquetados de la
+              siguiente manera {n1,n2...n6} y un valor llamado codigo_reserva. El campo codigo_reserva se le
+              tiene que pasar a la función setAltaLineaNueva en un plazo de 10 minutos, o esta función devolverá
+              un error [0034] que indica que la reserva habrá expirado.
+            </td>
+            <td>
+              <ul>
+                <li>0007 -> No se han podido obtener los números.</li>
+                <li>0008 -> No se han podido obtener los números.</li>
+              </ul>
+            </td>
+          </tr>
+
+          <tr class="active">
+            <td>
+              <form method="post"> {% csrf_token %} {{ form.as_p }}
+                <button id="call_getPoolMsisdn" class="callOMV btn btn-block btn-primary" type="submit" name="button">Probar</button></td>
+              </form>
+            </td>
+            <td colspan=4>
+              <pre>
+                <code id="result_getPoolMsisdn">
+                </code>
+              </pre>
+            </td>
+          </tr>
+
+          <tr>
+            <td>getPoolSIM()</td>
+            <td>
+              Función obtener SIMS libres o ver el estado de una SIM en concreto.
+            </td>
+            <td>
+              <ul>
+                <li>user (string)</li>
+                <li>pass (string)</li>
+              </ul>
+            </td>
+            <td>
+              La aplicación devolverá un listado con las 10 primeras SIMS libres
+              disponibles para el alta de una nueva línea
+            </td>
+            <td>
+
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <form method="post"> {% csrf_token %} {{ form.as_p }}
+                <button id="call_getPoolSIM" class="callOMV btn btn-block btn-primary" type="submit" name="button">Probar</button></td>
+              </form>
+            </td>
+            <td colspan=4>
+              <pre>
+                <code id="result_getPoolSIM">
+                </code>
+              </pre>
+            </td>
+          </tr>
+
+
+          <tr class="active">
+              <td>getCDR()</td>
+              <td>
+                Función que mostrará el listado de CDR.
+              </td>
+              <td>
+                <ul>
+                  <li>user (string)</li>
+                  <li>pass (string)</li>
+                  <li>mes (string)</li>
+                  <li>anyo (int)</li>
+                  <li>tipo_servicio (string) (SMS, DATOS, MOVIL, MOVIL_ENTRANTE)</li>
+                </ul>
+              </td>
+              <td>
+                La aplicación devolverá un array bidimensional con los resultados de la consulta, o una cadena en
+                caso de que ocurra algún error.
+              </td>
+              <td>
+                <ul>
+                  <li>0007 -> Campo “tipo_servicio” incorrecto.</li>
+                  <li>0008 -> Campos “mes”,“anyo” o “dia” incorrectos.</li>
+                  <li>0009 -> Error al obtener la configuración del cliente.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr class="active">
+              <td>
+                <form method="post"> {% csrf_token %} {{ form.as_p }}
+                  <button id="call_getCDR" class="callOMV btn btn-block btn-primary" type="submit" name="button">Probar</button></td>
+                </form>
+              </td>
+              <td colspan=4>
+                <pre>
+                  <code id="result_getCDR">
+                  </code>
+                </pre>
+              </td>
+            </tr>
+
+            <tr>
+              <td>getCliente()</td>
+              <td>
+                Función que listará los clientes finales asociados.
+              </td>
+              <td>
+                <ul>
+                  <li>user (string)</li>
+                  <li>pass (string)</li>
+                  <li>fiscalId (string) Opcional</li>
+                </ul>
+              </td>
+              <td>
+                La aplicación devolverá un array bidimensional con los resultados de la consulta, o una cadena si
+                hay algún tipo de error.
+              </td>
+              <td>
+                <ul>
+                  <li>0007 -> Error al obtener los clientes.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <form method="post"> {% csrf_token %} {{ form.as_p }}
+                  <button id="call_getCliente" class="callOMV btn btn-block btn-primary" type="submit" name="button">Probar</button></td>
+                </form>
+              </td>
+              <td colspan=4>
+                <pre>
+                  <code id="result_getCliente">
+                  </code>
+                </pre>
+              </td>
+            </tr>
+
+            <tr class="active">
+              <td>setAltaClienteFinal()</td>
+              <td>
+                Función que insertará un cliente final en el sistema.
+              </td>
+              <td>
+                <ul>
+                  <li>user (string)</li>
+                  <li>pass (string)</li>
+                  <li>subscriberType (int)</li>
+                  <li>marketingConsent (int)</li>
+                  <li>documentType (int)</li>
+                  <li>fiscalId (int)</li>
+                  <li>contactName (string)</li>
+                  <li>contactFamilyName1 (string)</li>
+                  <li>birthday (string)</li>
+                  <li>contactPhone (string)</li>
+                </ul>
+              </td>
+              <td>
+                La aplicación devolverá una cadena con el resultado de la ejecución de la función, más adelante se
+                detallan los códigos y descripciones de los mismos.
+              </td>
+              <td>
+                <ul>
+                  <li>0011 -> No hay archivo para el documento de identificación.</li>
+                  <li>0012 -> Formato incorrecto para el documento de identificación.</li>
+                  <li>0013 -> Campo “fiscalId” incorrecto.</li>
+                  <li>0014 -> Si ”subscriberType” es igual a ‘1’, campos “name”, “contactName”, “contactDocumentType” o “contactFiscalId” incorrectos.</li>
+                  <li>0015 -> Si ”subscriberType” es igual a ‘1’, campo “fiscalId” incorrecto.</li>
+                  <li>0016 -> Si ”subscriberType” es distinto de ‘1’, campos “contactName” o “contactFamilyName1” incorrectos.</li>
+                  <li>0017 -> Si ”subscriberType” es distinto de ‘1’, campo “fiscalId” incorrecto.</li>
+                  <li>0018 -> El cliente que intenta insertar ya existe en el sistema.</li>
+                  <li>0019 -> Campo “birthday” incorrecto.</li>
+                  <li>0020 -> Error al insertar el nuevo usuario.</li>
+                  <li>0021 -> Error al insertar el nuevo usuario.</li>
+                  <li>0022 -> Error al subir el documento.</li>
+                  <li>0023 -> No se han rellenado todos los datos personales obligatorios.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr class="active">
+              <td>
+                <form method="post"> {% csrf_token %} {{ form.as_p }}
+                  <button id="call_setAltaClienteFinal" class="callOMV btn btn-block btn-primary" type="submit" name="button">Probar</button></td>
+                </form>
+              </td>
+              <td colspan=4>
+                <pre>
+                  <code id="result_setAltaClienteFinal">
+                  </code>
+                </pre>
+              </td>
+            </tr>
+
+            <tr>
+              <td>setAltaLineaNueva()</td>
+              <td>
+                Función que dará de alta una nueva línea en el sistema.
+              </td>
+              <td>
+                <ul>
+                  <li>user (string)</li>
+                  <li>pass (string)</li>
+                  <li>tarifa (string)</li>
+                  <li>subscriberType (int)</li>
+                  <li>nif (string)</li>
+                  <li>icc (int)</li>
+                  <li>digito_control (int)</li>
+                  <li>telefono (string)</li>
+                  <li>codigo_reserva (int)</li>
+                </ul>
+              </td>
+              <td>
+                La aplicación devolverá una cadena con el resultado de la ejecución de la función, más adelante se
+                detallan los códigos y descripciones de los mismos.
+              </td>
+              <td>
+                <ul>
+                  <li>##n_solicitud## ->Número solicitud insertado. Si “responseNsolicitud” es ’S’.</li>
+                  <li>0007 -> Campo “tarifa” incorrecto.</li>
+                  <li>0008 - 0009 -> Error al obtener sus datos como agente.</li>
+                  <li>0010 -> Error al obtener la tarifa.</li>
+                  <li>0011 -> No existe ninguna tarifa para el tipo de cliente insertado.</li>
+                  <li>0012 -> Campos “subscriberType” o “nif” incorrectos..</li>
+                  <li>0013 -> No existe ningún cliente asociado con el documento “nif” asociado.</li>
+                  <li>0014 -> Campos “icc” o “digito_control” vacíos.</li>
+                  <li>0015 -> Campo “telefono” vacío..</li>
+                  <li>0016 -> Campo “icc” no numérico.</li>
+                  <li>0017 -> El campo “digito_control” no corresponde con el campo “icc”.</li>
+                  <li>0018 -> La SIM insertada no se encuentra aprovisionada en el sistema.</li>
+                  <li>0019 -> La SIM no corresponde al rango que usted tiene asignado.</li>
+                  <li>0020 -> La SIM introducida ya está en uso en otra línea.</li>
+                  <li>0021 -> Para la tarifa seleccionada, el campo “telefono_asociado” no puede ser vacío.</li>
+                  <li>0022 -> El teléfono asociado que ha introducido no pertenece a un teléfono suyo.</li>
+                  <li>0023 -> El teléfono asociado, ya tiene asociada una tarifa..</li>
+                  <li>0024 -> Campo “telefono” incorrecto.</li>
+                  <li>0025 -> Campo “telefono” no existe.</li>
+                  <li>0026 -> Campo “telefono” no corresponde a su rango.</li>
+                  <li>0027 -> Campo “telefono” ya está en uso por otra línea.</li>
+                  <li>0028 -> Campo “telefono” está en cuarentena.</li>
+                  <li>0034 -> Campo “telefono” ha caducado su reserva de número.</li>
+                  <li>0029 -> No existe ningún cliente asociado con el documento “nif” asociado.</li>
+                  <li>0030 - 0031 -> Error al insertar la solicitud de línea.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <form method="post"> {% csrf_token %} {{ form.as_p }}
+                  <button id="call_setAltaLineaNueva" class="callOMV btn btn-block btn-primary" type="submit" name="button">Probar</button></td>
+                </form>
+              </td>
+              <td colspan=4>
+                <pre>
+                  <code id="result_setAltaLineaNueva">
+                  </code>
+                </pre>
+              </td>
+            </tr>
+
+            <tr class="active">
+              <td>setAltaLineaPortabilidad()</td>
+              <td>
+                Función que dará de alta una nueva portabilidad en el sistema.
+              </td>
+              <td>
+                <ul>
+                  <li>user (string)</li>
+                  <li>pass (string)</li>
+                  <li>tarifa (string)</li>
+                  <li>subscriberType (int)</li>
+                  <li>nif (string)</li>
+                  <li>icc (int)</li>
+                  <li>digito_control (int)</li>
+                  <li>telefono (string)</li>
+                  <li>modalidad_actual (string)</li>
+                  <li>icc_origen (int)</li>
+                  <li>dc_origen (int)</li>
+                </ul>
+              </td>
+              <td>
+                La aplicación devolverá una cadena con el resultado de la ejecución de la función, más adelante se
+                detallan los códigos y descripciones de los mismos.
+              </td>
+              <td>
+                <ul>
+                  <li>##n_solicitud## ->Número solicitud insertado. Si “responseNsolicitud” es ’S’.</li>
+                  <li>0007 -> Campo “tarifa” incorrecto.</li>
+                  <li>0008 - 0009 -> Error al obtener sus datos como agente.</li>
+                  <li>0010 -> Error al obtener la tarifa.</li>
+                  <li>0011 -> No existe ninguna tarifa para el tipo de cliente insertado.</li>
+                  <li>0012 -> Campos “subscriberType” o “nif” incorrectos..</li>
+                  <li>0013 -> No existe ningún cliente asociado con el documento “nif” asociado.</li>
+                  <li>0014 -> No existe ningún cliente asociado con el “nif” indicado.</li>
+                  <li>0015 -> Campos “icc” o “digito_control” vacíos.</li>
+                  <li>0016 -> Campo “telefono” vacío..</li>
+                  <li>0017 -> Campo “telefono” incorrecto..</li>
+                  <li>0018 -> Campo “modalidad_actual” vacío..</li>
+                  <li>0019 ->Campo “modalidad_actual” incorrecto.</li>
+                  <li>0020 -> Campo “icc” no numérico.</li>
+                  <li>0021 -> El campo “digito_control” no corresponde con el campo “icc”..</li>
+                  <li>0022 -> La SIM insertada no se encuentra aprovisionada en el sistema.</li>
+                  <li>0023 -> La SIM no corresponde al rango que usted tiene asignado.</li>
+                  <li>0024 -> La SIM introducida ya está en uso en otra línea.</li>
+                  <li>0025 -> Para la tarifa seleccionada, el campo “telefono_asociado” no puede ser vacío.</li>
+                  <li>0026 -> El teléfono asociado que ha introducido no pertenece a un teléfono suyo.</li>
+                  <li>0027 -> El teléfono asociado, ya tiene asociada una tarifa.</li>
+                  <li>0028 -> Error al obtener sus solicitudes.</li>
+                  <li>0029 -> El teléfono insertado ya dispone de una solicitud en el sistema no cancelada.</li>
+                  <li>0030 -> No se encuentra el cliente en el sistema.</li>
+                  <li>0031 -> Campos “icc_origen” o “dc_origen” vacíos.</li>
+                  <li>0032 -> El campo “dc_origen” no se corresponde con el campo “icc_origen”.</li>
+                  <li>0033 -> Error no se han insertado los datos de la portabilidad correctamente.</li>
+                  <li>0034 -> Error no se han insertado los datos de la portabilidad correctamente.</li>
+                  <li>0035 -> Error al insertar la solicitud de línea.</li>
+                  <li>0036 ->Error al insertar la solicitud de línea.</li>
+                  <li>0037 -> Error no se ha podido aprovisionar la SIM.</li>
+                  <li>0038 -> Campos “bonos_d” o “bonos_v” contienen más de un elemento.</li>
+                  <li>0039 -> Campos “bonos_d” o “bonos_v” no son compatibles con la tarifa seleccionada.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr class="active">
+              <td>
+                <form method="post"> {% csrf_token %} {{ form.as_p }}
+                  <button id="call_setAltaLineaPortabilidad" class="callOMV btn btn-block btn-primary" type="submit" name="button">Probar</button></td>
+                </form>
+              </td>
+              <td colspan=4>
+                <pre>
+                  <code id="result_setAltaLineaPortabilidad">
+                  </code>
+                </pre>
+              </td>
+            </tr>
+
+            <tr>
+              <td>subirDocumento()</td>
+              <td>
+                Función para subir un documento de una solicitud de línea.
+              </td>
+              <td>
+                <ul>
+                  <li>user (string)</li>
+                  <li>pass (string)</li>
+                  <li>subscriberType (int)</li>
+                  <li>nif_cliente (string)</li>
+                  <li>codigo_solicitud (string)</li>
+                  <li>documento (base 64)</li>
+                  <li>tipo_documento (string) (DOCUMENTO, PORTABILIDAD, CONTRATO, OTROS)</li>
+                </ul>
+              </td>
+              <td>
+                La aplicación devolverá una cadena con el resultado de la ejecución de la función, más adelante se
+                detallan los códigos y descripciones de los mismos.
+              </td>
+              <td>
+                <ul>
+                  <li>0007 -> Campo “nif_cliente” incorrecto.</li>
+                  <li>0008 -> Campo “tipo_documento” incorrecto.</li>
+                  <li>0009 -> Campo “codigo_solicitud” incorrecto.</li>
+                  <li>0010 -> Campo “subscriberType” incorrecto.</li>
+                  <li>0011 -> El usuario asociado al número de documento introducido no se encuentra en el sistema.</li>
+                  <li>0012 -> Error al obtener la solicitud de la línea.</li>
+                  <li>0013 -> No existe solicitud de línea para “codigo_solicitud” insertado.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <form method="post"> {% csrf_token %} {{ form.as_p }}
+                  <button id="call_subirDocumento" class="callOMV btn btn-block btn-primary" type="submit" name="button">Probar</button></td>
+                </form>
+              </td>
+              <td colspan=4>
+                <pre>
+                  <code id="result_subirDocumento">
+                  </code>
+                </pre>
+              </td>
+            </tr>
+
+            <tr class="active">
+              <td>cancelLineasSolicitud()</td>
+              <td>
+                Función para cancelar solicitudes de línea.
+              </td>
+              <td>
+                <ul>
+                  <li>user (string)</li>
+                  <li>pass (string)</li>
+                  <li>codigo (int)</li>
+                </ul>
+              </td>
+              <td>
+                La aplicación devolverá una cadena con el resultado de la operación.
+              </td>
+              <td>
+                <ul>
+                  <li>0007 -> Error al obtener la solicitud de línea.</li>
+                  <li>0008 -> Campo “codigo” incorrecto.</li>
+                  <li>0009 -> Error al obtener el estado de la solicitud.</li>
+                  <li>0010 -> El estado de la solicitud no es el correcto para que la solicitud sea cancelada.</li>
+                  <li>0011 - 0013 - 0014 - 0015-> Error al cancelar la solicitud</li>
+                  <li>0012 -> El periodo para cancelar la solicitud de portabilidad ha expirado.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr class="active">
+              <td>
+                <form method="post"> {% csrf_token %} {{ form.as_p }}
+                  <button id="call_cancelLineasSolicitud" class="callOMV btn btn-block btn-primary" type="submit" name="button">Probar</button></td>
+                </form>
+              </td>
+              <td colspan=4>
+                <pre>
+                  <code id="result_cancelLineasSolicitud">
+                  </code>
+                </pre>
+              </td>
+            </tr>
+
+            <tr>
+              <td>setServicios()</td>
+              <td>
+                Función para modificar los servicios de una línea.
+              </td>
+              <td>
+                <ul>
+                  <li>user (string)</li>
+                  <li>pass (string)</li>
+                  <li>telefono (string)</li>
+                  <li>servicios (array)</li>
+                </ul>
+              </td>
+              <td>
+                La aplicación devolverá una cadena con el resultado de la operación.
+              </td>
+              <td>
+                <ul>
+                  <li>0007 Error al obtener la línea.</li>
+                  <li>0008 ->El teléfono introducido no se encuentra en el sistema.</li>
+                  <li>0009 -> Campo “servicios” incorrecto.</li>
+                  <li>0010 -> Error no se han modificado los servicios de la línea.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <form method="post"> {% csrf_token %} {{ form.as_p }}
+                  <button id="call_setServicios" class="callOMV btn btn-block btn-primary" type="submit" name="button">Probar</button></td>
+                </form>
+              </td>
+              <td colspan=4>
+                <pre>
+                  <code id="result_setServicios">
+                  </code>
+                </pre>
+              </td>
+            </tr>
+
+
+          </tbody>
+        </table>
+
+      </div>
+      <div class="col-sm-1">
+      </div>
+
+
+    </div>
+
+  </div><!-- /.container -->
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript">
+
+
+  $('.callOMV').click(function(e) {
+    e.preventDefault();
+    var call = $(this).attr('id').replace('call_','');
+    var form = $(this).closest("form");
+    $.ajax({
+      url: "/documentacion-omv/test/"+call,
+      data: form.serialize(),
+      dataType: 'json',
+      success: function (data) {
+        console.log(data)
+        $("#result_"+call).html(JSON.stringify(data));
+      }
+    });
+  });
+
+  </script>
+</body>
+</html>
