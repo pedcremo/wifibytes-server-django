@@ -6,9 +6,14 @@
 
 ============================
 
+PREREQUISITES
+
+sudo apt-get install libncurses5-dev
+sudo apt-get install libevent-dev python-all-dev (In order to avoid reportLab problems)
+
 How to run the project:
 
-1.- Create virtualenv
+1.- Create virtualenv (In your home)
     virtualenv Wifibytes
 
 2.- Activate virtualenv
@@ -24,14 +29,22 @@ How to run the project:
 5.- Install all requirements
     pip install -r requirements.txt
 
-6.- Migrate BBDD
-    python manage.py migrate --settings=Wifibytes.settings.local
+5.5.- Install postgres BD
+(ubuntu 16.04)
+sudo apt-get install -y postgresql-9.5 postgresql-contrib-9.5 
+sudo apt-get install -y postgresql-doc-9.5 postgresql-server-dev-9.5
+(ubuntu 14.04)
+sudo apt-get install -y postgresql-9.3 postgresql-contrib-9.3
+sudo apt-get install -y postgresql-doc-9.3 postgresql-server-dev-9.3
+
+6.- Migrate BBDD (Not until postgres installed. Get into folder wifibytes where manage.py is installed) READ PROBLEM with reportLab
+    python manage.py migrate --settings=wifibytes.settings.local
 
 7.- Create super user
-    python manage.py createsuperuser --settings=Wifibytes.settings.local
+    python manage.py createsuperuser --settings=wifibytes.settings.local
 
 8.- Run server
-    python manage.py runserver --settings=Wifibytes.settings.local
+    python manage.py runserver --settings=wifibytes.settings.local
 
 
 Check http://localhost:8000
