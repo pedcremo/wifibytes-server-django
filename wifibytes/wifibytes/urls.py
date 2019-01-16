@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-from django.conf.urls import patterns, include, url
+#from django.conf.urls import patterns, include, url
+#from django.conf.urls.defaults import *
+
 from django.conf import settings
 from django.views.generic import TemplateView
 from rest_framework import routers, viewsets, permissions
@@ -135,7 +137,8 @@ router.add_api_view(
     "[SITEMAP]", url(
         r'^api/sitemap/$', SitemapView.as_view(), name='SitemapView'))
 
-urlpatterns = patterns(
+#urlpatterns = patterns(
+urlpatterns = [
     '',
     # para traer por id
     url(r'^causa/(?P<id>[0-9]+)$', CausaAPIView.as_view(), name='causa'),
@@ -171,7 +174,8 @@ urlpatterns = patterns(
     #url(r'^sermepa/', include('sermepa.urls')),
     # url(regex = r'^pago/',view = 'facturacion.views.form',name = 'pago'),
     # url(regex = r'^end/',view = 'facturacion.views.end',name = 'end'),
-)
+#)
+]
 
 AdminSite.index_template = 'index.html'
 
