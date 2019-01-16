@@ -1,7 +1,7 @@
 # encoding:utf-8
 from datetime import datetime
 import random
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
