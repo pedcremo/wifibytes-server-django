@@ -59,7 +59,7 @@ def TestDocOmvView(request, call):
     if not request.user.is_superuser:
         return HttpResponseForbidden()
 
-    print('[CALL] => ', call)
+    print(('[CALL] => ', call))
 
     response = {}
 
@@ -202,11 +202,11 @@ def TestDocOmvView(request, call):
     if "setAltaClienteFinal" == call:
         if random.randint(0, 10) > 5:
             response = {
-                'codigo': 0001,
+                'codigo': 0o001,
             }
         else:
             response = {
-                'codigo': random.randint(0011, 0023),
+                'codigo': random.randint(0o011, 0o023),
             }
 
     if "setAltaLineaNueva" == call:
@@ -222,7 +222,7 @@ def TestDocOmvView(request, call):
     if "setAltaLineaPortabilidad" == call:
         if random.randint(0, 10) > 5:
             response = {
-                'codigo': 0001,
+                'codigo': 0o001,
             }
         else:
             response = {
@@ -231,7 +231,7 @@ def TestDocOmvView(request, call):
     if "subirDocumento" == call:
         if random.randint(0, 10) > 5:
             response = {
-                'codigo': 0001,
+                'codigo': 0o001,
             }
         else:
             response = {
@@ -240,7 +240,7 @@ def TestDocOmvView(request, call):
     if "cancelLineasSolicitud" == call:
         if random.randint(0, 10) > 5:
             response = {
-                'codigo': 0001,
+                'codigo': 0o001,
             }
         else:
             response = {
@@ -250,7 +250,7 @@ def TestDocOmvView(request, call):
     if "setServicios" == call:
         if random.randint(0, 10) > 5:
             response = {
-                'codigo': 0001,
+                'codigo': 0o001,
             }
         else:
             response = {
@@ -260,7 +260,7 @@ def TestDocOmvView(request, call):
     if "getCDR" == call:
         if random.randint(0, 10) < 0:
             response = {
-                'codigo': 0001,
+                'codigo': 0o001,
             }
         else:
             response = {

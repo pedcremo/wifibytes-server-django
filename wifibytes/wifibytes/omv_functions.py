@@ -7,11 +7,11 @@ from signaturit_sdk.signaturit_client import SignaturitClient
 
 import xml.etree.ElementTree as ET
 
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import string
 import os
 import sys
-import httplib
+import http.client
 import base64
 from functools import wraps
 import errno
@@ -251,8 +251,8 @@ def errorMessage(function, code):
         {"code": "0014", "message": "Error al cancelar la solicitud."},
         {"code": "0015", "message": "Error al cancelar la solicitud."}]
 
-    return (
-        item for item in error_codes[function] if item["code"] == code).next()
+    return next((
+        item for item in error_codes[function] if item["code"] == code))
 
 
 def makeCall(function, params):
@@ -260,8 +260,8 @@ def makeCall(function, params):
     user = settings.OMV_USER
     password = settings.OMV_PASSWORD
 
-    print ('user', user)
-    print ('password', password)
+    print(('user', user))
+    print(('password', password))
 
     service_action = "/ws_desarrollo/mv/gestMOVIL_2.php?WSLD"
 
@@ -282,8 +282,8 @@ def makeCall(function, params):
     <ns:userInfo>
     <ns:user>%s</ns:user>
     <ns:pass>%s</ns:pass>""" % (function, user, password)
-    for k, v in params.iteritems():
-        body += u"<ns:%s>%s</ns:%s>" % (k, v, k)
+    for k, v in params.items():
+        body += "<ns:%s>%s</ns:%s>" % (k, v, k)
     body += """
     </ns:userInfo>
     </ns:%s>
@@ -294,10 +294,10 @@ def makeCall(function, params):
 
     print('\n----------------------------')
     print('   CALL [OMV] --> ')
-    print('   [function]-->', function)
-    print('   [params]-->', params)
+    print(('   [function]-->', function))
+    print(('   [params]-->', params))
 
-    request = httplib.HTTPConnection(server_addr, timeout=30)
+    request = http.client.HTTPConnection(server_addr, timeout=30)
     request.putrequest("POST", service_action)
     request.putheader(
         "Accept",
@@ -311,7 +311,7 @@ def makeCall(function, params):
     request.send(body)
     response = request.getresponse()
 
-    print('   [response]-->', response)
+    print(('   [response]-->', response))
     # print(readResponse(response))
     print('----------------------------\n')
     return response
@@ -473,10 +473,10 @@ def altaLinea(linea, icc, dc):
         print('[tipoCliente]--> 1')
         clientes = consultaCliente(linea.coddir.cifnif)
     else:
-        print('[tipoCliente]--> ', cliente.tipo_cliente)
+        print(('[tipoCliente]--> ', cliente.tipo_cliente))
         clientes = consultaCliente(cliente.cifnif)
 
-    print('[clientes]', clientes)
+    print(('[clientes]', clientes))
 
     # if len(clientes['clientes']) == 0:
     if not clientes or len(clientes['clientes']) == 0:
@@ -496,13 +496,12 @@ def altaLinea(linea, icc, dc):
     if alta['status_code'] == 200 and alta['response_code'] == '0001':
         print('okeiieieie')
         pool = getpool()
-        print('Response getpool --> ', pool)
+        print(('Response getpool --> ', pool))
         movil = pool['numbers']['n1']
-        print('MOVIL --> ', movil)
+        print(('MOVIL --> ', movil))
 
         # REVISAR
-        subtarifa_movil = filter(lambda x: (x.tipo_tarifa == 1),
-                                 linea.codtarifa.getSubtarifas)
+        subtarifa_movil = [x for x in linea.codtarifa.getSubtarifas if (x.tipo_tarifa == 1)]
         ###############
 
         # tarifa = subtarifa_movil[0].subtarifa_siglas_omv
@@ -522,10 +521,10 @@ def altaLinea(linea, icc, dc):
         else:
             params['nif'] = cliente.cifnif
         print('FUNCTION --> setAltaLineaNueva')
-        print('PARAMS --> ', params)
+        print(('PARAMS --> ', params))
         alta = makeCall("setAltaLineaNueva", params)
-        print('RESPUESTA setAltaLineaNueva --> ', alta)
-        print('status --> ', alta.status)
+        print(('RESPUESTA setAltaLineaNueva --> ', alta))
+        print(('status --> ', alta.status))
 
         if alta.status == 403:
             return {'status_code': 403, 'message': 'OMV error inesperado',
@@ -655,7 +654,7 @@ def portabilidadLinea(linea, icc, dc):
                     'n_solicitud': response[2:-2]
                 }
                 print('[RESPUESTA] => ')
-                print respuesta
+                print(respuesta)
                 print('-----------------')
 
                 return {'status_code': 400, 'message': 'Error 400',

@@ -88,10 +88,10 @@ class PedidoCliAdmin(admin.ModelAdmin):
     formatted_amount.short_description = 'Total Pedido'
     formatted_amount.admin_order_field = 'totaleuros'
     suit_form_tabs = (
-        ('pedidocli', u'Información del pedido'),
-        ('infocliente', u'Información del cliente'),
-        ('lineapedido', u'Líneas del pedido'),
-        ('infoeneboo', u'Campos eneboo'))
+        ('pedidocli', 'Información del pedido'),
+        ('infocliente', 'Información del cliente'),
+        ('lineapedido', 'Líneas del pedido'),
+        ('infoeneboo', 'Campos eneboo'))
 
     inlines = [
         LineaPedidoCliInline

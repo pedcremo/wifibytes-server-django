@@ -41,7 +41,7 @@ class Command(BaseCommand):
             except:
                 pass
 
-            now = int(format(datetime.now(), u'U'))
+            now = int(format(datetime.now(), 'U'))
             before = now - 86400
             articulos = Articulo.objects.all()
 
@@ -117,9 +117,9 @@ class Command(BaseCommand):
 
             outfile.close()
 
-            articulos_time = int(format(datetime.now(), u'U'))
+            articulos_time = int(format(datetime.now(), 'U'))
             elapsed = articulos_time - now
-            print "Articulos exportados - %ss" % elapsed
+            print("Articulos exportados - %ss" % elapsed)
 
             # ------------------------------------------------------------
 
@@ -137,14 +137,14 @@ class Command(BaseCommand):
                 writer.writerow([codfamilia, descripcion])
 
             outfile.close()
-            familias_time = int(format(datetime.now(), u'U'))
+            familias_time = int(format(datetime.now(), 'U'))
             elapsed = familias_time - articulos_time
-            print "Familias exportadas - %ss" % elapsed
+            print("Familias exportadas - %ss" % elapsed)
 
             # ------------------------------------------------------------
 
-            elapsed = int(format(datetime.now(), u'U')) - now
-            return u"Exportación terminada - %ss" % elapsed
+            elapsed = int(format(datetime.now(), 'U')) - now
+            return "Exportación terminada - %ss" % elapsed
 
         else:
             raise CommandError('Only the default is supported')

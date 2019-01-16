@@ -66,7 +66,7 @@ class DireccionesViewSet(viewsets.ModelViewSet):
         queryset = self.queryset.filter(
             codcliente__consumer_user=self.request.user)
         received = self.request.QUERY_PARAMS
-        if 'default' in received.keys():
+        if 'default' in list(received.keys()):
             queryset = queryset.filter(default=True, domfacturacion=True)
 
         return queryset
@@ -180,7 +180,7 @@ class LineaViewSet(viewsets.ModelViewSet):
         user = self.request.user
         request_params = self.request.QUERY_PARAMS
 
-        if 'draft' in request_params.keys():
+        if 'draft' in list(request_params.keys()):
             query = self.queryset.filter(
                 codcliente__consumer_user=user, draft=True)
         else:
@@ -191,7 +191,7 @@ class LineaViewSet(viewsets.ModelViewSet):
 
     def get_serializer_context(self):
         query = self.request.QUERY_PARAMS
-        if 'lang' in query.keys():
+        if 'lang' in list(query.keys()):
             lang = query['lang']
         else:
             lang = ''
@@ -234,7 +234,7 @@ class activarLinea(APIView):
 
     def post(self, request):
         query = self.request.data
-        if 'id_linea' in query.keys():
+        if 'id_linea' in list(query.keys()):
             linea = MobilsClients.objects.get(pk=query['id_linea'])
             activacion = enviarDocumento(linea)
             if (activacion['status_code'] == 200 and
@@ -260,7 +260,7 @@ class getContracts(APIView):
             cliente = linea.codcliente
 
             if linea.nuevoicc:
-                print('linea', linea)
+                print(('linea', linea))
                 new_partial_icc = str(linea.nuevoicc)[:-1]
                 try:
                     new_icc_dc = str(linea.nuevoicc)[-1:]
@@ -289,8 +289,8 @@ class getContracts(APIView):
                     result = getpoolSim()
                     print (result)
                     print('------')
-                    print (result['response']['icc'])
-                    print (result['response']['dc'])
+                    print((result['response']['icc']))
+                    print((result['response']['dc']))
                     new_partial_icc = result['response']['icc']
                     new_icc_dc = result['response']['dc']
                 except Exception as error:
@@ -300,8 +300,8 @@ class getContracts(APIView):
                 linea.nuevoicc = str(new_partial_icc) + str(new_icc_dc)
                 linea.save()
 
-                print('[PARTIAL ICC] --> ', new_partial_icc)
-                print('[DC ICC] --> ', new_icc_dc)
+                print(('[PARTIAL ICC] --> ', new_partial_icc))
+                print(('[DC ICC] --> ', new_icc_dc))
                 print ('linea save')
 
             if(linea.origen == 1):
@@ -315,14 +315,14 @@ class getContracts(APIView):
                 #new_icc_dc = calculate_checksum(new_partial_icc)
 
                 print ('origen dos')
-                print ('partial_icc', new_partial_icc)
-                print('new_icc_dc', new_icc_dc)
+                print(('partial_icc', new_partial_icc))
+                print(('new_icc_dc', new_icc_dc))
                 alta = altaLinea(
                     linea, new_partial_icc, new_icc_dc)
 
             message = alta['message']
 
-            print('message--> ', message)
+            print(('message--> ', message))
             if alta['response_code'] == '0001':
                 linea.alta = True
                 linea.omv_solicitud = alta['n_solicitud']
@@ -369,7 +369,7 @@ class getContracts(APIView):
         }
         try:  # Get company Data
             data_company = DatosEmpresa.objects.filter(datos_empresa_default=True).first()
-            print data_company
+            print(data_company)
             company['name'] = data_company.name
             company['address'] = data_company.address
             company['city'] = data_company.city
@@ -378,7 +378,7 @@ class getContracts(APIView):
             company['logo'] = get_full_image_url(request, data_company.logo.url)
         except Exception as error:
             print ('[ERROR] --> datos_empresa DoesNotExist')
-            print error
+            print(error)
             return {
                 "status": 400,
                 "response": Response(
@@ -416,7 +416,7 @@ class getContracts(APIView):
             os.makedirs(client_folder_contract_path)
         #######
 
-        if 'line' in query.keys():
+        if 'line' in list(query.keys()):
             try:
                 linea = MobilsClients.objects.get(pk=query['line'])
             except MobilsClients.DoesNotExist:
@@ -457,7 +457,7 @@ class getContracts(APIView):
             file_path.append(pdf_old_path)
             # OLD CONTRACT ##############################
 
-        if 'service' in query.keys():
+        if 'service' in list(query.keys()):
 
             try:
                 service = Servicio.objects.get(pk=query['service'])
@@ -606,7 +606,7 @@ class ClienteAPIView(APIView):
             return Response('the user is not compatible with the token',
                             status=status.HTTP_403_FORBIDDEN)
 
-        if 'codcliente' in query.keys():
+        if 'codcliente' in list(query.keys()):
             codcliente = query.get('codcliente')
 
             try:
@@ -698,13 +698,13 @@ class ClienteNoRegistradoView(APIView):
     def post(self, request, format=None):
         received = self.request.data
 
-        if 'cifnif' in received.keys():
+        if 'cifnif' in list(received.keys()):
             try:
                 user = Cliente.objects.filter(cifnif=received['cifnif'])[0]
             except Exception:
                 return Response({'message': 'Error: client not found'},
                                 status=status.HTTP_400_BAD_REQUEST)
-        elif 'email' in received.keys():
+        elif 'email' in list(received.keys()):
             try:
                 user = Cliente.objects.filter(email=received['email'])[0]
             except Exception:
@@ -820,7 +820,7 @@ class dirclientesAPIListView(APIView):
                             status=status.HTTP_403_FORBIDDEN)
 
         try:
-            if 'id_dir' in query.keys():
+            if 'id_dir' in list(query.keys()):
                 id_dir = query.get('id_dir')
                 dirs = DirClientes.objects.get(pk=id_dir)
                 direcciones = {
@@ -828,12 +828,12 @@ class dirclientesAPIListView(APIView):
                     'codcliente': dirs.codcliente.codcliente,
                     'domenvio': dirs.domenvio,
                     'domfacturacion': dirs.domfacturacion,
-                    'nombre': unicode(dirs.nombre),
+                    'nombre': str(dirs.nombre),
                     'cifnif': dirs.cifnif,
-                    'direccion': unicode(dirs.direccion),
+                    'direccion': str(dirs.direccion),
                     'codpais': dirs.codpais,
-                    'ciudad': unicode(dirs.ciudad),
-                    'provincia': unicode(dirs.provincia),
+                    'ciudad': str(dirs.ciudad),
+                    'provincia': str(dirs.provincia),
                     'apartado': dirs.apartado,
                     'codpostal': dirs.codpostal,
                     'telefono': dirs.telefono,
@@ -958,7 +958,7 @@ class mobils_clientsAPIListView(APIView):
             return Response('the user is not compatible with the token',
                             status=status.HTTP_403_FORBIDDEN)
 
-        if 'id_mobil' in query.keys():
+        if 'id_mobil' in list(query.keys()):
             id_mobil = query.get('id_mobil')
             items = MobilsClients.objects.filter(pk=id_mobil)
         else:
@@ -987,41 +987,41 @@ class mobils_clientsAPIListView(APIView):
                 'the user is not compatible with the token',
                 status=status.HTTP_403_FORBIDDEN)
 
-        if 'direccion' in query.keys():
+        if 'direccion' in list(query.keys()):
 
             mobil = MobilsClients()
             mobil.codcliente = Cliente.objects.get(pk=query['codcliente'])
             mobil.roaming = 0
             mobil.buzon_voz = 0
 
-            if 'titular' in query.keys():
+            if 'titular' in list(query.keys()):
                 mobil.tipoCliente = query['titular']
             else:
                 return Response(
                     data={"message": "Falta tipo de cliente"}, status=400)
 
-            if 'codtarifa' in query.keys():
+            if 'codtarifa' in list(query.keys()):
                 mobil.codtarifa = Tarifa.objects.get(pk=query['codtarifa'])
             else:
                 return Response(
                     data={"message": "Falta codtarifa"}, status=400)
 
-            if 'mobil' in query.keys():
+            if 'mobil' in list(query.keys()):
                 mobil.mobil = query['mobil']
 
-            if 'tipoTarifaAntigua' in query.keys():
+            if 'tipoTarifaAntigua' in list(query.keys()):
                 mobil.tipoTarifaAntigua = query['tipoTarifaAntigua']
 
-            if 'companiaAntigua' in query.keys():
+            if 'companiaAntigua' in list(query.keys()):
                 mobil.companiaAnterior = query['companiaAntigua']
 
-            if 'tipoSim' in query.keys():
+            if 'tipoSim' in list(query.keys()):
                 mobil.tipoSim = query['tipoSim']
 
-            if 'icc_anterior' in query.keys():
+            if 'icc_anterior' in list(query.keys()):
                 mobil.icc_anterior = query['icc_anterior']
 
-            if 'dc_icc_anterior' in query.keys():
+            if 'dc_icc_anterior' in list(query.keys()):
                 mobil.dc_icc_anterior = query['dc_icc_anterior']
 
             if query['direccion']['id'] > 0:
@@ -1044,7 +1044,7 @@ class mobils_clientsAPIListView(APIView):
                 direccion.numero = query['direccion']['numero']
                 direccion.ciudad = query['direccion']['ciudad']
                 direccion.provincia = query['direccion']['provincia']
-                if 'idprovincia' in query['direccion'].keys():
+                if 'idprovincia' in list(query['direccion'].keys()):
                     direccion.idprovincia = Provincia.objects.get(
                         pk=query['direccion']['idprovincia'])
                 # direccion.apartado = query['direccion'].apartado
@@ -1118,7 +1118,7 @@ class obtenerConsumoCliente(APIView):
 
         query = self.request.QUERY_PARAMS
 
-        if 'id_linea' in query.keys():
+        if 'id_linea' in list(query.keys()):
             id_linea = query['id_linea']
             try:
                 linea = MobilsClients.objects.get(pk=id_linea)
@@ -1134,17 +1134,17 @@ class obtenerConsumoCliente(APIView):
                     status=status.HTTP_400_BAD_REQUEST)
             except:
                 return Response(
-                    data={"message": u"Token inválido o cliente no existente"},
+                    data={"message": "Token inválido o cliente no existente"},
                     status=status.HTTP_401_UNAUTHORIZED)
 
             today = datetime.now()
 
-            if 'mes' in query.keys():
+            if 'mes' in list(query.keys()):
                 mes = query['mes']
             else:
                 mes = today.month
 
-            if 'anyo' in query.keys():
+            if 'anyo' in list(query.keys()):
                 anyo = query['anyo']
             else:
                 anyo = today.year
@@ -1189,7 +1189,7 @@ class nuevaAlta(APIView):
 
         query = self.request.QUERY_PARAMS
 
-        if 'id_linea' in query.keys():
+        if 'id_linea' in list(query.keys()):
             response = altaCliente(query['id_linea'])
             return Response(
                 data={"message": "Forbidden"},
@@ -1279,7 +1279,7 @@ class ServicioViewSet(viewsets.ModelViewSet):
         user = self.request.user
         request_params = self.request.QUERY_PARAMS
 
-        if 'draft' in request_params.keys():
+        if 'draft' in list(request_params.keys()):
             query = self.queryset.filter(
                 servicio_consumer__consumer_user=user, servicio_draft=True)
         else:

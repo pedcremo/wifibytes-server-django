@@ -41,7 +41,7 @@ class Command(BaseCommand):
             except:
                 pass
 
-            now = int(format(datetime.now(), u'U'))
+            now = int(format(datetime.now(), 'U'))
             before = now - 86400
 
             '''pedidos = PedidoCli.objects.filter(
@@ -50,7 +50,7 @@ class Command(BaseCommand):
             )'''
 
             pedidos = PedidoCli.objects.all()
-            print 'NUMERO DE PEDIDOS', pedidos.count()
+            print('NUMERO DE PEDIDOS', pedidos.count())
 
             outfile_path = os.path.join(
                 settings.MEDIA_URL, 'csv', "to_export/pedidos.csv")
@@ -121,12 +121,12 @@ class Command(BaseCommand):
 
             outfile.close()
 
-            pedidos_time = int(format(datetime.now(), u'U'))
+            pedidos_time = int(format(datetime.now(), 'U'))
             elapsed = pedidos_time - now
-            print "Pedidos exportados - %ss" % elapsed
+            print("Pedidos exportados - %ss" % elapsed)
 
-            elapsed = int(format(datetime.now(), u'U')) - now
-            return u"Exportación terminada - %ss" % elapsed
+            elapsed = int(format(datetime.now(), 'U')) - now
+            return "Exportación terminada - %ss" % elapsed
 
         else:
             raise CommandError('Only the default is supported')

@@ -30,7 +30,7 @@ class RangoICC(models.Model):
     @property
     def icc_disponibles(self):
         icc_registrados = MobilsClients.objects.values_list('nuevoicc', flat=True)
-        lst_disponibles = range(self.rango_icc_init, self.rango_icc_end)
+        lst_disponibles = list(range(self.rango_icc_init, self.rango_icc_end))
         for icc in icc_registrados:
             if icc:
                 icc = int(icc) / 10
@@ -41,7 +41,7 @@ class RangoICC(models.Model):
     @property
     def icc_registrados(self):
         icc_registrados = MobilsClients.objects.values_list('nuevoicc', flat=True)
-        lst_disponibles = range(self.rango_icc_init, self.rango_icc_end)
+        lst_disponibles = list(range(self.rango_icc_init, self.rango_icc_end))
         lst_registrados = []
         for icc in icc_registrados:
             if icc:
@@ -54,12 +54,12 @@ class RangoICC(models.Model):
         return str(self.rango_icc_id)
 
     class Meta:
-        verbose_name = u'Rango ICC'
-        verbose_name_plural = u'Rangos ICC'
+        verbose_name = 'Rango ICC'
+        verbose_name_plural = 'Rangos ICC'
         ordering = ['-created_at']
 
     def save(self, *args, **kwargs):
-        self.updated_at = int(format(datetime.now(), u'U'))
+        self.updated_at = int(format(datetime.now(), 'U'))
 
         if not self.created_at:
             self.created_at = self.updated_at

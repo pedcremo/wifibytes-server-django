@@ -34,7 +34,7 @@ class Command(BaseCommand):
         ID_CSV = '1478770598'
 
         if options['myoption'] == 'default':
-            now = int(format(datetime.now(), u'U'))
+            now = int(format(datetime.now(), 'U'))
             before = now - 86400
 
             # ------------------------------------------------------------
@@ -46,7 +46,7 @@ class Command(BaseCommand):
             # Guardar Datos en diccionario
             result = {}
             for row in reader:
-                for column, value in row.iteritems():
+                for column, value in row.items():
                     result.setdefault(column, []).append(value)
 
             for i in range(len(result['idlinea'])):
@@ -54,7 +54,7 @@ class Command(BaseCommand):
                 try:  # Obtener linea
                     linea = lineasfacturascli.objects.get(pk=result['idlinea'][i])
                 except lineasfacturascli.DoesNotExist:
-                    print 'Linea Factura Nueva'
+                    print('Linea Factura Nueva')
                     linea = lineasfacturascli()
                     linea.idlinea = result['idlinea'][i]
 
@@ -113,14 +113,14 @@ class Command(BaseCommand):
 
                 try:  # Guardar linea
                     linea.save()
-                    print "Importado Linea Factura idlinea => ", result['idlinea'][i]
+                    print("Importado Linea Factura idlinea => ", result['idlinea'][i])
                 except:
-                    print "ERROR Importando Linea Factura idlinea => ", result['idlinea'][i]
+                    print("ERROR Importando Linea Factura idlinea => ", result['idlinea'][i])
 
 
-            print 'Total Linea Facturas => ', AttributeErrorlen(result['idlinea'])
+            print('Total Linea Facturas => ', AttributeErrorlen(result['idlinea']))
 
-            elapsed = int(format(datetime.now(), u'U')) - now
-            return u"Importación terminada - %ss" % elapsed
+            elapsed = int(format(datetime.now(), 'U')) - now
+            return "Importación terminada - %ss" % elapsed
 
         raise CommandError('Only the default is supported')

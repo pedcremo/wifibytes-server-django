@@ -7,19 +7,19 @@ from datetime import datetime
 from django.utils.dateformat import format
 from tinymce.models import HTMLField
 import uuid
-import StringIO
+from io import StringIO
 from django.db.models import Prefetch
 
 
 class Familia(models.Model):
-    codfamilia = models.CharField(verbose_name=u'Código Familia',
+    codfamilia = models.CharField(verbose_name='Código Familia',
                                   primary_key=True, editable=True,
                                   max_length=4)
     slug = models.SlugField(editable=False)
     nombre = models.CharField(verbose_name="Nombre [ES]", max_length=200, blank=False)
     nombre_va = models.CharField(verbose_name="Nombre [VA]", max_length=200, blank=True)
     color = models.ForeignKey('pagina.PaletaColores',
-                              related_name='Familia_PaletaColores', null=True)
+                              related_name='Familia_PaletaColores', on_delete=models.SET_NULL)
     icono = models.FileField(upload_to="familia")
     pretitulo = models.CharField(verbose_name="Pretitulo [ES]", max_length=200, blank=False)
     pretitulo_va = models.CharField(verbose_name="Pretitulo [VA]", max_length=200, blank=True)
@@ -38,17 +38,17 @@ class Familia(models.Model):
     updated_at = models.IntegerField(default=0, editable=False)
 
     def __unicode__(self):
-        return unicode(self.nombre)
+        return str(self.nombre)
 
     class Meta:
         index_together = ['codfamilia', 'nombre']
 
     def save(self, *args, **kwargs):
-        self.updated_at = int(format(datetime.now(), u'U'))
+        self.updated_at = int(format(datetime.now(), 'U'))
         self.slug = slugify(self.nombre)
 
         if not self.codfamilia:
-            self.created_at = int(format(datetime.now(), u'U'))
+            self.created_at = int(format(datetime.now(), 'U'))
             self.codfamilia = "%s" % (uuid.uuid4(),)
 
         try:
@@ -61,7 +61,7 @@ class Familia(models.Model):
                 # Image Variables
                 if self.imagen_cabecera:
                     imagename = str(uuid.uuid1().hex) + '.PNG'
-                    print 'triying image'
+                    print('triying image')
                     image = Img.open(
                         StringIO.StringIO(self.imagen_cabecera.read()))
                     width, height = image.size
@@ -75,14 +75,14 @@ class Familia(models.Model):
                         new_width = width * new_height / height
                     temp_img = image.resize(
                         (new_width, new_height), Img.LANCZOS)
-                    print temp_img.size
+                    print((temp_img.size))
                     output = StringIO.StringIO()
                     temp_img.save(output, format='PNG', optimize=True)
                     output.seek(0)
                     new_img = File(output, imagename)
                     self.thumbnail = new_img
             except Exception:
-                print 'ERROR: Error on team image'
+                print('ERROR: Error on team image')
 
         super(Familia, self).save(*args, **kwargs)
 
@@ -130,7 +130,7 @@ class Procesador(models.Model):
     id = models.IntegerField(primary_key=True, editable=False)
 
     def __unicode__(self):
-        return unicode(self.num_procesador)
+        return str(self.num_procesador)
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -149,7 +149,7 @@ class Ram(models.Model):
     id = models.IntegerField(primary_key=True, editable=False)
 
     def __unicode__(self):
-        return unicode(self.num_ram)
+        return str(self.num_ram)
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -199,7 +199,7 @@ class Articulo(models.Model):
 
     slug = models.SlugField(editable=False)
     codfamilia = models.ForeignKey(Familia, related_name='familia_codfamilia',
-                                   null=False, blank=False)
+                                   null=False, blank=False, on_delete=models.PROTECT)
     descripcion = models.CharField(verbose_name="Descripción [ES]",
                                    max_length=250, blank=False, null=False)
     descripcion_va = models.CharField(verbose_name="Descripción [VA]",
@@ -231,16 +231,16 @@ class Articulo(models.Model):
     visible = models.BooleanField(default=False, blank=False, null=False)
 
     marca = models.ForeignKey(Marca, related_name='Articulo_Marca',
-                              blank=False)
+                              blank=False, on_delete=models.SET_NULL)
     pantalla = models.ForeignKey(Pantalla, related_name='Articulo_Pantalla',
-                                 blank=True, null=True)
+                                 blank=True, null=True, on_delete=models.SET_NULL)
     procesador = models.ForeignKey(Procesador,
                                    related_name='Articulo_Procesador',
-                                   blank=True, null=True)
+                                   blank=True, null=True, on_delete=models.SET_NULL)
     ram = models.ForeignKey(Ram, related_name='Articulo_Ram', blank=True,
-                            null=True)
+                            null=True, on_delete=models.SET_NULL)
     camara = models.ForeignKey(Camara, related_name='Articulo_Camara',
-                               blank=True, null=True)
+                               blank=True, null=True, on_delete=models.SET_NULL)
     destacado = models.BooleanField(default=False,  editable=True, null=False)
 
     # Campos exclusivos Eneboo
@@ -262,17 +262,17 @@ class Articulo(models.Model):
     updated_at = models.IntegerField(default=0, editable=False)
 
     def __unicode__(self):
-        return unicode(self.referencia) + " - " + unicode(self.descripcion)
+        return str(self.referencia) + " - " + str(self.descripcion)
 
     def save(self, *args, **kwargs):
-        self.updated_at = int(format(datetime.now(), u'U'))
+        self.updated_at = int(format(datetime.now(), 'U'))
         self.slug = slugify(self.descripcion)
 
         try:  # si existen modificaciones
             currentObject = Articulo.objects.get(referencia=self.referencia)
         except Articulo.DoesNotExist:
             if not self.referencia:
-                self.created_at = int(format(datetime.now(), u'U'))
+                self.created_at = int(format(datetime.now(), 'U'))
                 self.referencia = "%s" % (uuid.uuid4(),)
         try:
             orig = Articulo.objects.get(pk=self.pk)
@@ -284,7 +284,7 @@ class Articulo(models.Model):
                 # Image Variables
                 if self.imagen:
                     imagename = str(uuid.uuid1().hex) + '.PNG'
-                    print 'triying image'
+                    print('triying image')
                     image = Img.open(StringIO.StringIO(self.imagen.read()))
                     width, height = image.size
                     # horizontal 220
@@ -304,7 +304,7 @@ class Articulo(models.Model):
                     self.thumbnail = new_img
 
             except Exception:
-                print 'ERROR: Error on team image'
+                print('ERROR: Error on team image')
 
         super(Articulo, self).save(*args, **kwargs)
 
@@ -324,7 +324,7 @@ class Tarifa(models.Model):
     activo = models.BooleanField(verbose_name="Activo", null=False, default=0)
     destacado = models.BooleanField(default=False, editable=True, null=False)
     color = models.ForeignKey('pagina.PaletaColores',
-                              related_name='Tarifa_PaletaColores', null=True)
+                              related_name='Tarifa_PaletaColores', null=True, on_delete=models.SET_NULL)
     created_at = models.IntegerField(default=0, editable=False)
     updated_at = models.IntegerField(default=0, editable=False)
 
@@ -345,10 +345,10 @@ class Tarifa(models.Model):
         return str(self.codtarifa)
 
     def save(self, *args, **kwargs):
-        self.updated_at = int(format(datetime.now(), u'U'))
+        self.updated_at = int(format(datetime.now(), 'U'))
         self.slug = slugify(self.nombretarifa)
         if not self.codtarifa:
-            self.created_at = int(format(datetime.now(), u'U'))
+            self.created_at = int(format(datetime.now(), 'U'))
             no = self.__class__.objects.count()
             if no == 0:
                 self.codtarifa = 1
@@ -387,12 +387,12 @@ class Subtarifa(models.Model):
         null=True)
     subtarifa_omv = models.ForeignKey(
         'omv.Omv', verbose_name="Omv asociado a Tarifa",
-        null=True, blank=True)
+        null=True, blank=True, on_delete=models.SET_NULL)
     tipo_tarifa = models.IntegerField(
         null=False, default=0, blank=False, choices=rate_type)
     subtarifa_tarifa = models.ForeignKey(
         Tarifa, related_name='subtarifa_tarifa', verbose_name="Tarifa",
-        blank=False)
+        blank=False, on_delete=models.PROTECT)
     created_at = models.IntegerField(default=0, editable=False)
     updated_at = models.IntegerField(default=0, editable=False)
 
@@ -401,9 +401,9 @@ class Subtarifa(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.subtarifa_id)
-        self.updated_at = int(format(datetime.now(), u'U'))
+        self.updated_at = int(format(datetime.now(), 'U'))
         if not self.subtarifa_id:
-            self.created_at = int(format(datetime.now(), u'U'))
+            self.created_at = int(format(datetime.now(), 'U'))
             no = self.__class__.objects.count()
             if no == 0:
                 self.subtarifa_id = 1
@@ -421,7 +421,7 @@ class Subtarifa(models.Model):
 class Template1(models.Model):
     id = models.IntegerField(primary_key=True, editable=False)
     articulo = models.ForeignKey(
-        "catalogo.Articulo", related_name='template1_articulo')
+        "catalogo.Articulo", related_name='template1_articulo', on_delete=models.SET_NULL)
     pretitulo = models.CharField(verbose_name=(
         "pretitulo"), max_length=100, null=True, blank=True)
     caja_1_titulo = models.CharField(verbose_name=(
@@ -448,7 +448,7 @@ class Template1(models.Model):
     imagen_fondo_cuerpo = models.FileField(
         upload_to="Templates", verbose_name="imagen_fondo_cuerpo",
         blank=True, null=True)
-    idioma = models.ForeignKey('internationalization.Idioma', null=True)
+    idioma = models.ForeignKey('internationalization.Idioma', null=True, on_delete=models.SET_NULL)
 
     def __unicode__(self):
         return str(self.id)
@@ -469,7 +469,7 @@ class Template1(models.Model):
 class Template2(models.Model):
     id = models.IntegerField(primary_key=True, editable=False)
     articulo = models.ForeignKey(
-        "catalogo.Articulo", related_name='template2_articulo')
+        "catalogo.Articulo", related_name='template2_articulo',  on_delete=models.SET_NULL)
     pretitulo = models.CharField(verbose_name=(
         "pretitulo"), max_length=100, null=True, blank=True)
     caja_1_titulo = models.CharField(verbose_name=(
@@ -498,7 +498,7 @@ class Template2(models.Model):
     imagen_fondo_cuerpo = models.FileField(
         upload_to="Templates", verbose_name="imagen_fondo_cuerpo",
         blank=True, null=True)
-    idioma = models.ForeignKey('internationalization.Idioma', null=True)
+    idioma = models.ForeignKey('internationalization.Idioma', null=True, on_delete=models.SET_NULL)
 
     def __unicode__(self):
         return str(self.id)
@@ -519,7 +519,7 @@ class Template2(models.Model):
 class Template3(models.Model):
     id = models.IntegerField(primary_key=True, editable=False)
     articulo = models.ForeignKey(
-        "catalogo.Articulo", related_name='template3_articulo')
+        "catalogo.Articulo", related_name='template3_articulo', on_delete=models.SET_NULL)
     pretitulo = models.CharField(verbose_name=(
         "pretitulo"), max_length=100, blank=True, null=True)
     franja_1_texto = HTMLField(blank=True, null=True)
@@ -545,7 +545,7 @@ class Template3(models.Model):
         upload_to="Templates", verbose_name="Imagen3", blank=True, null=True)
     imagen4 = models.FileField(
         upload_to="Templates", verbose_name="Imagen4", blank=True, null=True)
-    idioma = models.ForeignKey('internationalization.Idioma', null=True)
+    idioma = models.ForeignKey('internationalization.Idioma', null=True, on_delete=models.SET_NULL)
 
     def __unicode__(self):
         return str(self.id)

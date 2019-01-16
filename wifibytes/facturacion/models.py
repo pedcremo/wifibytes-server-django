@@ -18,7 +18,7 @@ class Consumo(models.Model):
         null=False, editable=False)
     codcliente = models.ForeignKey(
         Cliente, verbose_name=("Codigo Cliente"),
-        related_name='Consumo_Cliente')
+        related_name='Consumo_Cliente',on_delete=models.PROTECT)
     fecha_mes = models.DateField(
         verbose_name=("Fecha"), null=True, blank=True)
     dia_inicio = models.DateField(
@@ -58,10 +58,10 @@ class FormasPago(models.Model):
     activa = models.BooleanField(default=False, blank=False)
 
     def __unicode__(self):
-        return unicode(self.nombre)
+        return str(self.nombre)
 
     class Meta:
-        verbose_name = u"Métodos de Pago"
+        verbose_name = "Métodos de Pago"
 
     def save(self, *args, **kwargs):
 
@@ -88,10 +88,10 @@ class FormasEnvio(models.Model):
     precio = models.FloatField(verbose_name="Precio")
 
     def __unicode__(self):
-        return unicode(self.nombre)
+        return str(self.nombre)
 
     class Meta:
-        verbose_name = u"Métodos de envío"
+        verbose_name = "Métodos de envío"
 
     def save(self, *args, **kwargs):
 
@@ -117,7 +117,7 @@ class PedidoCli(models.Model):
     idpedido = models.IntegerField(primary_key=True, editable=False)
 
     codcliente = models.ForeignKey(Cliente, verbose_name=("Codigo Cliente"),
-                                   related_name='PedidoCli_Cliente')
+                                   related_name='PedidoCli_Cliente',on_delete=models.PROTECT)
 
     cifnif = models.CharField(verbose_name=("CIFNIF"), max_length=20,
                               null=True, blank=True, editable=True)
@@ -130,7 +130,7 @@ class PedidoCli(models.Model):
     #    blank=True, editable=True)
 
     coddir = models.ForeignKey(DirClientes, verbose_name=("Codigo Dirección"),
-                               related_name='PedidoCli_DirClientes')
+                               related_name='PedidoCli_DirClientes',on_delete=models.PROTECT)
 
     direccion = models.CharField(verbose_name=(
         "Dirección"), max_length=100,  null=True, blank=True, editable=True)
@@ -163,7 +163,7 @@ class PedidoCli(models.Model):
 
     coddirEnvio = models.ForeignKey(DirClientes,
                                     verbose_name=("Codigo Dirección Envío"),
-                                    related_name='PedidoCli_DirClientesEnvio')
+                                    related_name='PedidoCli_DirClientesEnvio',on_delete=models.SET_NULL)
 
     direccionEnvio = models.CharField(verbose_name=("Dirección de Envío"),
                                       max_length=200,  null=True,
@@ -187,7 +187,7 @@ class PedidoCli(models.Model):
 
     codpago = models.ForeignKey(
         FormasPago, verbose_name=("Formas de Pago - TPV"),
-        null=True, blank=True)
+        null=True, blank=True,on_delete=models.SET_NULL)
 
     codigo = models.CharField(
         verbose_name=("Codigo"), max_length=13, null=True, blank=True)
@@ -263,10 +263,10 @@ class PedidoCli(models.Model):
     fecha = models.DateField(verbose_name=("Fecha"), null=True, blank=True)
     formaEnvio = models.ForeignKey(FormasEnvio,
                                    verbose_name=("Forma de envío"),
-                                   related_name='PedidoCli_FormasEnvio')
+                                   related_name='PedidoCli_FormasEnvio',on_delete=models.PROTECT)
 
     formaPago = models.ForeignKey(FormasPago, verbose_name=("Forma de pago"),
-                                  related_name='PedidoCli_FormasPago')
+                                  related_name='PedidoCli_FormasPago',on_delete=models.PROTECT)
 
     estado = models.IntegerField(verbose_name=("Estado del pedido"),
                                  choices=estados, null=False, blank=False,
@@ -292,17 +292,17 @@ class PedidoCli(models.Model):
 
     def save(self, *args, **kwargs):
         # print 'NUM PEDIDOS ', PedidoCli.objects.all().count()
-        self.updated_at = int(format(datetime.now(), u'U'))
+        self.updated_at = int(format(datetime.now(), 'U'))
 
         try:  # Existe el objeto
             currentObject = PedidoCli.objects.get(
                 idpedido=self.idpedido
             )
-            print 'EXISTE'
+            print('EXISTE')
         except PedidoCli.DoesNotExist:
-            print 'NO EXISTE'
+            print('NO EXISTE')
             if not self.idpedido:
-                self.created_at = int(format(datetime.now(), u'U'))
+                self.created_at = int(format(datetime.now(), 'U'))
                 no = PedidoCli.objects.count()
                 if no == 0:
                     self.idpedido = 900000
@@ -318,7 +318,7 @@ class PedidoCli(models.Model):
                 no = PedidoCli.objects.filter(pk__gte=900000).count()
                 self.numero = no + 1
 
-                self.created_at = int(format(datetime.now(), u'U'))
+                self.created_at = int(format(datetime.now(), 'U'))
                 self.fecha = datetime.today()
 
                 if self.codcliente:
@@ -412,7 +412,7 @@ def generar_factura(sender, instance, created, **kwargs):
     print('------------------------------')
     try:
         factura.save()
-        print '[FACTURA GENERADA]  idpedido=> ', factura.idpedido
+        print('[FACTURA GENERADA]  idpedido=> ', factura.idpedido)
     except Exception as error:
         print (error)
         print('[ERROR] => Generando Factura')
@@ -461,7 +461,7 @@ class LineaPedidoCli(models.Model):
         null=True, blank=True, editable=True)
 
     referencia = models.ForeignKey(Articulo, verbose_name=("referencia"),
-                                   related_name='LineaPedidoCli_Articulo')
+                                   related_name='LineaPedidoCli_Articulo',on_delete=models.SET_NULL)
 
     cantidad = models.FloatField(
         verbose_name=("cantidad"),
@@ -477,14 +477,14 @@ class LineaPedidoCli(models.Model):
         verbose_name=("descripcion"), max_length=100, null=True, blank=True)
 
     idpedido = models.ForeignKey(PedidoCli, verbose_name=("idpedido"),
-                                 related_name='LineaPedidoCli_PedidoCli')
+                                 related_name='LineaPedidoCli_PedidoCli',on_delete=models.SET_NULL)
 
     idlineapresupuesto = models.IntegerField(
         verbose_name=("idlineapresupuesto"), default=0, editable=False)
 
     codimpuesto = models.ForeignKey(Impuesto, verbose_name=("codimpuesto"),
                                     related_name='LineaPedidoCli_Impuesto',
-                                    default='IVA18%')
+                                    default='IVA18%',on_delete=models.SET_NULL)
 
     cerrada = models.BooleanField(default=False, verbose_name=("cerrada"))
 
@@ -502,8 +502,8 @@ class LineaPedidoCli(models.Model):
         null=True, blank=True)
 
     def __unicode__(self):
-        return u'art: %s - > lin: %s ped: %s ' % (
-            unicode(self.referencia), str(self.idlinea), str(self.idpedido))
+        return 'art: %s - > lin: %s ped: %s ' % (
+            str(self.referencia), str(self.idlinea), str(self.idpedido))
 
     def save(self, *args, **kwargs):
         try:  # Existe el objeto
@@ -512,7 +512,7 @@ class LineaPedidoCli(models.Model):
             )
         except LineaPedidoCli.DoesNotExist:
             if not self.idlinea:
-                self.created_at = int(format(datetime.now(), u'U'))
+                self.created_at = int(format(datetime.now(), 'U'))
                 no = LineaPedidoCli.objects.count()
                 if no == 0:
                     self.idlinea = 900000
@@ -530,13 +530,13 @@ class LineaPedidoCli(models.Model):
 
 class facturasCli(models.Model):
     idfactura = models.IntegerField(primary_key=True, null=False)
-    idpedido = models.ForeignKey(PedidoCli, null=True, blank=False)
+    idpedido = models.ForeignKey(PedidoCli, null=True, blank=False,on_delete=models.SET_NULL)
     codigo = models.CharField(max_length=12, null=False, blank=False)
     numero = models.CharField(max_length=12, null=False, blank=False)
     totaleuros = models.FloatField(null=False, blank=False)
     hora = models.TimeField(null=False, blank=False)
     direccion = models.CharField(max_length=100, null=False, blank=False)
-    codpago = models.ForeignKey(FormasPago, null=False, blank=False)
+    codpago = models.ForeignKey(FormasPago, null=False, blank=False,on_delete=models.PROTECT)
     codejercicio = models.CharField(max_length=4, null=False, blank=False)
     total = models.FloatField(null=False, blank=False)
     ciudad = models.CharField(max_length=100, null=True, blank=True)
@@ -544,18 +544,18 @@ class facturasCli(models.Model):
     automatica = models.BooleanField(default=True)
     nombrecliente = models.CharField(max_length=100, null=False, blank=False)
     observaciones = models.TextField(null=True, blank=True)
-    codcliente = models.ForeignKey('cliente.Cliente', null=True, blank=True)
+    codcliente = models.ForeignKey('cliente.Cliente', null=True, blank=True,on_delete=models.SET_NULL)
     totaliva = models.FloatField(null=False, blank=False)
-    idprovincia = models.ForeignKey('geo.Provincia', null=True, blank=True)
+    idprovincia = models.ForeignKey('geo.Provincia', null=True, blank=True,on_delete=models.SET_NULL)
     fecha = models.DateField(null=False, blank=False)
     neto = models.FloatField(null=False, blank=False)
-    codpais = models.ForeignKey('geo.Pais', null=True, blank=True)
+    codpais = models.ForeignKey('geo.Pais', null=True, blank=True,on_delete=models.SET_NULL)
     deabono = models.BooleanField(default=False)
     editable = models.BooleanField(default=False)
     codalmacen = models.CharField(max_length=4, null=True, blank=True)
     coddir = models.ForeignKey(
         'cliente.DirClientes', related_name="factura_direccion", null=True,
-        blank=True)
+        blank=True,on_delete=models.SET_NULL)
     cifnif = models.CharField(max_length=20, null=False, blank=False)
     nogenerarasiento = models.BooleanField(default=True)
     idfacturarect = models.IntegerField(null=True, blank=True)
@@ -635,7 +635,7 @@ class facturasCli(models.Model):
 
 class lineasfacturascli(models.Model):
     idlinea = models.IntegerField(primary_key=True, null=False, editable=False)
-    idfactura = models.ForeignKey(facturasCli, null=False, blank=False)
+    idfactura = models.ForeignKey(facturasCli, null=False, blank=False,on_delete=models.PROTECT)
     pvptotal = models.FloatField(null=False, blank=False, default=0)
     cantidad = models.FloatField(null=False, blank=False, default=0)
     irpf = models.FloatField(null=True, blank=True, default=0)
@@ -651,7 +651,7 @@ class lineasfacturascli(models.Model):
     idliquidacio = models.IntegerField(null=True, blank=True)
     pvpunitario = models.FloatField(null=False, blank=False, default=0)
     referencia = models.ForeignKey('catalogo.Articulo',
-                                   null=False, blank=False)
+                                   null=False, blank=False,on_delete=models.PROTECT)
 
     def __unicode__(self):
         return str(str(self.idlinea) + ' - ' + str(self.idfactura))
@@ -663,7 +663,7 @@ class lineasfacturascli(models.Model):
             )
         except lineasfacturascli.DoesNotExist:
             if not self.idlinea:
-                self.created_at = int(format(datetime.now(), u'U'))
+                self.created_at = int(format(datetime.now(), 'U'))
                 no = lineasfacturascli.objects.count()
                 if no == 0:
                     self.idlinea = 900000

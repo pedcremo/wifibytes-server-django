@@ -101,7 +101,7 @@ class Email:
             smtpObj.login(self.USER, self.PASSWORD)
             smtpObj.sendmail(self.USER, RECEIVERS, msg.as_string())
             smtpObj.quit()
-            print "Successfully sent email"
+            print("Successfully sent email")
             return True
         except SMTPException:
-            print "Error: unable to send email"
+            print("Error: unable to send email")

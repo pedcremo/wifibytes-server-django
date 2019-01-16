@@ -3,7 +3,7 @@ from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.views.generic import TemplateView
 from rest_framework import routers, viewsets, permissions
-from hybridrouter import HybridRouter
+from .hybridrouter import HybridRouter
 from django.contrib.admin.sites import AdminSite
 
 from cliente.views import *

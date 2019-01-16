@@ -50,17 +50,17 @@ class MakePayment(APIView):
     def get(self, request):
 
         received = request.data
-        print received
+        print(received)
 
         user = User.objects.get(pk=2)
 
         user = customers.get_customer_for_user(
             user=user
         )
-        print "*" * 30
-        print user
+        print("*" * 30)
+        print(user)
 
-        if 'pedido' in received.keys():
+        if 'pedido' in list(received.keys()):
             # pedido = PedidoCli.objects.get(pk=)
             # new_user = User.objects.get(username='pepito')
 
@@ -159,7 +159,7 @@ class LineaspedidoscliAPIListView(APIView):
     def get(self, request, format=None):
         received = self.request.QUERY_PARAMS
 
-        if('idpedido' in received.keys()):
+        if('idpedido' in list(received.keys())):
             pedido = PedidoCli.objects.get(pk=received['idpedido'])
             lineas = LineaPedidoCli.objects.filter(idpedido=pedido)
         else:
@@ -174,10 +174,10 @@ class PedidoscliAPIView(APIView):
 
     def get(self, request, format=None):
         received = self.request.QUERY_PARAMS
-        if 'HTTP_AUTHORIZATION' in self.request.META.keys():
+        if 'HTTP_AUTHORIZATION' in list(self.request.META.keys()):
             token = self.request.META['HTTP_AUTHORIZATION'].split(' ')[1]
 
-            if('idpedido' in received.keys()):
+            if('idpedido' in list(received.keys())):
                 try:
                     item = PedidoCli.objects.get(pk=received['idpedido'], codcliente__token=token)
                     serializer = PedidoscliSerializer(item, context={'request': request})
@@ -203,9 +203,9 @@ class PedidoscliAPIView(APIView):
         received = request.data
         dict_data = PedidoCli()
 
-        if('lineasPedido' in received.keys()):
+        if('lineasPedido' in list(received.keys())):
 
-            if('codcliente' in received.keys()):
+            if('codcliente' in list(received.keys())):
                 try:
                     codcliente = Cliente.objects.get(pk=received['codcliente'])
                     dict_data.codcliente = codcliente
@@ -216,7 +216,7 @@ class PedidoscliAPIView(APIView):
                 return Response(data={'message': 'codcliente not received'},
                                 status=status.HTTP_400_BAD_REQUEST)
 
-            if('formaenvio' in received.keys()):
+            if('formaenvio' in list(received.keys())):
                 try:
                     formaenvio = FormasEnvio.objects.get(
                         pk=received['formaenvio'])
@@ -228,7 +228,7 @@ class PedidoscliAPIView(APIView):
                 return Response(data={'message': 'formaenvio not received'},
                                 status=status.HTTP_400_BAD_REQUEST)
 
-            if('coddir' in received.keys()):
+            if('coddir' in list(received.keys())):
                 try:
                     coddir = DirClientes.objects.get(pk=received['coddir'])
                     dict_data.coddir = coddir
@@ -240,7 +240,7 @@ class PedidoscliAPIView(APIView):
                 return Response(data={'message': 'coddir not received'},
                                 status=status.HTTP_400_BAD_REQUEST)
 
-            if('coddirEnvio' in received.keys()):
+            if('coddirEnvio' in list(received.keys())):
                 try:
                     coddirEnvio = DirClientes.objects.get(
                         pk=received['coddirEnvio'])
@@ -253,7 +253,7 @@ class PedidoscliAPIView(APIView):
                 return Response(data={'message': 'coddirEnvio not received'},
                                 status=status.HTTP_400_BAD_REQUEST)
 
-            if('formapago' in received.keys()):
+            if('formapago' in list(received.keys())):
                 try:
                     formapago = FormasPago.objects.get(
                         pk=received['formapago'])
@@ -267,7 +267,7 @@ class PedidoscliAPIView(APIView):
 
             dict_data.save()
 
-            if 'hasRate' in received.keys() and received['hasRate']:
+            if 'hasRate' in list(received.keys()) and received['hasRate']:
                 linea = {
                     'id': Articulo.objects.filter(descripcion='SIM')[0],  # credit article
                     'cantidad': 1,
@@ -309,7 +309,7 @@ class PedidoscliAPIView(APIView):
                 pedido.totaleuros = totalPedido
                 pedido.save()
 
-                if 'stripe_token' in received.keys():
+                if 'stripe_token' in list(received.keys()):
 
                     user = customers.get_customer_for_user(
                         user=codcliente.consumer_user
@@ -370,7 +370,7 @@ class PedidoscliAPIListView(APIView):
     def get(self, request, format=None):
         received = self.request.QUERY_PARAMS
 
-        if('codcliente' in received.keys()):
+        if('codcliente' in list(received.keys())):
             items = PedidoCli.objects.filter(
                 codcliente=received['codcliente']).order_by('-fecha',
                                                             '-idpedido')
@@ -410,7 +410,7 @@ class FacturascliViewSet(viewsets.ModelViewSet):
 
         order = '-'
 
-        if 'order' in query.keys():
+        if 'order' in list(query.keys()):
             if query['order'] == 'asc':
                 order = ''
 
@@ -476,7 +476,7 @@ class FormasEnvioViewSet(viewsets.ModelViewSet):
 
     def get_serializer_context(self):
         query = self.request.QUERY_PARAMS
-        if 'lang' in query.keys():
+        if 'lang' in list(query.keys()):
             lang = query['lang']
         else:
             lang = ''
@@ -495,7 +495,7 @@ class FormasPagoViewSet(viewsets.ModelViewSet):
 
     def get_serializer_context(self):
         query = self.request.QUERY_PARAMS
-        if 'lang' in query.keys():
+        if 'lang' in list(query.keys()):
             lang = query['lang']
         else:
             lang = ''
@@ -529,7 +529,7 @@ def ultimospedidosdashboard(request):
         }
         orders.append(info)
 
-    print orders
+    print(orders)
     return HttpResponse(
         json.dumps({'results': orders}),
         content_type='application/json; utf-8')
@@ -564,7 +564,7 @@ def factura_pdf(request, pk):
         company['logo'] = get_full_image_url(request, data_company.logo.url)
     except Exception as error:
         print ('[ERROR] --> datos_empresa DoesNotExist')
-        print error
+        print(error)
         return {
             "status": 400,
             "response": Response(

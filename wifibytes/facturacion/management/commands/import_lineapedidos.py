@@ -33,7 +33,7 @@ class Command(BaseCommand):
         ID_CSV = '1478703635'
 
         if options['myoption'] == 'default':
-            now = int(format(datetime.now(), u'U'))
+            now = int(format(datetime.now(), 'U'))
             before = now - 86400
 
             # ------------------------------------------------------------
@@ -45,7 +45,7 @@ class Command(BaseCommand):
             # Guardar Datos en diccionario
             result = {}
             for row in reader:
-                for column, value in row.iteritems():
+                for column, value in row.items():
                     result.setdefault(column, []).append(value)
 
             for i in range(len(result['idlinea'])):
@@ -53,7 +53,7 @@ class Command(BaseCommand):
                 try:  # Obtener linea
                     linea = LineaPedidoCli.objects.get(pk=result['idlinea'][i])
                 except PedidoCli.DoesNotExist:
-                    print 'Linea Pedido Nueva'
+                    print('Linea Pedido Nueva')
                     linea = LineaPedidoCli()
                     linea.idlinea = result['idlinea'][i]
 
@@ -113,13 +113,13 @@ class Command(BaseCommand):
 
                 try:  # Guardar linea
                     linea.save()
-                    print "Importado Linea Pedido idlinea => ", result['idlinea'][i]
+                    print("Importado Linea Pedido idlinea => ", result['idlinea'][i])
                 except:
-                    print "ERROR Importando Linea Pedido idlinea => ", result['idlinea'][i]
+                    print("ERROR Importando Linea Pedido idlinea => ", result['idlinea'][i])
 
-            print 'Total Linea Pedidos => ', len(result['idlinea'])
+            print('Total Linea Pedidos => ', len(result['idlinea']))
 
-            elapsed = int(format(datetime.now(), u'U')) - now
-            return u"Importación terminada - %ss" % elapsed
+            elapsed = int(format(datetime.now(), 'U')) - now
+            return "Importación terminada - %ss" % elapsed
 
         raise CommandError('Only the default is supported')

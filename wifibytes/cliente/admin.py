@@ -92,9 +92,9 @@ class ClienteAdmin(admin.ModelAdmin):
         DirClientesInline, CuentasbcoCliInline, MobilsClientsInline
     ]
     suit_form_tabs = (
-        ('cliente', u'Información del cliente'),
+        ('cliente', 'Información del cliente'),
         ('dirclientes', 'Direcciones'), ('lineas', 'Lineas'),
-        ('cuentas', 'Cuentas Bancarias'), ('omv', u'Campos Eneboo y OMV'))
+        ('cuentas', 'Cuentas Bancarias'), ('omv', 'Campos Eneboo y OMV'))
 
     list_display = ('codcliente', 'nombre', 'apellido', 'email',
                     'fecha_registro', 'telefono', 'is_active', 'listar_servicios')
@@ -178,7 +178,7 @@ class MobilsClientsAdmin(admin.ModelAdmin):
         else:
             obj.delete()
 
-    delete_model.short_description = u'Borrar selección'
+    delete_model.short_description = 'Borrar selección'
 
 
 class ServicioAdmin(admin.ModelAdmin):

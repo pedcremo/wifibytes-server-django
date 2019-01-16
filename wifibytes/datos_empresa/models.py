@@ -74,12 +74,12 @@ class DatosEmpresa(models.Model):
         return str(self.datos_empresa_id)
 
     class Meta:
-        verbose_name = u'Datos Empresa'
-        verbose_name_plural = u'Datos Empresa'
+        verbose_name = 'Datos Empresa'
+        verbose_name_plural = 'Datos Empresa'
         ordering = ['-created_at']
 
     def save(self, *args, **kwargs):
-        self.updated_at = int(format(datetime.now(), u'U'))
+        self.updated_at = int(format(datetime.now(), 'U'))
 
         if not self.created_at:
             self.created_at = self.updated_at
@@ -97,14 +97,14 @@ class InfoEmpresa(models.Model):
     )
     datos_empresa_fk = models.ForeignKey(
         DatosEmpresa, verbose_name='Datos Empresa',
-        related_name='datos_empresa_fk', null=False
+        related_name='datos_empresa_fk', null=False,on_delete=models.PROTECT
     )
     key = models.CharField(max_length=200, null=True, blank=True)
     content = HTMLField(null=True, blank=True)
     image = models.FileField(
         verbose_name=("Info Empresa Imagen"),
         upload_to='info_empresa_image', null=True, blank=True)
-    idioma = models.ForeignKey('internationalization.Idioma', null=True)
+    idioma = models.ForeignKey('internationalization.Idioma', null=True,on_delete=models.SET_NULL)
     updated_at = models.IntegerField(default=0, editable=False)
     created_at = models.IntegerField(default=0, editable=False)
 
@@ -112,13 +112,13 @@ class InfoEmpresa(models.Model):
         return str(self.info_empresa_id)
 
     class Meta:
-        verbose_name = u'Info Empresa'
-        verbose_name_plural = u'Info Empresas'
+        verbose_name = 'Info Empresa'
+        verbose_name_plural = 'Info Empresas'
         ordering = ['-created_at']
         unique_together = ['datos_empresa_fk', 'key', 'idioma']
 
     def save(self, *args, **kwargs):
-        self.updated_at = int(format(datetime.now(), u'U'))
+        self.updated_at = int(format(datetime.now(), 'U'))
         if not self.created_at:
             self.created_at = self.updated_at
         super(InfoEmpresa, self).save(*args, **kwargs)
@@ -142,12 +142,12 @@ class TextosContrato(models.Model):
         return str(self.textos_contrato_id)
 
     class Meta:
-        verbose_name = u'Textos Contrato'
-        verbose_name_plural = u'Textos Contratos'
+        verbose_name = 'Textos Contrato'
+        verbose_name_plural = 'Textos Contratos'
         ordering = ['-created_at']
 
     def save(self, *args, **kwargs):
-        self.updated_at = int(format(datetime.now(), u'U'))
+        self.updated_at = int(format(datetime.now(), 'U'))
 
         if not self.created_at:
             self.created_at = self.updated_at
@@ -165,12 +165,12 @@ class Texto(models.Model):
     )
     textos_contrato_fk = models.ForeignKey(
         TextosContrato, verbose_name='Textos Contrato',
-        related_name='textos_contrato_fk', null=False
+        related_name='textos_contrato_fk', null=False,on_delete=models.PROTECT
     )
     key = models.CharField(max_length=200, null=True, blank=True)
     title = models.CharField(max_length=300, null=True, blank=True)
     content = models.TextField(max_length=10000, blank=True, null=True)
-    idioma = models.ForeignKey('internationalization.Idioma', null=True)
+    idioma = models.ForeignKey('internationalization.Idioma', null=True,on_delete=models.SET_NULL)
     updated_at = models.IntegerField(default=0, editable=False)
     created_at = models.IntegerField(default=0, editable=False)
 
@@ -178,13 +178,13 @@ class Texto(models.Model):
         return str(self.texto_id)
 
     class Meta:
-        verbose_name = u'Texto Contrato'
-        verbose_name_plural = u'Texto Contratos'
+        verbose_name = 'Texto Contrato'
+        verbose_name_plural = 'Texto Contratos'
         ordering = ['-created_at']
         unique_together = ['textos_contrato_fk', 'key', 'idioma']
 
     def save(self, *args, **kwargs):
-        self.updated_at = int(format(datetime.now(), u'U'))
+        self.updated_at = int(format(datetime.now(), 'U'))
         if not self.created_at:
             self.created_at = self.updated_at
         super(Texto, self).save(*args, **kwargs)
@@ -196,7 +196,7 @@ class DatosEmail(models.Model):
     )
     datos_empresa_fk = models.ForeignKey(
         DatosEmpresa, verbose_name='Datos Empresa',
-        null=False
+        null=False,on_delete=models.PROTECT
     )
     email_receiver = models.CharField(
         max_length=50, null=True, blank=True,
@@ -223,12 +223,12 @@ class DatosEmail(models.Model):
         return str(self.datos_email_id)
 
     class Meta:
-        verbose_name = u'Datos Email'
-        verbose_name_plural = u'Datos Email'
+        verbose_name = 'Datos Email'
+        verbose_name_plural = 'Datos Email'
         ordering = ['-created_at']
 
     def save(self, *args, **kwargs):
-        self.updated_at = int(format(datetime.now(), u'U'))
+        self.updated_at = int(format(datetime.now(), 'U'))
 
         if not self.created_at:
             self.created_at = self.updated_at

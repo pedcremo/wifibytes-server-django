@@ -45,7 +45,7 @@ class Command(BaseCommand):
             except:
                 pass
 
-            now = int(format(datetime.now(), u'U'))
+            now = int(format(datetime.now(), 'U'))
             before = now - 86400
 
             pedidos = PedidoCli.objects.filter(
@@ -100,12 +100,12 @@ class Command(BaseCommand):
 
             outfile.close()
 
-            lineapedidos__time = int(format(datetime.now(), u'U'))
+            lineapedidos__time = int(format(datetime.now(), 'U'))
             elapsed = lineapedidos__time - now
-            print "Linea Pedidos exportados - %ss" % elapsed
+            print("Linea Pedidos exportados - %ss" % elapsed)
 
-            elapsed = int(format(datetime.now(), u'U')) - now
-            return u"Exportación terminada - %ss" % elapsed
+            elapsed = int(format(datetime.now(), 'U')) - now
+            return "Exportación terminada - %ss" % elapsed
 
         else:
             raise CommandError('Only the default is supported')

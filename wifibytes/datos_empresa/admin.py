@@ -34,8 +34,8 @@ class DatosEmpresaAdmin(admin.ModelAdmin):
 
     suit_form_tabs = (
         ('general', 'General'),
-        ('infoEmpresa', u'Textos'),
-        ('datosEmail', u'Configuración Email'),
+        ('infoEmpresa', 'Textos'),
+        ('datosEmail', 'Configuración Email'),
     )
     list_display = (
         'name',
@@ -82,7 +82,7 @@ class TextosContratoAdmin(admin.ModelAdmin):
     readonly_fields = ('creation_date',)
 
     suit_form_tabs = (
-        ('textoContrato', u'Textos'),
+        ('textoContrato', 'Textos'),
     )
     list_display = (
         'creation_date',

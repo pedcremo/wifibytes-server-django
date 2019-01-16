@@ -17,7 +17,7 @@ class DatosEmpresaViewSet(viewsets.ModelViewSet):
 
     def get_serializer_context(self):
         query = self.request.QUERY_PARAMS
-        if 'lang' in query.keys():
+        if 'lang' in list(query.keys()):
             lang = query['lang']
         else:
             lang = ''

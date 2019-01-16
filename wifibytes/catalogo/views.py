@@ -62,12 +62,12 @@ class ArticuloViewSet(mixins.RetrieveModelMixin,
         queryset = self.queryset.filter(activo=True)
         query = self.request.QUERY_PARAMS
 
-        if 'destacado' in query.keys():
+        if 'destacado' in list(query.keys()):
             queryset = queryset.filter(destacado=True)
             paginator = PageNumberPagination()
             queryset = paginator.paginate_queryset(queryset, request)
 
-        if 'familia' in query.keys():
+        if 'familia' in list(query.keys()):
             familia = query['familia']
             queryset = queryset.filter(codfamilia__slug=familia)
 
@@ -75,7 +75,7 @@ class ArticuloViewSet(mixins.RetrieveModelMixin,
 
     def get_serializer_context(self):
         query = self.request.QUERY_PARAMS
-        if 'lang' in query.keys():
+        if 'lang' in list(query.keys()):
             lang = query['lang']
         else:
             lang = ''
@@ -96,7 +96,7 @@ class FamiliaViewSet(viewsets.ModelViewSet):
 
     def get_serializer_context(self):
         query = self.request.QUERY_PARAMS
-        if 'lang' in query.keys():
+        if 'lang' in list(query.keys()):
             lang = query['lang']
         else:
             lang = ''
@@ -115,14 +115,14 @@ class TarifaViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         query = self.request.QUERY_PARAMS
         queryset = self.queryset
-        if 'destacado' in query.keys():
+        if 'destacado' in list(query.keys()):
             queryset = queryset.filter(destacado=True)
 
         return queryset.filter(activo=True)
 
     def get_serializer_context(self):
         query = self.request.QUERY_PARAMS
-        if 'lang' in query.keys():
+        if 'lang' in list(query.keys()):
             lang = query['lang']
         else:
             lang = ''
@@ -206,7 +206,7 @@ class ArticuloView(APIView):
 
         query = self.request.QUERY_PARAMS
 
-        if 'destacado' in query.keys():
+        if 'destacado' in list(query.keys()):
             queryset = Articulo.objects.filter(destacado=True)
             paginator = PageNumberPagination()
             result_page = paginator.paginate_queryset(queryset, request)
@@ -215,7 +215,7 @@ class ArticuloView(APIView):
                                                      'request': request})
             return Response(serializer.data, status=status.HTTP_200_OK)
 
-        if 'familia' in query.keys():
+        if 'familia' in list(query.keys()):
             familia = query['familia']
             queryset = Articulo.objects.filter(codfamilia__slug=familia)
             if queryset.count() > 0:

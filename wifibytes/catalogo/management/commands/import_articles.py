@@ -34,13 +34,13 @@ class Command(BaseCommand):
         """
 
         if options['myoption'] == 'default':
-            now = int(format(datetime.now(), u'U'))
+            now = int(format(datetime.now(), 'U'))
             before = now - 86400
 
             # ------------------------------------------------------------
             # Familias
             # ------------------------------------------------------------
-            print "Importando familias"
+            print("Importando familias")
 
             path = settings.MEDIA_URL+'csv/to_import/eneboo_familias.csv'
             reader = csv.DictReader(open(path))
@@ -48,7 +48,7 @@ class Command(BaseCommand):
             # Guardar Datos en diccionario
             result = {}
             for row in reader:
-                for column, value in row.iteritems():
+                for column, value in row.items():
                     if value == 'None':
                         value = None
                     result.setdefault(column, []).append(value)
@@ -64,8 +64,8 @@ class Command(BaseCommand):
                 familia.save()
                 # print "Importado Familia codfamilia => ", result['codfamilia'][i]
 
-            print "Familias importadas"
-            print "Importando articulos"
+            print("Familias importadas")
+            print("Importando articulos")
             # ------------------------------------------------------------
             # Articulos
             # ------------------------------------------------------------
@@ -75,7 +75,7 @@ class Command(BaseCommand):
             # Guardar Datos en diccionario
             result = {}
             for row in reader:
-                for column, value in row.iteritems():
+                for column, value in row.items():
                     if value == 'None':
                         value = None
                     result.setdefault(column, []).append(value)
@@ -126,9 +126,9 @@ class Command(BaseCommand):
                 articulo.save()
                 # print "Importado Articulo referencia => ", result['referencia'][i]
 
-            print 'Total Articulos => ', len(result['referencia'])
+            print('Total Articulos => ', len(result['referencia']))
 
-            elapsed = int(format(datetime.now(), u'U')) - now
-            return u"Importación terminada - %ss" % elapsed
+            elapsed = int(format(datetime.now(), 'U')) - now
+            return "Importación terminada - %ss" % elapsed
 
         raise CommandError('Only the default is supported')

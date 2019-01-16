@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
-reload(sys)
+import imp
+imp.reload(sys)
 sys.setdefaultencoding('utf-8')
 from optparse import make_option
 from django.core.management.base import BaseCommand, CommandError
@@ -40,13 +41,13 @@ class Command(BaseCommand):
             except:
                 pass
 
-            now = int(format(datetime.now(), u'U'))
+            now = int(format(datetime.now(), 'U'))
             before = now - 86400
             '''clientes = Cliente.objects.filter(updated_at__gte=before,
                                               updated_at__lt=now)
             '''
             clientes = Cliente.objects.all()
-            print 'NUM CLIENTES', clientes.count()
+            print('NUM CLIENTES', clientes.count())
             outfile_path = os.path.join(
                 settings.MEDIA_URL, 'csv', "to_export/clientes.csv")
 
@@ -126,9 +127,9 @@ class Command(BaseCommand):
 
             outfile.close()
 
-            clientes_time = int(format(datetime.now(), u'U'))
+            clientes_time = int(format(datetime.now(), 'U'))
             elapsed = clientes_time - now
-            print "Clientes exportados - %ss" % elapsed
+            print("Clientes exportados - %ss" % elapsed)
 
             # ------------------------------------------------------------
 
@@ -136,7 +137,7 @@ class Command(BaseCommand):
                                                   updated_at__lt=now)
 
             mobils = MobilsClients.objects.all()
-            print 'NUM MOBILS ', mobils.count()
+            print('NUM MOBILS ', mobils.count())
             outfile_path = os.path.join(
                 settings.MEDIA_URL, 'csv', "to_export/mobils_clients.csv")
 
@@ -167,16 +168,16 @@ class Command(BaseCommand):
                      id_mobils_clients, tarifa, codcliente, codagente, mobil])
 
             outfile.close()
-            mobils_time = int(format(datetime.now(), u'U'))
+            mobils_time = int(format(datetime.now(), 'U'))
             elapsed = mobils_time - clientes_time
-            print "Lineas exportadas - %ss" % elapsed
+            print("Lineas exportadas - %ss" % elapsed)
 
             # ------------------------------------------------------------
 
             cuentas = CuentasbcoCli.objects.filter(created_at__gte=before,
                                                    created_at__lt=now)
             cuentas = CuentasbcoCli.objects.all()
-            print 'NUM CUENTAS ', cuentas.count()
+            print('NUM CUENTAS ', cuentas.count())
 
             outfile_path = os.path.join(
                 settings.MEDIA_URL, 'csv', "to_export/cuentas.csv")
@@ -219,9 +220,9 @@ class Command(BaseCommand):
                 ])
 
             outfile.close()
-            cuenta_time = int(format(datetime.now(), u'U'))
+            cuenta_time = int(format(datetime.now(), 'U'))
             elapsed = cuenta_time - mobils_time
-            print "Cuentas exportadas - %ss" % elapsed
+            print("Cuentas exportadas - %ss" % elapsed)
 
             # ------------------------------------------------------------
 
@@ -229,7 +230,7 @@ class Command(BaseCommand):
                                                      created_at__lt=now)
 
             direcciones = DirClientes.objects.all()
-            print 'NUM DIRECCIONS ', direcciones.count()
+            print('NUM DIRECCIONS ', direcciones.count())
 
             outfile_path = os.path.join(
                 settings.MEDIA_URL, 'csv', "to_export/dirclientes.csv")
@@ -270,11 +271,11 @@ class Command(BaseCommand):
                 ])
 
             outfile.close()
-            dir_time = int(format(datetime.now(), u'U'))
+            dir_time = int(format(datetime.now(), 'U'))
             elapsed = dir_time - cuenta_time
-            print "Direcciones exportadas - %ss" % elapsed
+            print("Direcciones exportadas - %ss" % elapsed)
 
-            elapsed = int(format(datetime.now(), u'U')) - now
-            return u"Exportación terminada - %ss" % elapsed
+            elapsed = int(format(datetime.now(), 'U')) - now
+            return "Exportación terminada - %ss" % elapsed
 
         raise CommandError('Only the default is supported')

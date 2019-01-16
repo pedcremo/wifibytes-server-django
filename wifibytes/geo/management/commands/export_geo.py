@@ -9,7 +9,8 @@ from wifibytes.export_functions import export_model
 import csv
 import os
 import sys
-reload(sys)
+import imp
+imp.reload(sys)
 sys.setdefaultencoding('utf-8')
 
 # Class MUST be named 'Command'
@@ -23,20 +24,20 @@ class Command(BaseCommand):
 
     def handle(self, *app_labels, **options):
 
-        start_time = int(format(datetime.now(), u'U'))
+        start_time = int(format(datetime.now(), 'U'))
 
-        print "Importando Paises"
+        print("Importando Paises")
         paises = Pais.objects.all()
         export_fields = ['codpais', 'codiso', 'nombre']
         destination_fields = ['codpais', 'codiso', 'nombre']
 
         export_model(export_fields, destination_fields, paises, 'paises')
 
-        print "%s paises exportados - %s segundos" % (
-            paises.count(), int(format(datetime.now(), u'U')) - start_time)
+        print("%s paises exportados - %s segundos" % (
+            paises.count(), int(format(datetime.now(), 'U')) - start_time))
 
-        print "Importando provincias"
-        phase_time = int(format(datetime.now(), u'U'))
+        print("Importando provincias")
+        phase_time = int(format(datetime.now(), 'U'))
         provincias = Provincia.objects.all()
         export_fields = ['provincia', 'idprovincia', 'codpais', 'codigo']
         destination_fields = [
@@ -45,9 +46,9 @@ class Command(BaseCommand):
         export_model(
             export_fields, destination_fields, provincias, 'provincias')
 
-        print "%s provincias exportadas - %s segundos" % (
+        print("%s provincias exportadas - %s segundos" % (
             provincias.count(),
-            int(format(datetime.now(), u'U')) - phase_time)
+            int(format(datetime.now(), 'U')) - phase_time))
 
-        return u"Exportación finalizada - %s segundos" % (
-            int(format(datetime.now(), u'U')) - start_time)
+        return "Exportación finalizada - %s segundos" % (
+            int(format(datetime.now(), 'U')) - start_time)

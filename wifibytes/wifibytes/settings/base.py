@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 from os.path import abspath, basename, dirname, join, normpath
 from sys import path
 import datetime
-from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
+#from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
 
 # PATH CONFIGURATION
@@ -197,21 +197,21 @@ SUIT_CONFIG = {
             {'label': 'Textos contacto', 'url': '/admin/pagina/txtcontacto/1/'}
         )},
         {'app': 'geo', 'icon': 'icon-globe'},
-        {'label': u'Configuración', 'icon': 'icon-cog', 'models': (
-            {'model': 'facturacion.formaspago', 'label': u'Métodos de pago'},
-            {'model': 'facturacion.formasenvio', 'label': u'Métodos de envío'},
-            {'model': 'auth.user', 'label': u'Usuarios'})
+        {'label': 'Configuración', 'icon': 'icon-cog', 'models': (
+            {'model': 'facturacion.formaspago', 'label': 'Métodos de pago'},
+            {'model': 'facturacion.formasenvio', 'label': 'Métodos de envío'},
+            {'model': 'auth.user', 'label': 'Usuarios'})
          },
-        {'label': u'Empresas', 'icon': 'icon-briefcase', 'models': (
+        {'label': 'Empresas', 'icon': 'icon-briefcase', 'models': (
             {'label': 'Datos Empresa', 'url': '/admin/datos_empresa/datosempresa/'},
         )},
-        {'label': u'Textos Contrato', 'icon': 'icon-info-sign', 'models': (
+        {'label': 'Textos Contrato', 'icon': 'icon-info-sign', 'models': (
             {'label': 'Textos', 'url': '/admin/datos_empresa/textoscontrato/'},
         )},
-        {'label': u'Rangos ICC', 'icon': 'icon-info-sign', 'models': (
+        {'label': 'Rangos ICC', 'icon': 'icon-info-sign', 'models': (
             {'label': 'Rangos ICC', 'url': '/admin/icc/rangoicc/'},
         )},
-        {'label': u'Documentación OMV', 'icon': 'icon-info-sign', 'models': (
+        {'label': 'Documentación OMV', 'icon': 'icon-info-sign', 'models': (
             {'label': 'Documentación', 'url': '/documentacion-omv/'},
         )},
     ),

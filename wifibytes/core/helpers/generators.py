@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 
 import random
 import string
@@ -48,7 +48,7 @@ def random_string(length=16):
     :param length: Lengtht of the generated string.
     """
     chars = string.digits + string.ascii_letters
-    return u''.join(random.choice(chars) for _ in range(length))
+    return ''.join(random.choice(chars) for _ in range(length))
 
 
 def random_pin(length=4):
@@ -57,7 +57,7 @@ def random_pin(length=4):
     :param length: Lengtht of the generated string.
     """
     chars = string.digits
-    return u''.join(random.choice(chars) for _ in range(length))
+    return ''.join(random.choice(chars) for _ in range(length))
 
 
 def random_image(size=(200, 200)):

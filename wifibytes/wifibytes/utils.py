@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.template.context import Context
 from django.template.loader import get_template
 from xhtml2pdf import pisa # TODO: Change this when the lib changes.
-import StringIO
+import io
 import os
 
 #===============================================================================
@@ -59,7 +59,7 @@ def generate_pdf(template_name, file_object=None, context=None, link_callback=fe
     In case the passed in file object is none, it will return a StringIO instance.
     """
     if not file_object:
-        file_object = StringIO.StringIO()
+        file_object = io.StringIO()
     if not context:
         context = {}
     tmpl = get_template(template_name)

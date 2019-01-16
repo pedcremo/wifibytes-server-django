@@ -15,20 +15,20 @@ class Pais(models.Model):
         verbose_name_plural = 'Paises'
 
     def __unicode__(self):
-        return unicode(self.nombre)
+        return str(self.nombre)
 
 
 class Comunidad(models.Model):
     codcomunidad = models.IntegerField(primary_key=True,
                                        null=False, editable=False)
-    codpais = models.ForeignKey(Pais, null=False, blank=False)
+    codpais = models.ForeignKey(Pais, null=False, blank=False,on_delete=models.PROTECT)
     nombre = models.CharField(max_length=100, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = 'Comunidades'
 
     def __unicode__(self):
-        return unicode(self.nombre)
+        return str(self.nombre)
 
     def save(self, *args, **kwargs):
 
@@ -47,15 +47,15 @@ class Provincia(models.Model):
     idprovincia = models.IntegerField(
         primary_key=True, null=False, editable=False)
     provincia = models.CharField(max_length=50, null=False, blank=False)
-    codpais = models.ForeignKey(Pais, null=False, blank=False)
-    codcomunidad = models.ForeignKey(Comunidad, null=True, blank=True)
+    codpais = models.ForeignKey(Pais, null=False, blank=False,on_delete=models.PROTECT)
+    codcomunidad = models.ForeignKey(Comunidad, null=True, blank=True,on_delete=models.SET_NULL)
     codigo = models.CharField(max_length=2, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = 'Provincias'
 
     def __unicode__(self):
-        return unicode(self.provincia)
+        return str(self.provincia)
 
     def save(self, *args, **kwargs):
 

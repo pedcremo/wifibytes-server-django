@@ -33,7 +33,7 @@ class Command(BaseCommand):
         ID_CSV = '1478700290'
 
         if options['myoption'] == 'default':
-            now = int(format(datetime.now(), u'U'))
+            now = int(format(datetime.now(), 'U'))
             before = now - 86400
 
             # ------------------------------------------------------------
@@ -45,7 +45,7 @@ class Command(BaseCommand):
             # Guardar Datos en diccionario
             result = {}
             for row in reader:
-                for column, value in row.iteritems():
+                for column, value in row.items():
                     result.setdefault(column, []).append(value)
 
             for i in range(len(result['idpedido'])):
@@ -53,7 +53,7 @@ class Command(BaseCommand):
                 try:  # Obtener pedido
                     pedido = PedidoCli.objects.get(pk=result['idpedido'][i])
                 except PedidoCli.DoesNotExist:
-                    print 'Pedido Nuevo'
+                    print('Pedido Nuevo')
                     pedido = PedidoCli()
                     pedido.idpedido = result['idpedido'][i]
 
@@ -127,14 +127,14 @@ class Command(BaseCommand):
 
                 pedido.save()
                 try:  # Guardar Pedido
-                    print "Importado Pedido idpedido => ", result['idpedido'][i]
+                    print("Importado Pedido idpedido => ", result['idpedido'][i])
                 except:
-                    print "ERROR Importando Pedido idpedido => ", result['idpedido'][i]
+                    print("ERROR Importando Pedido idpedido => ", result['idpedido'][i])
 
 
-            print 'Total Pedidos => ', len(result['idpedido'])
+            print('Total Pedidos => ', len(result['idpedido']))
 
-            elapsed = int(format(datetime.now(), u'U')) - now
-            return u"Importación terminada - %ss" % elapsed
+            elapsed = int(format(datetime.now(), 'U')) - now
+            return "Importación terminada - %ss" % elapsed
 
         raise CommandError('Only the default is supported')

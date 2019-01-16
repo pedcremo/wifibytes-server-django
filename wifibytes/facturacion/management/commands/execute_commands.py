@@ -20,7 +20,7 @@ TASKS = (
 )
 
 for task in TASKS:
-    print task
+    print(task)
     CMD = task
     LOG_NAME = 'cronlog_' + CMD + '.txt'
 

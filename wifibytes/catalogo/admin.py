@@ -151,7 +151,7 @@ class TarifaAdmin(admin.ModelAdmin):
         SubtarifasInline,
     ]
     suit_form_tabs = (
-        ('tarifa', u'Información de la Tarifa'),
+        ('tarifa', 'Información de la Tarifa'),
         ('subtarifas', 'Paquetes Tarifa'))
     list_display = ('codtarifa', 'nombretarifa', 'slug', 'pretitulo',
                     'pretitulo_va', 'logo', 'precio', 'activo', 'destacado',

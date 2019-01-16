@@ -9,7 +9,7 @@ import uuid
 import hashlib, base64
 from PIL import Image as Img
 from PIL import ImageOps
-import StringIO
+import io
 
 # Create your models here.
 class Causa(models.Model):
@@ -43,21 +43,21 @@ class Causa(models.Model):
             try:
                 # Image Variables
                 imagename = str(uuid.uuid1().hex) + '.PNG'
-                print 'triying image'
-                image = Img.open(StringIO.StringIO(self.thumbnail_url.read()))
+                print('triying image')
+                image = Img.open(io.StringIO(self.thumbnail_url.read()))
                 width, height = image.size
                 new_width = 750
                 new_height = height * new_width / width
                 temp_img = image.resize((new_width, new_height), Img.LANCZOS)
-                print temp_img.size
-                output = StringIO.StringIO()
+                print(temp_img.size)
+                output = io.StringIO()
                 temp_img.save(output, format='PNG', optimize=True)
                 output.seek(0)
                 new_img = File(output, imagename)
                 self.thumbnail_url = new_img
 
             except Exception:
-                print 'ERROR: Error on team image'
+                print('ERROR: Error on team image')
 
         else:
             orig = Causa.objects.get(pk=self.pk)
@@ -65,20 +65,20 @@ class Causa(models.Model):
                 try:
                     # Image Variables
                     imagename = str(uuid.uuid1().hex) + '.PNG'
-                    print 'triying image'
-                    image = Img.open(StringIO.StringIO(self.thumbnail_url.read()))
+                    print('triying image')
+                    image = Img.open(io.StringIO(self.thumbnail_url.read()))
                     width, height = image.size
                     new_width = 750
                     new_height = height * new_width / width
                     temp_img = image.resize((new_width, new_height), Img.LANCZOS)
-                    print temp_img.size
-                    output = StringIO.StringIO()
+                    print(temp_img.size)
+                    output = io.StringIO()
                     temp_img.save(output, format='PNG', optimize=True)
                     output.seek(0)
                     new_img = File(output, imagename)
                     self.thumbnail_url = new_img
 
                 except Exception:
-                    print 'ERROR: Error on team image'
+                    print('ERROR: Error on team image')
 
         super(Causa, self).save(*args, **kwargs)

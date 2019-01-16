@@ -17,23 +17,23 @@ import datetime
 class NewCausaAPIView(APIView):
 
     def post(self, request, format=None):
-        print "-----------------"
-        print request.DATA
-        print "-----------------"
-        print request.FILES
-        print "======================"
+        print("-----------------")
+        print(request.DATA)
+        print("-----------------")
+        print(request.FILES)
+        print("======================")
         query = request.DATA
 
-        if 'nombre' in query.keys():
+        if 'nombre' in list(query.keys()):
             nombre = query['nombre']
 
-        if 'descripcion' in query.keys():
+        if 'descripcion' in list(query.keys()):
             descripcion = query['descripcion']
 
-        if 'remitente' in query.keys():
+        if 'remitente' in list(query.keys()):
             remitente = query['remitente']
 
-        if 'email' in query.keys():
+        if 'email' in list(query.keys()):
             email = query['email']
 
 
@@ -76,7 +76,7 @@ class CausaAPIListView(APIView):
         #     except Causa.DoesNotExist:
         #         return Response(data={"message": "HTTP_400_BAD_REQUEST"}, status=status.HTTP_400_BAD_REQUEST)
         # el
-        if 'actual' in query.keys():
+        if 'actual' in list(query.keys()):
             try:
                 queryset = Causa.objects.filter(activo=True,visible=True).order_by('-fechainicio')[:1]
                 serializer = CausaSerializer(queryset, many=True)

@@ -52,7 +52,7 @@ class SetServiciosView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
         try:
-            if 'function' in received.keys():
+            if 'function' in list(received.keys()):
                 if received['function'] == 'activarBuzonDeVoz':
                     try:
                         activarBuzonDeVoz(mobil)

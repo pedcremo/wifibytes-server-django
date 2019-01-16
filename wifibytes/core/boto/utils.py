@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Storages for split media and static in different folders."""
-from __future__ import unicode_literals
+
 from pipeline.storage import PipelineMixin
 import storages.backends.s3boto
  

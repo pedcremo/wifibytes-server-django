@@ -16,7 +16,7 @@ class HybridRouter(routers.DefaultRouter):
 
     def get_urls(self):
         urls = super(HybridRouter, self).get_urls()
-        for api_view_key in self._api_view_urls.keys():
+        for api_view_key in list(self._api_view_urls.keys()):
             urls.append(self._api_view_urls[api_view_key])
         urls.sort()
         return urls
@@ -34,10 +34,10 @@ class HybridRouter(routers.DefaultRouter):
 
             def get(self, request, format=None):
                 ret = {}
-                for key, url_name in api_root_dict.items():
+                for key, url_name in list(api_root_dict.items()):
                     ret[key] = reverse.reverse(url_name, request=request, format=format)
                 # In addition to what had been added, now add the APIView urls
-                for api_view_key in api_view_urls.keys():
+                for api_view_key in list(api_view_urls.keys()):
                     ret[api_view_key] = reverse.reverse(api_view_urls[api_view_key].name, request=request, format=format)
                 return response.Response(ret)
 

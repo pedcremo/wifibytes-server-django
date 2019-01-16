@@ -31,7 +31,7 @@ class Command(BaseCommand):
     def handle(self, *app_labels, **options):
         ID_CSV = '1478707748'
         if options['myoption'] == 'default':
-            now = int(format(datetime.now(), u'U'))
+            now = int(format(datetime.now(), 'U'))
             before = now - 86400
 
             # ------------------------------------------------------------
@@ -39,12 +39,12 @@ class Command(BaseCommand):
             # ------------------------------------------------------------
             path = settings.MEDIA_URL+'csv/to_import/eneboo_formaspago.csv'
             reader = csv.DictReader(open(path))
-            print "Importando formas de pago"
+            print("Importando formas de pago")
 
             # Guardar Datos en diccionario
             result = {}
             for row in reader:
-                for column, value in row.iteritems():
+                for column, value in row.items():
                     result.setdefault(column, []).append(value)
 
             for i in range(len(result['codpago'])):
@@ -64,12 +64,12 @@ class Command(BaseCommand):
 
                     pago.save()
                 except Exception as msg:
-                    print "ERROR Importando Forma Pago => %s" % (
-                        result['codpago'][i])
+                    print("ERROR Importando Forma Pago => %s" % (
+                        result['codpago'][i]))
 
-            print 'Total formas pago => %s en %s segundos' % (
+            print('Total formas pago => %s en %s segundos' % (
                 len(result['codpago']),
-                int(format(datetime.now(), u'U')) - now)
+                int(format(datetime.now(), 'U')) - now))
 
 
         # ------------------------------------------------------------
@@ -81,7 +81,7 @@ class Command(BaseCommand):
         # Guardar Datos en diccionario
         result = {}
         for row in reader:
-            for column, value in row.iteritems():
+            for column, value in row.items():
                 if value == 'None':
                     value = None
                 result.setdefault(column, []).append(value)
@@ -166,8 +166,8 @@ class Command(BaseCommand):
                 factura.codcliente = Cliente.objects.get(
                     pk=result['codcliente'][i])
             except Cliente.DoesNotExist:
-                print "No se encuentra el cliente factura %s" % (
-                    result['idfactura'][i])
+                print("No se encuentra el cliente factura %s" % (
+                    result['idfactura'][i]))
                 continue
 
             try:
@@ -208,12 +208,12 @@ class Command(BaseCommand):
             try:
                 factura.save()
             except Exception as msg:
-                print "ERROR Importando Factura => %s" % (
-                    result['idfactura'][i])
+                print("ERROR Importando Factura => %s" % (
+                    result['idfactura'][i]))
 
-        print 'Total Facturas => %s en %s segundos' % (
+        print('Total Facturas => %s en %s segundos' % (
             len(result['idfactura']),
-            int(format(datetime.now(), u'U')) - now)
+            int(format(datetime.now(), 'U')) - now))
 
         # ------------------------------------------------------------
         # Lineas Facturas
@@ -224,7 +224,7 @@ class Command(BaseCommand):
         # Guardar Datos en diccionario
         result = {}
         for row in reader:
-            for column, value in row.iteritems():
+            for column, value in row.items():
                 if value == 'None':
                     value = None
                 result.setdefault(column, []).append(value)
@@ -246,8 +246,8 @@ class Command(BaseCommand):
                     linea_factura.idfactura = facturasCli.objects.get(
                         pk=result['idfactura'][i])
                 except facturasCli.DoesNotExist:
-                    print "Factura no encontrada, linea %s" % (
-                        result['idlinea'][i])
+                    print("Factura no encontrada, linea %s" % (
+                        result['idlinea'][i]))
                     continue
 
                 linea_factura.pvptotal = result['pvptotal'][i]
@@ -268,8 +268,8 @@ class Command(BaseCommand):
                 linea_factura.save()
 
             except Exception as msg:
-                print "ERROR Importando lineaFactura (%s) => %s" % (
-                    result['idlinea'][i], msg)
+                print("ERROR Importando lineaFactura (%s) => %s" % (
+                    result['idlinea'][i], msg))
 
         # ------------------------------------------------------------
         # Pedidos
@@ -280,7 +280,7 @@ class Command(BaseCommand):
         # Guardar Datos en diccionario
         result = {}
         for row in reader:
-            for column, value in row.iteritems():
+            for column, value in row.items():
                 if value == 'None':
                     value = None
                 result.setdefault(column, []).append(value)
@@ -301,40 +301,40 @@ class Command(BaseCommand):
                     pedido.codcliente = Cliente.objects.get(
                         pk=result['codcliente'][i])
                 except Cliente.DoesNotExist:
-                    print "Cliente no encontrado pedido %s" % (
-                        result['codcliente'][i])
+                    print("Cliente no encontrado pedido %s" % (
+                        result['codcliente'][i]))
                     continue
 
                 try:
                     pedido.coddir = DirClientes.objects.get(
                         pk=result['coddir'][i])
                 except Cliente.DoesNotExist:
-                    print "Direccion no encontrada pedido %s" % (
-                        result['coddir'][i])
+                    print("Direccion no encontrada pedido %s" % (
+                        result['coddir'][i]))
                     continue
 
                 try:
                     pedido.coddirEnvio = DirClientes.objects.get(
                         pk=result['coddirEnvio'][i])
                 except Cliente.DoesNotExist:
-                    print "Direccion envio no encontrada pedido %s" % (
-                        result['coddirEnvio'][i])
+                    print("Direccion envio no encontrada pedido %s" % (
+                        result['coddirEnvio'][i]))
                     continue
 
                 try:
                     pedido.codpago = FormasPago.objects.get(
                         pk=result['codpago'][i])
                 except FormasPago.DoesNotExist:
-                    print "Forma pago no encontrada pedido %s" % (
-                        result['codpago'][i])
+                    print("Forma pago no encontrada pedido %s" % (
+                        result['codpago'][i]))
                     continue
 
                 try:
                     pedido.formaPago = formaPago.objects.get(
                         pk=result['formaPago'][i])
                 except formaPago.DoesNotExist:
-                    print "Cliente no encontrado pedido %s" % (
-                        result['codcliente'][i])
+                    print("Cliente no encontrado pedido %s" % (
+                        result['codcliente'][i]))
                     continue
 
 
@@ -380,11 +380,11 @@ class Command(BaseCommand):
                 pedido.save()
 
             except Exception as msg:
-                print "ERROR Importando lineaFactura (%s) => %s" % (
-                    result['idlinea'][i], msg)
+                print("ERROR Importando lineaFactura (%s) => %s" % (
+                    result['idlinea'][i], msg))
 
-        print 'Total Facturas => %s en %s segundos' % (
+        print('Total Facturas => %s en %s segundos' % (
             len(result['idfactura']),
-            int(format(datetime.now(), u'U')) - now)
+            int(format(datetime.now(), 'U')) - now))
 
         raise CommandError('Only the default is supported')

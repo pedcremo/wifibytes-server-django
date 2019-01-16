@@ -87,23 +87,23 @@ class Contacto(APIView):
     permission_classes = (AllowAny,)
 
     def post(self, request, format=None):
-        print "-----------------"
-        print request.DATA
-        print "-----------------"
-        print request.FILES
-        print "======================"
+        print("-----------------")
+        print(request.DATA)
+        print("-----------------")
+        print(request.FILES)
+        print("======================")
         query = request.DATA
 
-        if 'nombre' in query.keys():
+        if 'nombre' in list(query.keys()):
             nombre = query['nombre']
 
-        if 'telefono' in query.keys():
+        if 'telefono' in list(query.keys()):
             telefono = query['telefono']
 
-        if 'email' in query.keys():
+        if 'email' in list(query.keys()):
             email = query['email']
 
-        if 'descripcion' in query.keys():
+        if 'descripcion' in list(query.keys()):
             descripcion = query['descripcion']
 
         # instancia de email

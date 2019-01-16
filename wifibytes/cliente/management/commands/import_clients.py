@@ -43,12 +43,12 @@ class Command(BaseCommand):
             # Guardar Datos en diccionario
             result = {}
             for row in reader:
-                for column, value in row.iteritems():
+                for column, value in row.items():
                     if value == 'None':
                         value = None
                     result.setdefault(column, []).append(value)
 
-            print "\n---> Importando clientes\n"
+            print("\n---> Importando clientes\n")
             for i in range(len(result['codcliente'])):
 
                 try:  # Obtener Cliente
@@ -66,8 +66,8 @@ class Command(BaseCommand):
                     cliente.cifnif = result['cifnif'][i]
                     cliente.is_active = False
                 except Exception as msg:
-                    print "Error al buscar el cliente -> %s" % (
-                        msg)
+                    print("Error al buscar el cliente -> %s" % (
+                        msg))
 
                 cliente.email = result['email'][i]
                 cliente.nombrecomercial = result['nombrecomercial'][i]
@@ -89,8 +89,8 @@ class Command(BaseCommand):
                     cliente.save()
                     # print "Cliente guardado %s" % result['codcliente'][i]
                 except Exception as msg:
-                    print "ERROR Importando Client (%s) -> %s" % (
-                        result['codcliente'][i], msg)
+                    print("ERROR Importando Client (%s) -> %s" % (
+                        result['codcliente'][i], msg))
 
             # --- DIRECCIONES --- #
             # Importar Direcciones
@@ -100,12 +100,12 @@ class Command(BaseCommand):
             # Guardar Datos en diccionario
             result = {}
             for row in reader:
-                for column, value in row.iteritems():
+                for column, value in row.items():
                     if value == 'None':
                         value = None
                     result.setdefault(column, []).append(value)
 
-            print "\n---> Importando direcciones\n"
+            print("\n---> Importando direcciones\n")
             for i in range(len(result['id'])):
                 try:  # Obtener Direccion
                     direccion = DirClientes.objects.get(
@@ -141,9 +141,9 @@ class Command(BaseCommand):
                     direccion.codpostal = result['codpostal'][i]
                     direccion.save()
                 except Cliente.DoesNotExist:
-                    print '\txxx -> El Cliente De Direccion no existe (%s)' % (
+                    print('\txxx -> El Cliente De Direccion no existe (%s)' % (
                         result['codcliente'][i]
-                    )
+                    ))
 
             # --- CUENTAS --- #
             # Importar Cuentas
@@ -153,11 +153,11 @@ class Command(BaseCommand):
             # Guardar Datos en diccionario
             result = {}
             for row in reader:
-                for column, value in row.iteritems():
+                for column, value in row.items():
                     if value == 'None':
                         value = None
                     result.setdefault(column, []).append(value)
-            print "\n---> Importando cuentas\n"
+            print("\n---> Importando cuentas\n")
             for i in range(len(result['codcuenta'])):
                 try:  # Obtener Direccion
                     cuenta = CuentasbcoCli.objects.get(
@@ -193,9 +193,9 @@ class Command(BaseCommand):
                     cuenta.ctadc = result['ctadc'][i]
                     cuenta.save()
                 except Cliente.DoesNotExist:
-                    print '\txxx -> El Cliente De Cuenta no existe (%s)' % (
+                    print('\txxx -> El Cliente De Cuenta no existe (%s)' % (
                         result['codcliente'][i]
-                    )
+                    ))
 
             # --- MOBILS --- #
             path = settings.MEDIA_URL + 'csv/to_import/eneboo_mobils_clients.csv'
@@ -204,10 +204,10 @@ class Command(BaseCommand):
             # Guardar Datos en diccionario
             result = {}
             for row in reader:
-                for column, value in row.iteritems():
+                for column, value in row.items():
                     result.setdefault(column, []).append(value)
 
-            print "\n---> Importando mobils\n"
+            print("\n---> Importando mobils\n")
             for i in range(len(result['id_mobils_clients'])):
 
                 try:  # Obtener Mobil
@@ -242,8 +242,8 @@ class Command(BaseCommand):
                     linea.mobil = result['mobil'][i]
                     linea.save()
                 except Cliente.DoesNotExist:
-                    print "\txxx -> El cliente no existe. (linea: %s)" % (
-                        str(result['id_mobils_clients'][i]))
+                    print("\txxx -> El cliente no existe. (linea: %s)" % (
+                        str(result['id_mobils_clients'][i])))
 
             return "\n--->  Script Importar Mobils finalizado \n"
             return "\n--->  Script Importar Clientes finalizado \n"

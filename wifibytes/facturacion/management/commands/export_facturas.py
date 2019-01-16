@@ -1,6 +1,7 @@
 # encoding=utf8
 import sys
-reload(sys)
+import imp
+imp.reload(sys)
 sys.setdefaultencoding('utf8')
 
 import csv
@@ -41,7 +42,7 @@ class Command(BaseCommand):
             except:
                 pass
 
-            now = int(format(datetime.now(), u'U'))
+            now = int(format(datetime.now(), 'U'))
             before = now - 86400
 
             facturas = facturasCli.objects.filter(idfactura__gte=900000)
@@ -126,12 +127,12 @@ class Command(BaseCommand):
 
             outfile.close()
 
-            facturas_time = int(format(datetime.now(), u'U'))
+            facturas_time = int(format(datetime.now(), 'U'))
             elapsed = facturas_time - now
-            print "Facturas exportadss - %ss" % elapsed
+            print("Facturas exportadss - %ss" % elapsed)
 
-            elapsed = int(format(datetime.now(), u'U')) - now
-            return u"Exportación terminada - %ss" % elapsed
+            elapsed = int(format(datetime.now(), 'U')) - now
+            return "Exportación terminada - %ss" % elapsed
 
         else:
             raise CommandError('Only the default is supported')

@@ -11,13 +11,18 @@ PREREQUISITES
 sudo apt-get install libncurses5-dev
 sudo apt-get install libevent-dev python-all-dev (In order to avoid reportLab problems)
 
+We are gone to use python3  and django 2.1.5
+With tool 2to3 I've ported entire wifibytes django folder from python2 to python3 `2to3 -w -n .`
+
 How to run the project:
 
 1.- Create virtualenv (In your home)
-    virtualenv Wifibytes
+    OLD virtualenv Wifibytes
+    NEW python3 -m venv Wifibytes
 
 2.- Activate virtualenv
-    source Wifibytes/bin/activate
+    NEW source Wifibytes/bin/activate
+    
 
 3.- Clone the repo into virtualenv
     cd Wifibytes
@@ -26,7 +31,7 @@ How to run the project:
 4.- Enter to Django project directory
     cd Wifibytes-project
 
-5.- Install all requirements
+5.- Install all requirements (upgrade pip if needed `pip install --upgrade pip`)
     pip install -r requirements.txt
 
 5.5.- Install postgres BD

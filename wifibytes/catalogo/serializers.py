@@ -38,21 +38,21 @@ class ArticuloSerializer(ModelSerializer):
                 articulo=obj.referencia, idioma__codigo=lang).first()
             return_dict['template1'] = Template1Serializer(templates1).data
         except Template1.DoesNotExist:
-            print 'No match'
+            print('No match')
 
         try:
             templates2 = Template2.objects.filter(
                 articulo=obj.referencia, idioma__codigo=lang).first()
             return_dict['template2'] = Template2Serializer(templates2).data
         except Template2.DoesNotExist:
-            print 'No match'
+            print('No match')
 
         try:
             templates3 = Template3.objects.filter(
                 articulo=obj.referencia, idioma__codigo=lang).first()
             return_dict['template3'] = Template3Serializer(templates3).data
         except Template3.DoesNotExist:
-            print 'No match'
+            print('No match')
 
         return return_dict
 

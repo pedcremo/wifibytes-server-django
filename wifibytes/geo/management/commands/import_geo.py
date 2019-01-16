@@ -35,12 +35,12 @@ class Command(BaseCommand):
 
             result = {}
             for row in reader:
-                for column, value in row.iteritems():
+                for column, value in row.items():
                     if value == 'None':
                         value = None
                     result.setdefault(column, []).append(value)
 
-            print "\n---> Importando paises\n"
+            print("\n---> Importando paises\n")
             for i in range(len(result['codpais'])):
 
                 try:
@@ -48,8 +48,8 @@ class Command(BaseCommand):
                 except Pais.DoesNotExist:
                     pais = Pais()
                 except Exception as msg:
-                    print "Error al buscar el pais -> %s" % (
-                        msg)
+                    print("Error al buscar el pais -> %s" % (
+                        msg))
 
                 pais.codpais = result['codpais'][i]
                 pais.codiso = result['codiso'][i]
@@ -58,8 +58,8 @@ class Command(BaseCommand):
                 try:
                     pais.save()
                 except Exception as msg:
-                    print u"ERROR Importando País (%s) -> %s" % (
-                        result['codpais'][i], msg)
+                    print("ERROR Importando País (%s) -> %s" % (
+                        result['codpais'][i], msg))
 
             # --- PROVINCIAS --- #
             path = settings.MEDIA_URL+'csv/to_import/eneboo_provincias.csv'
@@ -67,10 +67,10 @@ class Command(BaseCommand):
 
             result = {}
             for row in reader:
-                for column, value in row.iteritems():
+                for column, value in row.items():
                     result.setdefault(column, []).append(value)
 
-            print "\n---> Importando provincias\n"
+            print("\n---> Importando provincias\n")
             for i in range(len(result['idprovincia'])):
                 try:
                     provincia = Provincia.objects.get(
@@ -87,14 +87,14 @@ class Command(BaseCommand):
                     pais = Pais.objects.get(pk=result['codpais'][i])
                     provincia.codpais = pais
                 except Pais.DoesNotExist:
-                    print u"ERROR Importando provincia (%s) -> %s" % (
-                        result['codpais'][i], 'El pais no existe')
+                    print("ERROR Importando provincia (%s) -> %s" % (
+                        result['codpais'][i], 'El pais no existe'))
 
                 try:
                     provincia.save()
                 except Exception as msg:
-                    print "ERROR Importando provincia (%s) -> %s" % (
-                        result['idprovincia'][i], msg)
+                    print("ERROR Importando provincia (%s) -> %s" % (
+                        result['idprovincia'][i], msg))
 
             return "\n--->  Script Importar Geo finalizado \n"
 
