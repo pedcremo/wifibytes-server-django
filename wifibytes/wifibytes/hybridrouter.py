@@ -19,8 +19,8 @@ class HybridRouter(routers.DefaultRouter):
         for api_view_key in list(self._api_view_urls.keys()):
             urls.append(self._api_view_urls[api_view_key])
         urls.sort()
-        return urls
-
+        return urls 
+    
     def get_api_root_view(self):
         # Copy the following block from Default Router
         api_root_dict = {}
