@@ -145,28 +145,29 @@ urlpatterns = [
     # path(r'^tarifa/(?P<pk>[0-9]+)/$', TarifaDetailView.as_view()),
     path(r'^paletacolores/(?P<pk>[0-9]+)/$', PaletaColoresDetailView.as_view()),
     # path(r'^articulo/(?P<pk>[\w|\W]+)/$', ArticuloDetailView.as_view()),
-    path(r'^facturapdf/(?P<pk>[0-9]+)/$', facturacion.views.factura_pdf, name="facturapdf"),
-    url(r'^contratopdf/(?P<linea>[0-9]+)/$', 'facturacion.views.contrato_pdf', name="contratopdf"),
+    
+    path(r'^facturapdf/(?P<pk>[0-9]+)/$',FormasPagoViewSet.as_view('factura_pdf'), name="facturapdf"),
+    path(r'^contratopdf/(?P<linea>[0-9]+)/$', FormasPagoViewSet.as_view('contrato_pdf'), name="contratopdf"),
     # path(r'^admin/activar_linea/(?P<id_linea>\d+)$', 'cliente.admin_views.activar_linea', name="activar_linea"),
 
-    url(r'^', include(router.urls)),
-    url(r'^$', TemplateView.as_view(template_name='base.html')),
+    path(r'^', include(router.urls)),
+    path(r'^$', TemplateView.as_view(template_name='base.html')),
     # Uncomment the next line to enable the admin:
     #path(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api-token-auth/', 'rest_framework_jwt.views.obtain_jwt_token'),
-    url(r'^api-token-verify/', 'rest_framework_jwt.views.verify_jwt_token'),
+    path(r'^api-token-auth/', 'rest_framework_jwt.views.obtain_jwt_token'),
+    path(r'^api-token-verify/', 'rest_framework_jwt.views.verify_jwt_token'),
     # grappelli URLS
     #path(r'^docs/', include('rest_framework_swagger.urls')),
 
-    url(r'^tinymce/', include('tinymce.urls')),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'pedidosdashboard/$', 'facturacion.views.ultimospedidosdashboard', name="pedidosdashboard"),
-    url(r'lineasdashboard/$', 'cliente.views.ultimaslineasdashboard', name="lineasdashboard"),
-    url(r'clientesdashboard/$', 'cliente.views.ultimosclientesdashboard', name="clientesdashboard"),
-    url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
+    path(r'^tinymce/', include('tinymce.urls')),
+    path(r'^admin/', include(admin.site.urls)),
+    path(r'pedidosdashboard/$', 'facturacion.views.ultimospedidosdashboard', name="pedidosdashboard"),
+    path(r'lineasdashboard/$', 'cliente.views.ultimaslineasdashboard', name="lineasdashboard"),
+    path(r'clientesdashboard/$', 'cliente.views.ultimosclientesdashboard', name="clientesdashboard"),
+    path(r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
-    url(r'^documentacion-omv/$', DocOmvView, name='documentacion_omv'),
-    url(r'^documentacion-omv/test/(?P<call>\w+)/', TestDocOmvView, name='documentacionOmvTest'),
+    path(r'^documentacion-omv/$', DocOmvView, name='documentacion_omv'),
+    path(r'^documentacion-omv/test/(?P<call>\w+)/', TestDocOmvView, name='documentacionOmvTest'),
 
 
     #path(r"^payments/", include("pinax.stripe.urls")),
@@ -174,7 +175,7 @@ urlpatterns = [
     #path(r'^sermepa/', include('sermepa.urls')),
     # path(regex = r'^pago/',view = 'facturacion.views.form',name = 'pago'),
     # path(regex = r'^end/',view = 'facturacion.views.end',name = 'end'),
-#)
+    #)
 ]
 
 AdminSite.index_template = 'index.html'
