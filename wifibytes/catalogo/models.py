@@ -19,7 +19,7 @@ class Familia(models.Model):
     nombre = models.CharField(verbose_name="Nombre [ES]", max_length=200, blank=False)
     nombre_va = models.CharField(verbose_name="Nombre [VA]", max_length=200, blank=True)
     color = models.ForeignKey('pagina.PaletaColores',
-                              related_name='Familia_PaletaColores', on_delete=models.SET_NULL)
+                              related_name='Familia_PaletaColores', on_delete=models.PROTECT)
     icono = models.FileField(upload_to="familia")
     pretitulo = models.CharField(verbose_name="Pretitulo [ES]", max_length=200, blank=False)
     pretitulo_va = models.CharField(verbose_name="Pretitulo [VA]", max_length=200, blank=True)
@@ -231,7 +231,7 @@ class Articulo(models.Model):
     visible = models.BooleanField(default=False, blank=False, null=False)
 
     marca = models.ForeignKey(Marca, related_name='Articulo_Marca',
-                              blank=False, on_delete=models.SET_NULL)
+                              blank=False, on_delete=models.PROTECT)
     pantalla = models.ForeignKey(Pantalla, related_name='Articulo_Pantalla',
                                  blank=True, null=True, on_delete=models.SET_NULL)
     procesador = models.ForeignKey(Procesador,
@@ -421,7 +421,7 @@ class Subtarifa(models.Model):
 class Template1(models.Model):
     id = models.IntegerField(primary_key=True, editable=False)
     articulo = models.ForeignKey(
-        "catalogo.Articulo", related_name='template1_articulo', on_delete=models.SET_NULL)
+        "catalogo.Articulo", related_name='template1_articulo', on_delete=models.PROTECT)
     pretitulo = models.CharField(verbose_name=(
         "pretitulo"), max_length=100, null=True, blank=True)
     caja_1_titulo = models.CharField(verbose_name=(
@@ -469,7 +469,7 @@ class Template1(models.Model):
 class Template2(models.Model):
     id = models.IntegerField(primary_key=True, editable=False)
     articulo = models.ForeignKey(
-        "catalogo.Articulo", related_name='template2_articulo',  on_delete=models.SET_NULL)
+        "catalogo.Articulo", related_name='template2_articulo',  on_delete=models.PROTECT)
     pretitulo = models.CharField(verbose_name=(
         "pretitulo"), max_length=100, null=True, blank=True)
     caja_1_titulo = models.CharField(verbose_name=(
@@ -519,7 +519,7 @@ class Template2(models.Model):
 class Template3(models.Model):
     id = models.IntegerField(primary_key=True, editable=False)
     articulo = models.ForeignKey(
-        "catalogo.Articulo", related_name='template3_articulo', on_delete=models.SET_NULL)
+        "catalogo.Articulo", related_name='template3_articulo', on_delete=models.PROTECT)
     pretitulo = models.CharField(verbose_name=(
         "pretitulo"), max_length=100, blank=True, null=True)
     franja_1_texto = HTMLField(blank=True, null=True)

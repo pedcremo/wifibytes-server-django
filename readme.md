@@ -16,7 +16,7 @@ With tool 2to3 I've ported entire wifibytes django folder from python2 to python
 
 How to run the project:
 
-1.- Create virtualenv (In your home)
+1.- Create virtualenv (In your home) (Don't change folder name afterwards or the virtualenv will fail )
     OLD virtualenv Wifibytes
     NEW python3 -m venv Wifibytes
 
@@ -43,10 +43,10 @@ sudo apt-get install -y postgresql-9.3 postgresql-contrib-9.3
 sudo apt-get install -y postgresql-doc-9.3 postgresql-server-dev-9.3
 
 6.- Migrate BBDD (Not until postgres installed. Get into folder wifibytes where manage.py is installed) READ PROBLEM with reportLab
-    python manage.py migrate --settings=wifibytes.settings.local
+    python3 manage.py migrate --settings=wifibytes.settings.local
 
 7.- Create super user
-    python manage.py createsuperuser --settings=wifibytes.settings.local
+    python3 manage.py createsuperuser --settings=wifibytes.settings.local
 
 8.- Run server
     python manage.py runserver --settings=wifibytes.settings.local

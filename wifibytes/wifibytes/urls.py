@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #from django.conf.urls import patterns, include, url
 #from django.conf.urls.defaults import *
-from django.urls import include, path
+from django.urls import include, path,re_path
 from django.conf import settings
 from django.views.generic import TemplateView
 from rest_framework import routers, viewsets, permissions
@@ -34,6 +34,9 @@ from geo.views import ProvinciaViewSet
 from datos_empresa.views import DatosEmpresaViewSet
 
 from administracion.views import SitemapView, DocOmvView, TestDocOmvView
+
+#PERE CHANGE
+from rest_framework_jwt.views import *
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -141,33 +144,36 @@ router.add_api_view(
 urlpatterns = [
     '',
     # para traer por id
-    path(r'^causa/(?P<id>[0-9]+)$', CausaAPIView.as_view(), name='causa'),
+    re_path(r'^causa/(?P<id>[0-9]+)$', CausaAPIView.as_view(), name='causa'),
     # path(r'^tarifa/(?P<pk>[0-9]+)/$', TarifaDetailView.as_view()),
-    path(r'^paletacolores/(?P<pk>[0-9]+)/$', PaletaColoresDetailView.as_view()),
+    re_path(r'^paletacolores/(?P<pk>[0-9]+)/$', PaletaColoresDetailView.as_view()),
     # path(r'^articulo/(?P<pk>[\w|\W]+)/$', ArticuloDetailView.as_view()),
     
-    path(r'^facturapdf/(?P<pk>[0-9]+)/$',FormasPagoViewSet.as_view('factura_pdf'), name="facturapdf"),
-    path(r'^contratopdf/(?P<linea>[0-9]+)/$', FormasPagoViewSet.as_view('contrato_pdf'), name="contratopdf"),
+    re_path(r'^facturapdf/(?P<pk>[0-9]+)/$',FormasPagoViewSet.as_view('factura_pdf'), name="facturapdf"),
+    re_path(r'^contratopdf/(?P<linea>[0-9]+)/$', FormasPagoViewSet.as_view('contrato_pdf'), name="contratopdf"),
     # path(r'^admin/activar_linea/(?P<id_linea>\d+)$', 'cliente.admin_views.activar_linea', name="activar_linea"),
 
-    path(r'^', include(router.urls)),
-    path(r'^$', TemplateView.as_view(template_name='base.html')),
+    re_path(r'^', include(router.urls)), 
+
+    re_path(r'^$', TemplateView.as_view(template_name='base.html')),
     # Uncomment the next line to enable the admin:
     #path(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path(r'^api-token-auth/', 'rest_framework_jwt.views.obtain_jwt_token'),
-    path(r'^api-token-verify/', 'rest_framework_jwt.views.verify_jwt_token'),
+    re_path(r'^api-token-auth/', obtain_jwt_token),
+    re_path(r'^api-token-verify/', verify_jwt_token),
     # grappelli URLS
     #path(r'^docs/', include('rest_framework_swagger.urls')),
 
-    path(r'^tinymce/', include('tinymce.urls')),
-    path(r'^admin/', include(admin.site.urls)),
-    path(r'pedidosdashboard/$', 'facturacion.views.ultimospedidosdashboard', name="pedidosdashboard"),
-    path(r'lineasdashboard/$', 'cliente.views.ultimaslineasdashboard', name="lineasdashboard"),
-    path(r'clientesdashboard/$', 'cliente.views.ultimosclientesdashboard', name="clientesdashboard"),
-    path(r'^media/(?P<path>.*)$', 'django.views.static.serve',
-        {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
-    path(r'^documentacion-omv/$', DocOmvView, name='documentacion_omv'),
-    path(r'^documentacion-omv/test/(?P<call>\w+)/', TestDocOmvView, name='documentacionOmvTest'),
+    re_path(r'^tinymce/', include('tinymce.urls')),
+
+    #path(r'^admin/', include(admin.site.urls)), PERE COMMENTED
+    re_path(r'^admin/', admin.site.urls),
+    re_path(r'pedidosdashboard/$', FormasPagoViewSet.as_view('ultimospedidosdashboard'), name="pedidosdashboard"),
+    re_path(r'lineasdashboard/$', nuevaAlta.as_view(), name="lineasdashboard"), #PERE MODIFIED
+    re_path(r'clientesdashboard/$', nuevaAlta.as_view(), name="clientesdashboard"), #PERE MODIFIED
+    #re_path(r'^media/(?P<path>.*)$', 'django.views.static.serve',
+    #    {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}), PERE COMMENTED
+    re_path(r'^documentacion-omv/$', DocOmvView, name='documentacion_omv'),
+    re_path(r'^documentacion-omv/test/(?P<call>\w+)/', TestDocOmvView, name='documentacionOmvTest'),
 
 
     #path(r"^payments/", include("pinax.stripe.urls")),
@@ -182,7 +188,12 @@ AdminSite.index_template = 'index.html'
 
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns += patterns(
+    """ urlpatterns += patterns(
         '',
         path(r'^__debug__/', include(debug_toolbar.urls)),
     )
+    PERE COMMENTED """
+    urlpatterns += [
+        '',
+        path(r'^__debug__/', include(debug_toolbar.urls)),
+    ]
