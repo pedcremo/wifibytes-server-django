@@ -142,7 +142,7 @@ router.add_api_view(
 
 #urlpatterns = patterns(
 urlpatterns = [
-    '',
+   
     # para traer por id
     re_path(r'^causa/(?P<id>[0-9]+)$', CausaAPIView.as_view(), name='causa'),
     # path(r'^tarifa/(?P<pk>[0-9]+)/$', TarifaDetailView.as_view()),
@@ -153,9 +153,9 @@ urlpatterns = [
     re_path(r'^contratopdf/(?P<linea>[0-9]+)/$', FormasPagoViewSet.as_view('contrato_pdf'), name="contratopdf"),
     # path(r'^admin/activar_linea/(?P<id_linea>\d+)$', 'cliente.admin_views.activar_linea', name="activar_linea"),
 
-    re_path(r'^', include(router.urls)), 
+    re_path('', include(router.urls)), #PERE CHANGED
+    re_path('', TemplateView.as_view(template_name='base.html')), #PERE CHANGED
 
-    re_path(r'^$', TemplateView.as_view(template_name='base.html')),
     # Uncomment the next line to enable the admin:
     #path(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     re_path(r'^api-token-auth/', obtain_jwt_token),
@@ -164,8 +164,8 @@ urlpatterns = [
     #path(r'^docs/', include('rest_framework_swagger.urls')),
 
     re_path(r'^tinymce/', include('tinymce.urls')),
+    #re_path(r'^admin/', include(admin.site.urls)), #PERE COMMENTED
 
-    #path(r'^admin/', include(admin.site.urls)), PERE COMMENTED
     re_path(r'^admin/', admin.site.urls),
     re_path(r'pedidosdashboard/$', FormasPagoViewSet.as_view('ultimospedidosdashboard'), name="pedidosdashboard"),
     re_path(r'lineasdashboard/$', nuevaAlta.as_view(), name="lineasdashboard"), #PERE MODIFIED
@@ -193,7 +193,6 @@ if settings.DEBUG:
         path(r'^__debug__/', include(debug_toolbar.urls)),
     )
     PERE COMMENTED """
-    urlpatterns += [
-        '',
+    urlpatterns += [       
         path(r'^__debug__/', include(debug_toolbar.urls)),
     ]

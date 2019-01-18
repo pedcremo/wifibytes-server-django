@@ -141,7 +141,33 @@ FIXTURE_DIRS = (
 # See:
 # https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
 
-TEMPLATE_CONTEXT_PROCESSORS = (
+#PERE ADDED
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': normpath(join(SITE_ROOT, 'templates')),
+        #'APP_DIRS': True,
+        'OPTIONS': {
+            # ... some options here ...
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.core.context_processors.debug',
+                'django.core.context_processors.i18n',
+                'django.core.context_processors.media',
+                'django.core.context_processors.static',
+                'django.core.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.request',
+            ],
+            'loaders':[
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ],
+        },
+    },
+]
+
+""" PERE COMMENTED TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
@@ -151,17 +177,17 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
 )
-
+ """
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
-TEMPLATE_LOADERS = (
+""" PERE COMMENTED TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-)
+) """
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
-TEMPLATE_DIRS = (
+"""PERE COMMENTED TEMPLATE_DIRS = (
     normpath(join(SITE_ROOT, 'templates')),
-)
+) """
 
 SUIT_CONFIG = {
     # header
@@ -329,12 +355,45 @@ INSTALLED_APPS += (
     'pipeline',
 )
 
-PIPELINE_COMPILERS = (
+PIPELINE = {
+    'PIPELINE_ENABLED': True,
+    'STYLESHEETS': {
+        'project_name': {
+            'source_filenames': (
+              'css/project_name.less',              
+            ),
+            'output_filename': 'css/project_name.css',
+            'extra_context': {
+                'media': 'screen,projection',
+            },
+        },
+    },
+    'JAVASCRIPT': {
+        'vendor': {
+            'source_filenames': (
+              'vendor/bootstrap/dist/js/bootstrap.js',              
+            ),
+            'output_filename': 'js/vendor.js',
+        }
+        ,
+        'project_name': {
+            'source_filenames': (
+                'js/*.coffee',
+            ),
+            'output_filename': 'js/project_name.js'
+        }
+    }
+}
+
+#OLD PIPELINE
+
+
+PIPELINE['COMPILERS'] = (
     'pipeline.compilers.less.LessCompiler',
     'pipeline.compilers.coffee.CoffeeScriptCompiler',
 )
 
-PIPELINE_CSS = {
+""" PERE COMMENT PIPELINE_CSS = {
     'project_name': {
         'source_filenames': (
             'css/project_name.less',
@@ -359,13 +418,13 @@ PIPELINE_JS = {
         ),
         'output_filename': 'js/project_name.js'
     }
-}
+} """
 
-PIPELINE_LESS_ARGUMENTS = '-x --yui-compress'
+PIPELINE['LESS_ARGUMENTS'] = '-x --yui-compress'
 
-PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.yuglify.YuglifyCompressor'
+PIPELINE['JS_COMPRESSOR'] = 'pipeline.compressors.yuglify.YuglifyCompressor'
 
-PIPELINE_YUGLIFY_JS_ARGUMENTS = '--terminal'
+#PIPELINE_YUGLIFY_JS_ARGUMENTS = '--terminal'
 
 STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'
 # END PIPELINE CONFIGURATION

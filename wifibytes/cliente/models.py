@@ -39,7 +39,7 @@ class GruposCliente(models.Model):
     codtarifa = models.ForeignKey(
         Tarifa,
         related_name='GruposClientes_Tarifa',
-        verbose_name=("Codigo tarifa"),on_delete=models.SET_NULL
+        verbose_name=("Codigo tarifa"),on_delete=models.PROTECT
     )
 
     nombre = models.CharField(
@@ -220,7 +220,7 @@ class CuentasbcoCli(models.Model):
         verbose_name=("Entidad"), max_length=150, null=True, blank=True)
     horamod = models.DateTimeField(
         verbose_name=("Fecha Modificación"), null=True, blank=True)
-    codcliente = models.ForeignKey(Cliente,  related_name='cuentasbco_cliente',on_delete=models.SET_NULL)
+    codcliente = models.ForeignKey(Cliente,  related_name='cuentasbco_cliente',on_delete=models.PROTECT)
 
     codigocuenta = models.CharField(
         verbose_name=("Codigo Cuenta"), max_length=30, blank=False, null=True)
@@ -281,7 +281,7 @@ class DirClientes(models.Model):
     id = models.IntegerField(primary_key=True, editable=False)
     codcliente = models.ForeignKey(
         Cliente, verbose_name=("Codigo Cliente"),
-        related_name='DirClientes_Cliente',on_delete=models.SET_NULL)
+        related_name='DirClientes_Cliente',on_delete=models.PROTECT)
     domenvio = models.BooleanField(
         default=False, verbose_name=("Domicilio de Envio"), blank=False,
         null=False)

@@ -36,7 +36,7 @@ class UserApiOmv(models.Model):
     user_password = models.CharField(
         verbose_name=("User Password"), max_length=30)
     codigo_omv = models.ForeignKey(
-        Omv, verbose_name=("Codigo OMV"), related_name='UserOmv_Omv',on_delete=models.SET_NULL)
+        Omv, verbose_name=("Codigo OMV"), related_name='UserOmv_Omv',on_delete=models.PROTECT)
 
     def __unicode__(self):
         return str(self.uid)
@@ -83,9 +83,9 @@ class CallApi(models.Model):
     call_id = models.IntegerField(
         primary_key=True, verbose_name=("ID"), editable=False)
     codigo_omv = models.ForeignKey(
-        Omv, verbose_name=("Codigo OMV"), related_name='UserOmv_CallApi',on_delete=models.SET_NULL)
+        Omv, verbose_name=("Codigo OMV"), related_name='UserOmv_CallApi',on_delete=models.PROTECT)
     typecall = models.ForeignKey(
-        TypeCallApi, verbose_name=("Tipo de Call"), related_name='TypeCallApi_CallApi',on_delete=models.SET_NULL)
+        TypeCallApi, verbose_name=("Tipo de Call"), related_name='TypeCallApi_CallApi',on_delete=models.PROTECT)
     url = models.CharField(verbose_name=("url"), max_length=120)
     authfield = models.CharField(verbose_name=("authfield info"), max_length=120)
     trans_call = models.IntegerField(
@@ -109,7 +109,7 @@ class ParamCallApi(models.Model):
     id = models.IntegerField(
         primary_key=True, verbose_name=("ID"), editable=False)
     call_id = models.ForeignKey(
-        CallApi, verbose_name=("Call OMV"), related_name='CallApi_ParamCallApi',on_delete=models.SET_NULL)
+        CallApi, verbose_name=("Call OMV"), related_name='CallApi_ParamCallApi',on_delete=models.PROTECT)
     param_name = models.CharField(
         verbose_name=("param nombre"), max_length=120)
     requerido = models.BooleanField(
@@ -133,7 +133,7 @@ class ParamCallBackApi(models.Model):
     id = models.IntegerField(
         primary_key=True, verbose_name=("ID"), editable=False)
     call_id = models.ForeignKey(
-        CallApi, verbose_name=("Call OMV"), related_name='CallApi_ParamCallBackApi',on_delete=models.SET_NULL)
+        CallApi, verbose_name=("Call OMV"), related_name='CallApi_ParamCallBackApi',on_delete=models.PROTECT)
     param_name = models.CharField(
         verbose_name=("param nombre"), max_length=120)
 

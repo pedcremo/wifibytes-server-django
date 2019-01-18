@@ -246,7 +246,7 @@ class Articulo(models.Model):
     # Campos exclusivos Eneboo
     secompra = models.BooleanField(default=True, null=False, blank=False)
     stockmax = models.FloatField(null=False, blank=False, default=0)
-    codimpuesto = models.CharField(max_length="10", null=True,
+    codimpuesto = models.CharField(max_length=10, null=True,
                                    default="IVA21%")
     observaciones = models.TextField(null=True, blank=True)
     codbarras = models.CharField(verbose_name="Codigo Barras", max_length=18,

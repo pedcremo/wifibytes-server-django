@@ -163,7 +163,7 @@ class PedidoCli(models.Model):
 
     coddirEnvio = models.ForeignKey(DirClientes,
                                     verbose_name=("Codigo Dirección Envío"),
-                                    related_name='PedidoCli_DirClientesEnvio',on_delete=models.SET_NULL)
+                                    related_name='PedidoCli_DirClientesEnvio',on_delete=models.PROTECT)
 
     direccionEnvio = models.CharField(verbose_name=("Dirección de Envío"),
                                       max_length=200,  null=True,
@@ -461,7 +461,7 @@ class LineaPedidoCli(models.Model):
         null=True, blank=True, editable=True)
 
     referencia = models.ForeignKey(Articulo, verbose_name=("referencia"),
-                                   related_name='LineaPedidoCli_Articulo',on_delete=models.SET_NULL)
+                                   related_name='LineaPedidoCli_Articulo',on_delete=models.PROTECT)
 
     cantidad = models.FloatField(
         verbose_name=("cantidad"),
@@ -477,14 +477,14 @@ class LineaPedidoCli(models.Model):
         verbose_name=("descripcion"), max_length=100, null=True, blank=True)
 
     idpedido = models.ForeignKey(PedidoCli, verbose_name=("idpedido"),
-                                 related_name='LineaPedidoCli_PedidoCli',on_delete=models.SET_NULL)
+                                 related_name='LineaPedidoCli_PedidoCli',on_delete=models.PROTECT)
 
     idlineapresupuesto = models.IntegerField(
         verbose_name=("idlineapresupuesto"), default=0, editable=False)
 
     codimpuesto = models.ForeignKey(Impuesto, verbose_name=("codimpuesto"),
                                     related_name='LineaPedidoCli_Impuesto',
-                                    default='IVA18%',on_delete=models.SET_NULL)
+                                    default='IVA18%',on_delete=models.PROTECT)
 
     cerrada = models.BooleanField(default=False, verbose_name=("cerrada"))
 
