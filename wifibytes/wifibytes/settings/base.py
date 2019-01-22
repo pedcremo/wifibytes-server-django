@@ -254,8 +254,8 @@ SUIT_CONFIG = {
 
 # MIDDLEWARE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#middleware-classes
-MIDDLEWARE_CLASSES = (
-    # Default Django middleware.
+MIDDLEWARE = (
+    # Default Django middleware.    
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
