@@ -166,7 +166,7 @@ urlpatterns = [
     #path(r'^docs/', include('rest_framework_swagger.urls')),
 
     re_path(r'^tinymce/', include('tinymce.urls')),
-    re_path(r'admin/', admin.site.urls), #PERE CHANGED
+    path('admin/', admin.site.urls), #PERE CHANGED
 
     re_path(r'pedidosdashboard/$', FormasPagoViewSet.as_view('ultimospedidosdashboard'), name="pedidosdashboard"),
     re_path(r'lineasdashboard/$', nuevaAlta.as_view(), name="lineasdashboard"), #PERE MODIFIED
