@@ -3,6 +3,8 @@
 #from django.conf.urls.defaults import *
 from django.urls import include, path,re_path
 from django.conf import settings
+from django.conf.urls.static import static
+
 from django.views.generic import TemplateView
 from rest_framework import routers, viewsets, permissions
 from .hybridrouter import HybridRouter
@@ -153,8 +155,8 @@ urlpatterns = [
     re_path(r'^contratopdf/(?P<linea>[0-9]+)/$', FormasPagoViewSet.as_view('contrato_pdf'), name="contratopdf"),
     # path(r'^admin/activar_linea/(?P<id_linea>\d+)$', 'cliente.admin_views.activar_linea', name="activar_linea"),
 
-    re_path('', include(router.urls)), #PERE CHANGED
-    re_path('', TemplateView.as_view(template_name='base.html')), #PERE CHANGED
+    re_path(r'^', include(router.urls)), #PERE CHANGED
+    re_path(r'^$', TemplateView.as_view(template_name='base.html')), #PERE CHANGED
 
     # Uncomment the next line to enable the admin:
     #path(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
@@ -164,14 +166,13 @@ urlpatterns = [
     #path(r'^docs/', include('rest_framework_swagger.urls')),
 
     re_path(r'^tinymce/', include('tinymce.urls')),
-    #re_path(r'^admin/', include(admin.site.urls)), #PERE COMMENTED
+    re_path(r'admin/', admin.site.urls), #PERE CHANGED
 
-    re_path(r'^admin/', admin.site.urls),
     re_path(r'pedidosdashboard/$', FormasPagoViewSet.as_view('ultimospedidosdashboard'), name="pedidosdashboard"),
     re_path(r'lineasdashboard/$', nuevaAlta.as_view(), name="lineasdashboard"), #PERE MODIFIED
     re_path(r'clientesdashboard/$', nuevaAlta.as_view(), name="clientesdashboard"), #PERE MODIFIED
     #re_path(r'^media/(?P<path>.*)$', 'django.views.static.serve',
-    #    {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}), PERE COMMENTED
+    #    {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}), #PERE CHANGED
     re_path(r'^documentacion-omv/$', DocOmvView, name='documentacion_omv'),
     re_path(r'^documentacion-omv/test/(?P<call>\w+)/', TestDocOmvView, name='documentacionOmvTest'),
 
@@ -182,7 +183,7 @@ urlpatterns = [
     # path(regex = r'^pago/',view = 'facturacion.views.form',name = 'pago'),
     # path(regex = r'^end/',view = 'facturacion.views.end',name = 'end'),
     #)
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #PERE added
 
 AdminSite.index_template = 'index.html'
 
