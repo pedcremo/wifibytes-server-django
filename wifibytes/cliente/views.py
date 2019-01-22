@@ -65,7 +65,7 @@ class DireccionesViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = self.queryset.filter(
             codcliente__consumer_user=self.request.user)
-        received = self.request.QUERY_PARAMS
+        received = self.request.query_params
         if 'default' in list(received.keys()):
             queryset = queryset.filter(default=True, domfacturacion=True)
 
@@ -113,7 +113,7 @@ class ClienteViewSet(mixins.RetrieveModelMixin,
             user = serializer.save()
 
             # --> SEND EMAIL WITH USER NAME
-            query = self.request.QUERY_PARAMS
+            query = self.request.query_params
             lang = query.get('lang', 'es')
 
             if lang == 'va':
@@ -178,7 +178,7 @@ class LineaViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        request_params = self.request.QUERY_PARAMS
+        request_params = self.request.query_params
 
         if 'draft' in list(request_params.keys()):
             query = self.queryset.filter(
@@ -190,7 +190,7 @@ class LineaViewSet(viewsets.ModelViewSet):
         return query
 
     def get_serializer_context(self):
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
         if 'lang' in list(query.keys()):
             lang = query['lang']
         else:
@@ -354,7 +354,7 @@ class getContracts(APIView):
 
         client_folder_contract_path = \
             os.path.join(global_folder_contracts_path, str(request.user))
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
         now = datetime.now()
         months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
                   'julio', 'agosto', 'septiembre', 'octubre', 'noviembre',
@@ -592,7 +592,7 @@ class ClienteAPIView(APIView):
 
     def get(self, request, format=None, *args, **kwargs):
         # print request.META['QUERY_STRING']
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
         try:
             token = self.request.META['HTTP_AUTHORIZATION']
             codcliente = query['id_consumer_token']
@@ -655,7 +655,7 @@ class ClienteAPIView(APIView):
     def put(self, request, format=None):
         dict_data = {}
         received = request.data
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
         try:
             token = self.request.META['HTTP_AUTHORIZATION']
             id_cliente_token = request.DATA['id']
@@ -740,7 +740,7 @@ class ClienteNoRegistradoView(APIView):
 class cuentasbcocliAPIListView(APIView):
 
     def get(self, request, format=None):
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
 
         try:
             token = self.request.META['HTTP_AUTHORIZATION']
@@ -805,7 +805,7 @@ class dirclientesAPIListView(APIView):
 
     def get(self, request, format=None):
 
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
 
         try:
             token = self.request.META['HTTP_AUTHORIZATION']
@@ -918,7 +918,7 @@ class dirclientesAPIListView(APIView):
     def delete(self, request, format=None):
         dict_data = {}
         received = request.data
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
         id_dir = query['id_dir']
         try:
             token = self.request.META['HTTP_AUTHORIZATION']
@@ -944,7 +944,7 @@ class mobils_clientsAPIListView(APIView):
 
     def get(self, request, format=None):
 
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
 
         try:
             token = self.request.META['HTTP_AUTHORIZATION']
@@ -1096,7 +1096,7 @@ class omvDisponibleNumbers(APIView):
 
     def get(self, request, format=None):
 
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
         response = getpool()
         if response['status_code'] == 403:
             return Response(
@@ -1116,7 +1116,7 @@ class obtenerConsumoCliente(APIView):
     def get(self, request, format=None):
         print('obtener el consumo')
 
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
 
         if 'id_linea' in list(query.keys()):
             id_linea = query['id_linea']
@@ -1187,7 +1187,7 @@ class nuevaAlta(APIView):
 
     def get(self, request, format=None):
 
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
 
         if 'id_linea' in list(query.keys()):
             response = altaCliente(query['id_linea'])
@@ -1277,7 +1277,7 @@ class ServicioViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        request_params = self.request.QUERY_PARAMS
+        request_params = self.request.query_params
 
         if 'draft' in list(request_params.keys()):
             query = self.queryset.filter(

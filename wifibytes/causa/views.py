@@ -66,7 +66,7 @@ class CausaAPIView(APIView):
 class CausaAPIListView(APIView):
 
     def get(self, request, format=None):
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
         # if 'destacado' in query.keys():
         #     q_destacado = query.get('destacado')
         #     try:

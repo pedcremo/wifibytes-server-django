@@ -76,7 +76,7 @@ class PaletaColoresDetailView(APIView):
 
     def get(self, request, pk, format=None):
         paletacolores = self.get_object(pk)
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
 
         serializer = PaletaColoresSerializer(paletacolores, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

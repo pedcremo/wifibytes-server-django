@@ -60,7 +60,7 @@ class ArticuloViewSet(mixins.RetrieveModelMixin,
 
     def get_queryset(self):
         queryset = self.queryset.filter(activo=True)
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
 
         if 'destacado' in list(query.keys()):
             queryset = queryset.filter(destacado=True)
@@ -74,7 +74,7 @@ class ArticuloViewSet(mixins.RetrieveModelMixin,
         return queryset
 
     def get_serializer_context(self):
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
         if 'lang' in list(query.keys()):
             lang = query['lang']
         else:
@@ -95,7 +95,7 @@ class FamiliaViewSet(viewsets.ModelViewSet):
         return self.queryset
 
     def get_serializer_context(self):
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
         if 'lang' in list(query.keys()):
             lang = query['lang']
         else:
@@ -113,7 +113,7 @@ class TarifaViewSet(viewsets.ModelViewSet):
     http_method_names = ['get']
 
     def get_queryset(self):
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
         queryset = self.queryset
         if 'destacado' in list(query.keys()):
             queryset = queryset.filter(destacado=True)
@@ -121,7 +121,7 @@ class TarifaViewSet(viewsets.ModelViewSet):
         return queryset.filter(activo=True)
 
     def get_serializer_context(self):
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
         if 'lang' in list(query.keys()):
             lang = query['lang']
         else:
@@ -133,7 +133,7 @@ class TarifaViewSet(viewsets.ModelViewSet):
 #     permission_classes = (AllowAny,)
 
 #     def get(self, request, format=None):
-#         query = self.request.QUERY_PARAMS
+#         query = self.request.query_params
 
 #         if 'destacado' in query.keys():
 #             try:
@@ -204,7 +204,7 @@ class ArticuloView(APIView):
 
     def get(self, request, format=None):
 
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
 
         if 'destacado' in list(query.keys()):
             queryset = Articulo.objects.filter(destacado=True)

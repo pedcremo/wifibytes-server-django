@@ -92,7 +92,7 @@ class ArticuloSerializer(ModelSerializer):
 class PaginatedArticleSerializer():
     def __init__(self, articles, request, num):
         paginator = Paginator(articles, num)
-        page = request.QUERY_PARAMS.get('page')
+        page = request.query_params.get('page')
         try:
             articles = paginator.page(page)
         except PageNotAnInteger:
@@ -104,7 +104,7 @@ class PaginatedArticleSerializer():
         previous = None if not articles.has_previous() else articles.previous_page_number()
         next = None if not articles.has_next() else articles.next_page_number()
         serializer = ArticuloSerializer(articles, many=True, context={
-            'lang': request.QUERY_PARAMS.get('lang', ''), 'request': request})
+            'lang': request.query_params.get('lang', ''), 'request': request})
         self.data = {'count': count, 'previous': previous,
                      'next': next, 'results': serializer.data}
 

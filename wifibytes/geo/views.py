@@ -26,6 +26,6 @@ class ProvinciaViewSet(viewsets.ModelViewSet):
                          'count': len(serializer.data)})
 
     def get_queryset(self):
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
         queryset = self.queryset
         return queryset.order_by('provincia')

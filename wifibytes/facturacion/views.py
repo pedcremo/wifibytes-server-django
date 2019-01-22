@@ -157,7 +157,7 @@ class LineaspedidoscliAPIView(APIView):
 class LineaspedidoscliAPIListView(APIView):
 
     def get(self, request, format=None):
-        received = self.request.QUERY_PARAMS
+        received = self.request.query_params
 
         if('idpedido' in list(received.keys())):
             pedido = PedidoCli.objects.get(pk=received['idpedido'])
@@ -173,7 +173,7 @@ class LineaspedidoscliAPIListView(APIView):
 class PedidoscliAPIView(APIView):
 
     def get(self, request, format=None):
-        received = self.request.QUERY_PARAMS
+        received = self.request.query_params
         if 'HTTP_AUTHORIZATION' in list(self.request.META.keys()):
             token = self.request.META['HTTP_AUTHORIZATION'].split(' ')[1]
 
@@ -368,7 +368,7 @@ class PedidoscliAPIView(APIView):
 class PedidoscliAPIListView(APIView):
 
     def get(self, request, format=None):
-        received = self.request.QUERY_PARAMS
+        received = self.request.query_params
 
         if('codcliente' in list(received.keys())):
             items = PedidoCli.objects.filter(
@@ -405,7 +405,7 @@ class FacturascliViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         token = self.request.META['HTTP_AUTHORIZATION'].split(' ')[1]
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
         queryset = self.queryset.filter(codcliente__token=token)
 
         order = '-'
@@ -475,7 +475,7 @@ class FormasEnvioViewSet(viewsets.ModelViewSet):
     max_paginate_by = 500
 
     def get_serializer_context(self):
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
         if 'lang' in list(query.keys()):
             lang = query['lang']
         else:
@@ -494,7 +494,7 @@ class FormasPagoViewSet(viewsets.ModelViewSet):
     max_paginate_by = 500
 
     def get_serializer_context(self):
-        query = self.request.QUERY_PARAMS
+        query = self.request.query_params
         if 'lang' in list(query.keys()):
             lang = query['lang']
         else:

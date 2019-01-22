@@ -155,7 +155,7 @@ urlpatterns = [
     path('contratopdf/(?P<linea>[0-9]+)/', FormasPagoViewSet.as_view('contrato_pdf'), name="contratopdf"),
     # path(r'^admin/activar_linea/(?P<id_linea>\d+)$', 'cliente.admin_views.activar_linea', name="activar_linea"),
 
-    path(r'', include(router.urls)), #PERE CHANGED
+    path('', include(router.urls)), #PERE CHANGED
     re_path(r'^$', TemplateView.as_view(template_name='base.html')), #PERE CHANGED
 
     # Uncomment the next line to enable the admin:
@@ -166,7 +166,7 @@ urlpatterns = [
     #path(r'^docs/', include('rest_framework_swagger.urls')),
 
     re_path(r'^tinymce/', include('tinymce.urls')),
-    path('admin', admin.site.urls), #PERE CHANGED
+    path('admin/', admin.site.urls), #PERE CHANGED
 
     re_path(r'pedidosdashboard/$', FormasPagoViewSet.as_view('ultimospedidosdashboard'), name="pedidosdashboard"),
     re_path(r'lineasdashboard/$', nuevaAlta.as_view(), name="lineasdashboard"), #PERE MODIFIED
