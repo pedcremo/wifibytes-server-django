@@ -140,24 +140,28 @@ FIXTURE_DIRS = (
 
 # See:
 # https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
-
+ 
 #PERE ADDED
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': normpath(join(SITE_ROOT, 'templates')),
+        #'DIRS': normpath(join(SITE_ROOT, 'templates')),
+        'DIRS': [
+            'templates',
+            'static'
+        ],
         #'APP_DIRS': True,
         'OPTIONS': {
             # ... some options here ...
             'context_processors': [
                 'django.contrib.auth.context_processors.auth',
-                'django.core.context_processors.debug',
-                'django.core.context_processors.i18n',
-                'django.core.context_processors.media',
-                'django.core.context_processors.static',
-                'django.core.context_processors.tz',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
-                'django.core.context_processors.request',
+                'django.template.context_processors.request',
             ],
             'loaders':[
                 'django.template.loaders.filesystem.Loader',

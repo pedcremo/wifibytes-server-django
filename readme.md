@@ -1,8 +1,6 @@
 ============================         
-
                                                                                                              
  Wifibytes Project
-
 
 ============================
 
@@ -35,12 +33,14 @@ How to run the project:
     pip install -r requirements.txt
 
 5.5.- Install postgres BD
-(ubuntu 16.04)
-sudo apt-get install -y postgresql-9.5 postgresql-contrib-9.5 
-sudo apt-get install -y postgresql-doc-9.5 postgresql-server-dev-9.5
-(ubuntu 14.04)
-sudo apt-get install -y postgresql-9.3 postgresql-contrib-9.3
-sudo apt-get install -y postgresql-doc-9.3 postgresql-server-dev-9.3
+    
+    (ubuntu 16.04)
+    sudo apt-get install -y postgresql-9.5 postgresql-contrib-9.5 
+    sudo apt-get install -y postgresql-doc-9.5 postgresql-server-dev-9.5
+    
+    (ubuntu 14.04)
+    sudo apt-get install -y postgresql-9.3 postgresql-contrib-9.3
+    sudo apt-get install -y postgresql-doc-9.3 postgresql-server-dev-9.3
 
 6.- Migrate BBDD (Not until postgres installed. Get into folder wifibytes where manage.py is installed) READ PROBLEM with reportLab
     python3 manage.py migrate --settings=wifibytes.settings.local
