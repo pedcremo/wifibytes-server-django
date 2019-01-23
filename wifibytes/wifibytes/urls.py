@@ -7,7 +7,9 @@ from django.conf.urls.static import static
 
 from django.views.generic import TemplateView
 from rest_framework import routers, viewsets, permissions
-from .hybridrouter import HybridRouter
+from .hybridrouter import HybridRouter #PERE commented
+#from rest_framework.routers import DefaultRouter #PERE added
+
 from django.contrib.admin.sites import AdminSite
 
 from cliente.views import *
@@ -46,6 +48,8 @@ admin.autodiscover()
 
 
 router = HybridRouter()
+#router = DefaultRouter()
+
 router.register(r"formasenvio", FormasEnvioViewSet)
 router.register(r"formaspago", FormasPagoViewSet)
 router.register(r"facturascli", FacturascliViewSet)
@@ -64,6 +68,8 @@ router.register(r"datos_empresa", DatosEmpresaViewSet, 'datos_empresa')
 router.add_api_view(
     "[OMV] ACTIVAR LINEA ", path(
         'activar_linea/', activarLinea.as_view(), name='activarLinea'))
+
+
 
 # Facturas
 #router.add_api_view("[FACTURACION] Listado de facturas", path(r'^facturascli/$', FacturascliAPIListView.as_view(), name='facturascli-list'))
@@ -140,7 +146,7 @@ router.add_api_view("[PAYMENT] MAKEPAYMENT", path(
 
 router.add_api_view(
     "[SITEMAP]", path(
-        'api/sitemap/', SitemapView.as_view(), name='SitemapView'))
+        'api/sitemap/', SitemapView.as_view(), name='SitemapView')) 
 
 #urlpatterns = patterns(
 urlpatterns = [
