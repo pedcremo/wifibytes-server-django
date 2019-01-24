@@ -10,3 +10,6 @@ class Idioma(models.Model):
 
     def __unicode__(self):
         return self.codigo
+
+    def __str__(self):
+        return self.codigo
