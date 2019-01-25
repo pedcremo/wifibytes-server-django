@@ -1,3 +1,4 @@
+
 # encoding:utf-8
 
 from rest_framework.serializers import ModelSerializer
@@ -9,3 +10,4 @@ class EmpresaSerializer(ModelSerializer):
     class Meta:
         model = Empresa
         depth = 0
+        fields = '__all__'

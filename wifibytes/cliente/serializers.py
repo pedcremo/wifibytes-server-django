@@ -169,7 +169,7 @@ class cuentasbcocliSerializer(ModelSerializer):
     class Meta:
         model = CuentasbcoCli
         depth = 0
-
+        fields = '__all__'
 
 class dirclientesSerializer(ModelSerializer):
     provincia_info = serializers.SerializerMethodField('provincia')
@@ -279,4 +279,4 @@ class ClienteListSerializer(HyperlinkedModelSerializer):
                   'consumerSigned', 'newsletter', 'is_active', 'password',
                   'tipo_documento', 'birthday_omv')
         model = Cliente
-        extra_kwargs = {'password': {'write_only': True}}
+extra_kwargs = {'password': {'write_only': True}}

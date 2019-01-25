@@ -10,6 +10,4 @@ class CausaSerializer(ModelSerializer):
     	#fields = ('codcausa', 'nombre', 'descripcion', 'thumbnail_url', 'fechainicio', 'visible', 'recaudacion', 'activo', 'valido_altrebit')
         model = Causa
         depth = 0
-
-
-	
+        fields = '__all__'

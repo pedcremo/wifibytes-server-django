@@ -20,6 +20,7 @@ class ArticuloSerializer(ModelSerializer):
 
     class Meta:
         model = Articulo
+        fields = '__all__'
         depth = 0
 
     def get_templates(self, obj):
@@ -239,41 +240,42 @@ class MarcaSerializer(ModelSerializer):
     class Meta:
         model = Marca
         depth = 0
-
+        fields = '__all__'
 
 class PantallaSerializer(ModelSerializer):
 
     class Meta:
         model = Pantalla
         depth = 0
-
+        fields = '__all__'
 
 class ProcesadorSerializer(ModelSerializer):
 
     class Meta:
         model = Procesador
         depth = 0
-
+        fields = '__all__'
 
 class RamSerializer(ModelSerializer):
 
     class Meta:
         model = Ram
         depth = 0
-
+        fields = '__all__'
 
 class CamaraSerializer(ModelSerializer):
 
     class Meta:
         model = Camara
         depth = 0
-
+        fields = '__all__'
 
 class Template1Serializer(ModelSerializer):
 
     class Meta:
         model = Template1
         depth = 0
+        fields = '__all__'
 
 
 class Template2Serializer(ModelSerializer):
@@ -281,6 +283,7 @@ class Template2Serializer(ModelSerializer):
     class Meta:
         model = Template2
         depth = 0
+        fields = '__all__'
 
 
 class Template3Serializer(ModelSerializer):
@@ -288,3 +291,4 @@ class Template3Serializer(ModelSerializer):
     class Meta:
         model = Template3
         depth = 0
+        fields = '__all__'

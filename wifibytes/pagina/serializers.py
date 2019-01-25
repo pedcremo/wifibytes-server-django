@@ -30,6 +30,7 @@ class PaletaColoresSerializer(ModelSerializer):
     class Meta:
         model = PaletaColores
         depth = 0
+        fields = '__all__'
 
 
 class TarifaDescriptorGenericoSerializer(ModelSerializer):
@@ -61,6 +62,7 @@ class TarifaDescriptorGenericoSerializer(ModelSerializer):
     class Meta:
         model = TarifaDescriptorGenerico
         depth = 0
+        fields = '__all__'
 
 
 class TxtContactoSerializer(ModelSerializer):
@@ -68,3 +70,4 @@ class TxtContactoSerializer(ModelSerializer):
     class Meta:
         model = TxtContacto
         depth = 0
+        fields = '__all__'
