@@ -55,6 +55,16 @@ How to run the project:
 Check http://localhost:8000
 
 
+Do a copy/backup from database (inside virtualenv)
+
+ python manage.py dumpdata --exclude auth.permission --exclude contenttypes --settings=wifibytes.settings.[WHATEVER] > [NAME].json
+
+
+Restore backup 
+
+ python manage.py loaddata --settings=wifibytes.settings.[WHATEVER]  [NAME].json
+
+
 ###### PDF
 "Reportlab Version 2.1+ is needed!" --import error for resolve this problem, go to your_virtualenv/local/lib/python2.7/site-packages/sx/pisa3/ edit pisa_util.py Just replace this code segment : if not (reportlab.Version[0] == "2" and reportlab.Version[2] >= "1"): raise ImportError("Reportlab Version 2.1+ is needed!") REPORTLAB22 = (reportlab.Version[0] == "2" and reportlab.Version[2] >= "2") with the following: if not (reportlab.Version[:3]>="2.1"): raise ImportError("Reportlab Version 2.1+ is needed!") REPORTLAB22 = (reportlab.Version[:3]>="2.1")
 
