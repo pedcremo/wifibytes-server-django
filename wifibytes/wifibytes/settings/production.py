@@ -71,7 +71,7 @@ DATABASES = {
 PINAX_STRIPE_PUBLIC_KEY = 'pk_test_gW0J741BYjsfYWHhpg9xUGaY'
 PINAX_STRIPE_SECRET_KEY = 'sk_test_e3vI9fCQ1C3HiHxqTETcteFj'
 
-SIGNATURIT_ACCESS_TOKEN = 'fqHrSbpgSaFKvksMiujLScXLUXIpsKWdKLeguPOxsaOPSMJvmkdIBJXSLZSVIruJpnePcmDaFFzdLSd
+SIGNATURIT_ACCESS_TOKEN = 'fqHrSbpgSaFKvksMiujLScXLUXIpsKWdKLeguPOxsaOPSMJvmkdIBJXSLZSVIruJpnePcmDaFFzdLSd'
 
 # ########## CACHE CONFIGURATION
 # # See: https://docs.djangoproject.com/en/dev/ref/settings/#caches
