@@ -66,38 +66,10 @@ Restore backup
 
 We should copy media/ folder too from wifibytes in order to keep uploaded images and documents
 
-###### PDF
-"Reportlab Version 2.1+ is needed!" --import error for resolve this problem, go to your_virtualenv/local/lib/python2.7/site-packages/sx/pisa3/ edit pisa_util.py Just replace this code segment : if not (reportlab.Version[0] == "2" and reportlab.Version[2] >= "1"): raise ImportError("Reportlab Version 2.1+ is needed!") REPORTLAB22 = (reportlab.Version[0] == "2" and reportlab.Version[2] >= "2") with the following: if not (reportlab.Version[:3]>="2.1"): raise ImportError("Reportlab Version 2.1+ is needed!") REPORTLAB22 = (reportlab.Version[:3]>="2.1")
 
-##### To Fix this error in Reporlab:
-locate util.py in your virtualenv site-packages
-replace this:
-
-
-```
-#!python
-
-if not (reportlab.Version[0] == "2" and reportlab.Version[2] >= "1"):
-    raise ImportError("Reportlab Version 2.1+ is needed!")
-
-REPORTLAB22 = (reportlab.Version[0] == "2" and reportlab.Version[2] >= "2")
-
-```
-
-to:
-
-```
-#!python
-
-if not (reportlab.Version[:3] >="2.1"):
-    raise ImportError("Reportlab Version 2.1+ is needed!")
-
-REPORTLAB22 = (reportlab.Version[:3] >="2.1")
-```
-
-
-https://stackoverflow.com/questions/22075485/xhtml2pdf-importerror-django/38674059#38674059
-
+For deployment install uwsgi on python3 venv 
+Dependencies python3-dev package
+Maybe we should uncomment on requirements.txt 
 
 ##### System Dependences
 sudo apt-get install libncurses5-dev
