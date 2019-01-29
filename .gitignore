@@ -82,3 +82,4 @@ ve-altrebit/
 *.DS_Store*
 
 .vscode/*
+wifibytes/.vscode/

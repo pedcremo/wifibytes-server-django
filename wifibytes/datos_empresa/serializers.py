@@ -1,9 +1,9 @@
 # encoding:utf-8
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
-from datos_empresa.models import DatosEmpresa, InfoEmpresa
 from wifibytes.functions import get_full_image_url
 from django.conf import settings
+from datos_empresa.models import DatosEmpresa, InfoEmpresa, Texto
 
 
 class InfoEmpresaSerializer(ModelSerializer):
@@ -91,3 +91,9 @@ class DatosEmpresaSerializer(ModelSerializer):
             'facebook', 'twitter',
             'textos'
         )
+class TextosContratoSerializer(ModelSerializer):
+    
+    class Meta:
+        model = Texto
+        depth = 0
+        fields= '__all__'

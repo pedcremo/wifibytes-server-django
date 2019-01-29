@@ -35,7 +35,9 @@ from pagina.models import *
 
 from geo.views import ProvinciaViewSet
 
-from datos_empresa.views import DatosEmpresaViewSet
+#from datos_empresa.views import DatosEmpresaViewSet
+from datos_empresa.views import *
+from datos_empresa.models import *
 
 from administracion.views import SitemapView, DocOmvView, TestDocOmvView
 
@@ -73,7 +75,8 @@ router.add_api_view(
 
 # Facturas
 #router.add_api_view("[FACTURACION] Listado de facturas", path(r'^facturascli/$', FacturascliAPIListView.as_view(), name='facturascli-list'))
-
+router.add_api_view("[FRONTEND] TEXTOS_CONTRATOS", path(
+    'textos_contratos/', TextosContratoListView.as_view(), name='TextosContratoListView'))
 
 router.add_api_view(
     "[SIGNATURIT] GET CONTRACTS ", path(

@@ -5,9 +5,10 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import viewsets
 
-from datos_empresa.models import DatosEmpresa
-from datos_empresa.serializers import DatosEmpresaSerializer
+from rest_framework.views import APIView
 
+from datos_empresa.models import DatosEmpresa, Texto
+from datos_empresa.serializers import DatosEmpresaSerializer, TextosContratoSerializer
 
 class DatosEmpresaViewSet(viewsets.ModelViewSet):
     queryset = DatosEmpresa.objects.all()
@@ -30,3 +31,12 @@ class DatosEmpresaViewSet(viewsets.ModelViewSet):
             queryset, many=False, context={'request': request}
         )
         return Response(serializer.data)
+
+class TextosContratoListView(APIView):
+
+    permission_classes = (AllowAny,)
+
+    def get(self, request):
+        queryset = Texto.objects.all()        
+        serializer = TextosContratoSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
