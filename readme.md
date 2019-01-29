@@ -51,6 +51,9 @@ How to run the project:
 8.- Run server
     python manage.py runserver --settings=wifibytes.settings.local
 
+NOTE: Important to run in production environments:
+`python manage.py collectstatic  --settings=wifibytes.settings.production`
+to generate assets folder with all css, js libraries and other stuff necessary to serve statically
 
 Check http://localhost:8000
 
