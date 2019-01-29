@@ -31,7 +31,7 @@ DATABASES = {
         'USER': 'wifibytes',
         'PASSWORD': 'sQX-Ve2-F3',
         #'HOST': 'postrgessql-db-instance.cedx16kwp0io.eu-west-2.rds.amazonaws.com',
-        'HOST': 'wifibytes.cedx16kwp0io.eu-west-2.rds.amazonaws.com',        
+        'HOST': 'wifibytesdjango2.cedx16kwp0io.eu-west-2.rds.amazonaws.com',        
         'PORT': '5432',                      # Set to empty string for default.
     }
 }
