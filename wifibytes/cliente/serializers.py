@@ -43,7 +43,7 @@ class ClienteSerializer(ModelSerializer):
                         'is_active': {'write_only': True},
                         'token': {'write_only': True}}
 
-        read_only_fields = ('codcliente')
+        read_only_fields = ('codcliente',)
         # consumerContract
 
 
