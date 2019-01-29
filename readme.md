@@ -16,14 +16,14 @@ How to run the project:
 
 1.- Create virtualenv (In your home) (Don't change folder name afterwards or the virtualenv will fail )
     OLD virtualenv Wifibytes
-    NEW python3 -m venv Wifibytes
+    NEW python3 -m venv env
 
 2.- Activate virtualenv
-    NEW source Wifibytes/bin/activate
+    NEW source env/bin/activate
     
 
 3.- Clone the repo into virtualenv
-    cd Wifibytes
+    
     git clone https://USUARIO@bitbucket.org/cactusagency/wifibytes-project.git
 
 4.- Enter to Django project directory
@@ -85,3 +85,7 @@ sudo apt-get install npm
 sudo npm -g install yuglify
 ln -s /usr/bin/nodejs /usr/bin/node 
 
+## Visual studio code integration ##
+
+Install python extension and configure python.pythonPath":"~/env/bin/python3"
+File -> Preferences -> Settings
