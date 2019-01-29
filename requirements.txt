@@ -34,7 +34,8 @@ pdfkit==0.6.1
 Pillow==5.4.1
 pinax-stripe==4.4.0
 #pisa==3.0.33 Not supported by python3 PLEASE SWITCH TO THE MORE RECENT VERSION AT: http://pypi.python.org/pypi/xhtml2pdf
-psycopg2==2.7.6.1
+#psycopg2==2.7.6.1
+psycopg2-binary==2.7.6.1
 PyExecJS==1.5.1
 Pygments==2.3.1
 PyJWT==1.7.1
