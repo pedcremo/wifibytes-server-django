@@ -56,7 +56,7 @@ class JSONWebTokenAPIView(APIView):
         return serializer_class(*args, **kwargs)
 
     def post(self, request):
-        serializer = self.get_serializer(data=request.DATA)
+        serializer = self.get_serializer(data=request.data)
 
         if serializer.is_valid():
             user = serializer.object.get('user') or request.user

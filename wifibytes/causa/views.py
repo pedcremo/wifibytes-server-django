@@ -18,11 +18,11 @@ class NewCausaAPIView(APIView):
 
     def post(self, request, format=None):
         print("-----------------")
-        print(request.DATA)
+        print(request.data)
         print("-----------------")
         print(request.FILES)
         print("======================")
-        query = request.DATA
+        query = request.data
 
         if 'nombre' in list(query.keys()):
             nombre = query['nombre']
