@@ -27,9 +27,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'wifibytes',
-        'USER': 'postgressql',
-        'PASSWORD': 'sQX-Ve2-F3',
-        'HOST': 'postrgessql-db-instance.cedx16kwp0io.eu-west-2.rds.amazonaws.com',
+        #'USER': 'postgressql',
+        'USER': 'wifibytes',
+        #'PASSWORD': 'sQX-Ve2-F3',
+        'PASSWORD': 'xarxaWWW',
+        #'HOST': 'postrgessql-db-instance.cedx16kwp0io.eu-west-2.rds.amazonaws.com',
+        'HOST': 'wifibytes.cedx16kwp0io.eu-west-2.rds.amazonaws.com',        
         'PORT': '5432',                      # Set to empty string for default.
     }
 }

@@ -69,7 +69,7 @@ We should copy media/ folder too from wifibytes in order to keep uploaded images
 
 For deployment install uwsgi on python3 venv 
 Dependencies python3-dev package
-Maybe we should uncomment on requirements.txt 
+Maybe we should uncomment on requirements.txt uwsgi installation
 
 ##### System Dependences
 sudo apt-get install libncurses5-dev
