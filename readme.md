@@ -122,5 +122,5 @@ server {
 
  Create symbolic link 
  `ln -s /etc/nginx/sites-available/wifibytes /etc/nginx/sites-enabled/wifibytes`
- Reset nginx
+ Reset nginxx
 `/etc/init.d/nginx restart`
