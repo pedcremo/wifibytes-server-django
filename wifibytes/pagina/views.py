@@ -22,7 +22,7 @@ from hashlib import sha1
 from django.conf import settings
 from django.utils.encoding import force_bytes
 from os.path import abspath, basename, dirname, join, normpath
-
+import subprocess
 
 #Get push event from git repository
 class PushFromGitRepoAPI(APIView):
@@ -60,12 +60,15 @@ class PushFromGitRepoAPI(APIView):
         
         SITE_ROOT = dirname(DJANGO_ROOT)
         HOME_ROOT = dirname(SITE_ROOT)
-        subprocess.run(["cd",SITE_ROOT])
-        subprocess.run(["git","pull"])
-        subprocess.run(["cd",HOME_ROOT])
-        subprocess.run(["supervisorctl","restart","all"])
+        
+        output = subprocess.check_output(["whoami"])
+        output += subprocess.check_output(["cd"])
+        output += subprocess.check_output(["cd",SITE_ROOT])
+        output += subprocess.check_output(["git","pull"])
+        output += subprocess.check_output(["cd",HOME_ROOT])
+        output += subprocess.check_output(["supervisorctl","restart","all"])
 
-        return Response(data={"message":"hola caracola","SITE_ROOT":SITE_ROOT,"HOME_ROOT":HOME_ROOT}, status=status.HTTP_200_OK)  
+        return Response(data={"output":output,"SITE_ROOT":SITE_ROOT,"HOME_ROOT":HOME_ROOT}, status=status.HTTP_200_OK)  
 
 class HomeAPIListView(APIView):
 
