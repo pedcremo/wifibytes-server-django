@@ -22,7 +22,7 @@ from hashlib import sha1
 from django.conf import settings
 from django.utils.encoding import force_bytes
 from os.path import abspath, basename, dirname, join, normpath
-import subprocess
+from subprocess import Popen, PIPE, STDOUT
 
 #Get push event from git repository
 class PushFromGitRepoAPI(APIView):
