@@ -1,10 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 
-`rm -f /tmp/logHook`
-OUTPUT="$(whoami)"
+`/bin/rm -f /tmp/logHook`
+OUTPUT="$(/usr/bin/whoami)"
 echo "${OUTPUT}" > /tmp/logHook
 `cd ..`
-OUTPUT="$(git pull)"
+OUTPUT="$(/usr/bin/git pull)"
 echo "${OUTPUT}" >> /tmp/logHook
-OUTPUT="$(cd && supervisorctl restart all)"
+OUTPUT="$(cd && /usr/bin/supervisorctl restart all)"
 echo "${OUTPUT}" >> /tmp/logHook
