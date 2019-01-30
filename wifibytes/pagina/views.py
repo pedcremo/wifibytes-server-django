@@ -54,7 +54,7 @@ class PushFromGitRepoAPI(APIView):
         if not hmac.compare_digest(force_bytes(mac.hexdigest()), force_bytes(signature)):
            return Response(data={"message": "Permission denied"}, status=status.HTTP_403_FORBIDDEN)
         
-        return Response(data={"message":"hola caracola"}, status=status.HTTP_200_OK)  
+        return Response(data={"message":"hola caracola"+SITE_ROOT}, status=status.HTTP_200_OK)  
 
 class HomeAPIListView(APIView):
 

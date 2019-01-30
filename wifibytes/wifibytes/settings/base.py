@@ -121,7 +121,7 @@ SECRET_KEY = 'j7@l1$$#ycid@@7-len0j$sma*e7q$rr7ysg)5p$7oi0abg4*z'
 # SITE CONFIGURATION
 # Hosts/domain names that are valid for this site
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['backend.wifibytes.com','localhost','127.0.0.1']
 # END SITE CONFIGURATION
 
 
