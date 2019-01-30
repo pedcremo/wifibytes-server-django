@@ -22,7 +22,7 @@ class PushFromGitRepoAPI(APIView):
 
     @csrf_exempt
     def post(self, request, format=None):
-        # Verify  if request came from GitHub
+        # Verify if request came from GitHub
         forwarded_for = u'{}'.format(request.META.get('HTTP_X_FORWARDED_FOR'))
         client_ip_address = ip_address(forwarded_for)
         whitelist = requests.get('https://api.github.com/meta').json()['hooks']
