@@ -460,3 +460,5 @@ JWT_AUTH = {
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=60)
 }
 #########
+
+GITHUB_WEBHOOK_KEY = 'XljuIcI5iBttpPebui'

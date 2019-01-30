@@ -16,6 +16,12 @@ import requests
 from ipaddress import ip_address, ip_network
 from django.views.decorators.csrf import csrf_exempt
 
+import hmac
+from hashlib import sha1
+
+from django.conf import settings
+from django.utils.encoding import force_bytes
+
 #Get push event from git repository
 class PushFromGitRepoAPI(APIView):
     permission_classes = (AllowAny,)
@@ -31,8 +37,24 @@ class PushFromGitRepoAPI(APIView):
             if client_ip_address in ip_network(valid_ip):
                 break
             else:
-                return Response("Permission denied.", status=status.HTTP_403_FORBIDDEN)  
-        return Response("hola caracola", status=status.HTTP_200_OK)  
+                return Response(data={"message": "Permission denied"}, status=status.HTTP_403_FORBIDDEN)  
+        
+         # Verify the request signature
+        header_signature = request.META.get('HTTP_X_HUB_SIGNATURE')
+        if header_signature is None:
+            return Response(data={"message": "Permission denied"}, status=status.HTTP_403_FORBIDDEN)
+
+        sha_name, signature = header_signature.split('=')
+        
+        if sha_name != 'sha1':            
+            return Response(data={"message": "Operation not supported"}, status=status.HTTP_501_NOT_IMPLEMENTED)
+           
+        mac = hmac.new(force_bytes(settings.GITHUB_WEBHOOK_KEY), msg=force_bytes(request.body), digestmod=sha1)
+        
+        if not hmac.compare_digest(force_bytes(mac.hexdigest()), force_bytes(signature)):
+           return Response(data={"message": "Permission denied"}, status=status.HTTP_403_FORBIDDEN)
+        
+        return Response(data={"message":"hola caracola"}, status=status.HTTP_200_OK)  
 
 class HomeAPIListView(APIView):
 
