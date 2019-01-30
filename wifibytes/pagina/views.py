@@ -23,6 +23,7 @@ from django.conf import settings
 from django.utils.encoding import force_bytes
 from os.path import abspath, basename, dirname, join, normpath
 from subprocess import Popen, PIPE, STDOUT
+import os
 
 #Get push event from git repository
 class PushFromGitRepoAPI(APIView):
@@ -75,7 +76,7 @@ class PushFromGitRepoAPI(APIView):
         except Exception as e:
                 result={"status": "failed", "output":str(e)}
         
-        return Response(data={"output":result,"SITE_ROOT":SITE_ROOT,"HOME_ROOT":HOME_ROOT}, status=status.HTTP_200_OK)  
+        return Response(data={"output":result,"SITE_ROOT":SITE_ROOT,"HOME_ROOT":HOME_ROOT,"UID":os.getuid()}, status=status.HTTP_200_OK)  
 
 class HomeAPIListView(APIView):
 
