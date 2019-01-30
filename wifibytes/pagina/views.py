@@ -60,6 +60,10 @@ class PushFromGitRepoAPI(APIView):
         
         SITE_ROOT = dirname(DJANGO_ROOT)
         HOME_ROOT = dirname(SITE_ROOT)
+        subprocess.run(["cd",SITE_ROOT])
+        subprocess.run(["git","pull"])
+        subprocess.run(["cd",HOME_ROOT])
+        subprocess.run(["supervisorctl","restart","all"])
 
         return Response(data={"message":"hola caracola","SITE_ROOT":SITE_ROOT,"HOME_ROOT":HOME_ROOT}, status=status.HTTP_200_OK)  
 
