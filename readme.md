@@ -16,18 +16,18 @@ How to run the project:
 
 1.- Create virtualenv (In your home) (Don't change folder name afterwards or the virtualenv will fail )
     OLD virtualenv Wifibytes
-    NEW python3 -m venv env
+    mkdir .virtualenvs 
+    NEW python3 -m venv .virtualenvs/wifibytes
 
 2.- Activate virtualenv
-    NEW source env/bin/activate
+    NEW source .virtualenvs/wifibytes/bin/activate
     
 
-3.- Clone the repo into virtualenv
-    
-    git clone https://USUARIO@bitbucket.org/cactusagency/wifibytes-project.git
-
+3.- Clone the repo in home
+    git clone https://github.com/pedcremo/wifibytes-server-django.git
+   
 4.- Enter to Django project directory
-    cd Wifibytes-project
+    cd wifibytes-server-django
 
 5.- Install all requirements (upgrade pip if needed `pip install --upgrade pip`)
     pip install -r requirements.txt
@@ -89,3 +89,38 @@ ln -s /usr/bin/nodejs /usr/bin/node
 
 Install python extension and configure python.pythonPath":"~/env/bin/python3"
 File -> Preferences -> Settings
+
+## nginx conf file and notes for production deployment ##
+Be sure this nginx directive is setted
+proxy_set_header X-Real-IP $remote_addr;
+
+
+Add this file to /etc/nginx/sites-available:
+
+upstream wifibytes_django {
+    server unix:///home/wifibyres/wifibytes.sock; 
+}
+server {
+    listen 80;
+    server_name DOMINIO_DEL_PROYECTO.com ; client_max_body_size 0;
+    charset utf-8;
+
+    location /media {
+        alias /home/wifibytes/wifibytes-project/wifibytes/media; 
+    }
+    location /static {
+        alias /home/wifibytes/wifibytes-project/wifibytes/assets;   
+    }
+    location / {
+        uwsgi_pass wifibytes_django;
+        uwsgi_param QUERY_STRING $query_string; uwsgi_param REQUEST_METHOD $request_method; uwsgi_param CONTENT_TYPE $content_type; uwsgi_param CONTENT_LENGTH $content_length; uwsgi_param REQUEST_URI $request_uri; uwsgi_param PATH_INFO $document_uri; uwsgi_param DOCUMENT_ROOT $document_root; uwsgi_param SERVER_PROTOCOL $server_protocol; uwsgi_param REMOTE_ADDR $remote_addr; uwsgi_param REMOTE_PORT $remote_port; uwsgi_param SERVER_ADDR $server_addr; uwsgi_param SERVER_PORT $server_port; uwsgi_param SERVER_NAME $server_name; uwsgi_param UWSGI_SCHEME http;
+    }   
+}
+
+ `cd/etc/nginx/sites-available`
+ `touch wifibytes && nano -c wifibytes`
+
+ Create symbolic link 
+ `ln -s /etc/nginx/sites-available/wifibytes /etc/nginx/sites-enabled/wifibytes`
+ Reset nginx
+`/etc/init.d/nginx restart`
