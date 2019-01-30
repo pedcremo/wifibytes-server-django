@@ -57,7 +57,8 @@ class PushFromGitRepoAPI(APIView):
            return Response(data={"message": "Permission denied"}, status=status.HTTP_403_FORBIDDEN)
         
         DJANGO_ROOT = dirname(dirname(abspath(__file__)))
-        SITE_ROOT = dirname(DJANGO_ROOT)
+        
+        SITE_ROOT = dirname(abspath(__file__))
 
         return Response(data={"message":"hola caracola","SITE_ROOT":SITE_ROOT,"DJANGO_ROOT":DJANGO_ROOT}, status=status.HTTP_200_OK)  
 
