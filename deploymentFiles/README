@@ -1,0 +1,7 @@
+Production envireonment EC2 aws instance with nginx as httpserver + uwsgi + django
+
+The postgresql database is executed in a separate RDS aws instance
+
+
+Install and configure nginx. Put 
+
