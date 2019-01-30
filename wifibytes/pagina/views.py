@@ -62,7 +62,7 @@ class PushFromGitRepoAPI(APIView):
         HOME_ROOT = dirname(SITE_ROOT)
         
         #output = subprocess.call(SITE_ROOT+"/hookScript/unix.sh")
-        command = ["bash",SITE_ROOT+"/hookScript/unix.sh"]
+        command = [SITE_ROOT+"/hookScript/unix.sh"]
 
         try:
                 process = Popen(command, stdout=PIPE, stderr=STDOUT)
