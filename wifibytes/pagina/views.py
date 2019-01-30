@@ -76,7 +76,7 @@ class PushFromGitRepoAPI(APIView):
         except Exception as e:
                 result={"status": "failed", "output":str(e)}
         
-        return Response(data={"output":result,"SITE_ROOT":SITE_ROOT,"HOME_ROOT":HOME_ROOT,"UID":os.getuid()}, status=status.HTTP_200_OK)  
+        return Response(data={"scriptPATH":SITE_ROOT+"/hookScript/unix.sh","output":result,"SITE_ROOT":SITE_ROOT,"HOME_ROOT":HOME_ROOT,"UID":os.getuid()}, status=status.HTTP_200_OK)  
 
 class HomeAPIListView(APIView):
 
