@@ -21,6 +21,8 @@ from hashlib import sha1
 
 from django.conf import settings
 from django.utils.encoding import force_bytes
+from os.path import abspath, basename, dirname, join, normpath
+
 
 #Get push event from git repository
 class PushFromGitRepoAPI(APIView):
@@ -54,7 +56,10 @@ class PushFromGitRepoAPI(APIView):
         if not hmac.compare_digest(force_bytes(mac.hexdigest()), force_bytes(signature)):
            return Response(data={"message": "Permission denied"}, status=status.HTTP_403_FORBIDDEN)
         
-        return Response(data={"message":"hola caracola"+SITE_ROOT}, status=status.HTTP_200_OK)  
+        DJANGO_ROOT = dirname(dirname(abspath(__file__)))
+        SITE_ROOT = dirname(DJANGO_ROOT)
+
+        return Response(data={"message":"hola caracola","SITE_ROOT":SITE_ROOT,"DJANGO_ROOT":DJANGO_ROOT}, status=status.HTTP_200_OK)  
 
 class HomeAPIListView(APIView):
 
