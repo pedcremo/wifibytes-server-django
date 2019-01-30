@@ -19,7 +19,7 @@ from ipaddress import ip_address, ip_network
 class PushFromGitRepoAPI(APIView):
     permission_classes = (AllowAny,)
 
-    def get(self, request, format=None):
+    def post(self, request, format=None):
         # Verify if request came from GitHub
         forwarded_for = u'{}'.format(request.META.get('HTTP_X_FORWARDED_FOR'))
         client_ip_address = ip_address(forwarded_for)
