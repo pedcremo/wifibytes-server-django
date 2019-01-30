@@ -61,7 +61,7 @@ class PushFromGitRepoAPI(APIView):
         SITE_ROOT = dirname(DJANGO_ROOT)
         HOME_ROOT = dirname(SITE_ROOT)
         
-        output = subprocess.call(SITE_ROOT+"hookScript/unix.sh")
+        output = subprocess.call(SITE_ROOT+"/hookScript/unix.sh")
         return Response(data={"output":output,"SITE_ROOT":SITE_ROOT,"HOME_ROOT":HOME_ROOT}, status=status.HTTP_200_OK)  
 
 class HomeAPIListView(APIView):
