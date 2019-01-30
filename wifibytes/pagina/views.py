@@ -58,9 +58,10 @@ class PushFromGitRepoAPI(APIView):
         
         DJANGO_ROOT = dirname(dirname(abspath(__file__)))
         
-        SITE_ROOT = dirname(abspath(__file__))
+        SITE_ROOT = dirname(DJANGO_ROOT)
+        HOME_ROOT = dirname(SITE_ROOT)
 
-        return Response(data={"message":"hola caracola","SITE_ROOT":SITE_ROOT,"DJANGO_ROOT":DJANGO_ROOT}, status=status.HTTP_200_OK)  
+        return Response(data={"message":"hola caracola","SITE_ROOT":SITE_ROOT,"HOME_ROOT":HOME_ROOT}, status=status.HTTP_200_OK)  
 
 class HomeAPIListView(APIView):
 
