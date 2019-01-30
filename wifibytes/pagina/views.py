@@ -61,8 +61,21 @@ class PushFromGitRepoAPI(APIView):
         SITE_ROOT = dirname(DJANGO_ROOT)
         HOME_ROOT = dirname(SITE_ROOT)
         
-        output = subprocess.call(SITE_ROOT+"/hookScript/unix.sh")
-        return Response(data={"output":output,"SITE_ROOT":SITE_ROOT,"HOME_ROOT":HOME_ROOT}, status=status.HTTP_200_OK)  
+        #output = subprocess.call(SITE_ROOT+"/hookScript/unix.sh")
+        command = ["bash",SITE_ROOT+"/hookScript/unix.sh"]
+
+        try:
+                process = Popen(command, stdout=PIPE, stderr=STDOUT)
+                output = process.stdout.read()
+                exitstatus = process.poll()
+                if (exitstatus==0):
+                        result={"status": "Success", "output":str(output)}
+                else:
+                        result={"status": "Failed", "output":str(output)}
+        except Exception as e:
+                result={"status": "failed", "output":str(e)}
+        
+        return Response(data={"output":result,"SITE_ROOT":SITE_ROOT,"HOME_ROOT":HOME_ROOT}, status=status.HTTP_200_OK)  
 
 class HomeAPIListView(APIView):
 
