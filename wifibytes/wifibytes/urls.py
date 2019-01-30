@@ -119,10 +119,15 @@ router.add_api_view("[FACTURACION] Impuestos de pago", path(
 # End points terminados
 router.add_api_view("[FRONTEND] Home Elements ", path(
     'home/', HomeAPIListView.as_view(), name='homeAPIListView'))
+
+# webhook github. We detect push and call this endpoint for continous integration 
+router.add_api_view("[BACKEND] Capture git push",path(
+   'pushFromGitRepo/',PushFromGitRepoAPI.as_view(),name='pushFromGitRepoAPI'))
+
 router.add_api_view("[FRONTEND] Tarifa Descripción Elements", path(
     'tarifa_descriptor/', TarifaDescriptorAPIListView.as_view(), name='tarifaDescriptorAPIListView'))
-router.add_api_view("[FRONTEND] Txt Contacto", path('txtcontacto/',
-                                                   TxtContactoAPIListView.as_view(), name='TxtContactoAPIListView'))
+router.add_api_view("[FRONTEND] Txt Contacto", path(
+    'txtcontacto/',TxtContactoAPIListView.as_view(), name='TxtContactoAPIListView'))
 
 router.add_api_view("[CAUSA] GET Causa List", path(
     'causa/', CausaAPIListView.as_view(), name='causa-list'))
@@ -171,6 +176,7 @@ urlpatterns = [
     #path(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api-token-auth/', obtain_jwt_token),
     path('api-token-verify/', verify_jwt_token),
+
     # grappelli URLS
     #path(r'^docs/', include('rest_framework_swagger.urls')),
 

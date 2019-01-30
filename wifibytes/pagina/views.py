@@ -12,6 +12,26 @@ from wifibytes.authlib import *
 from django.http import HttpResponseRedirect, Http404
 from wifibytes.configuracion_email import *
 
+import requests
+from ipaddress import ip_address, ip_network
+
+#Get push event from git repository
+class PushFromGitRepoAPI(APIView):
+    permission_classes = (AllowAny,)
+
+    def get(self, request, format=None):
+        # Verify if request came from GitHub
+        forwarded_for = u'{}'.format(request.META.get('HTTP_X_FORWARDED_FOR'))
+        client_ip_address = ip_address(forwarded_for)
+        whitelist = requests.get('https://api.github.com/meta').json()['hooks']
+
+        for valid_ip in whitelist:
+            if client_ip_address in ip_network(valid_ip):
+                break
+            else:
+                return HttpResponseForbidden('Permission denied.')
+
+        return Response("hola caracola", status=status.HTTP_200_OK)  
 
 class HomeAPIListView(APIView):
 
