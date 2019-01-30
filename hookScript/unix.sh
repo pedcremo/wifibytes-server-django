@@ -3,6 +3,5 @@
 `cd ..`
 OUTPUT="$(git pull)"
 echo "${OUTPUT}" > /tmp/logHook 
-`cd`
-OUTPUT="$(supervisorctl restart all)"
+OUTPUT="$(cd && supervisorctl restart all)"
 echo "${OUTPUT}" >> /tmp/logHook
