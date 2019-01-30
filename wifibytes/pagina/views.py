@@ -29,7 +29,7 @@ class PushFromGitRepoAPI(APIView):
             if client_ip_address in ip_network(valid_ip):
                 break
             else:
-                return Response("Permission denied.", status=HTTP_403_FORBIDDEN)  
+                return Response("Permission denied.", status=status.HTTP_403_FORBIDDEN)  
         return Response("hola caracola", status=status.HTTP_200_OK)  
 
 class HomeAPIListView(APIView):
