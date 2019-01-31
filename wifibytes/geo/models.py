@@ -14,7 +14,7 @@ class Pais(models.Model):
     class Meta:
         verbose_name_plural = 'Paises'
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.nombre)
 
 
@@ -27,7 +27,7 @@ class Comunidad(models.Model):
     class Meta:
         verbose_name_plural = 'Comunidades'
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.nombre)
 
     def save(self, *args, **kwargs):
@@ -54,7 +54,7 @@ class Provincia(models.Model):
     class Meta:
         verbose_name_plural = 'Provincias'
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.provincia)
 
     def save(self, *args, **kwargs):

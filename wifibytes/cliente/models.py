@@ -50,7 +50,7 @@ class GruposCliente(models.Model):
         editable=False
     )
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.codgrupo)
 
     def save(self, *args, **kwargs):
@@ -97,7 +97,7 @@ class Cliente(models.Model):
     segundo_apellido = models.CharField(
         verbose_name=("Segundo Apellido"), max_length=100, blank=True,
         null=True)
-    email = models.CharField(verbose_name=("Email"), max_length=50, null=True)
+    email = models.CharField(verbose_name=("Email"), max_length=50, unique=True, null=False)
     genero = models.CharField(max_length=1, blank=True, null=True,
                               choices=generos)
     nombrecomercial = models.CharField(
@@ -162,7 +162,7 @@ class Cliente(models.Model):
     created_at = models.IntegerField(default=0, editable=False)
     updated_at = models.IntegerField(default=0, editable=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.nombre) + " " + str(self.apellido)
 
     def save(self, *args, **kwargs):
@@ -247,7 +247,7 @@ class CuentasbcoCli(models.Model):
     created_at = models.IntegerField(default=0, editable=False)
     updated_at = models.IntegerField(default=0, editable=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.codcuenta)
 
     def save(self, *args, **kwargs):
@@ -316,7 +316,7 @@ class DirClientes(models.Model):
     created_at = models.IntegerField(default=0, editable=False)
     updated_at = models.IntegerField(default=0, editable=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.id)
 
     def save(self, *args, **kwargs):
@@ -419,7 +419,7 @@ class MobilsClients(models.Model):
         verbose_name = "Línea"
         verbose_name_plural = "Líneas"
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.id_mobilsclients)
 
     def save(self, *args, **kwargs):
@@ -480,7 +480,7 @@ class Servicio(models.Model):
                                         blank=False,on_delete=models.PROTECT)
     servicio_cuenta = models.ForeignKey(CuentasbcoCli, null=True, blank=False,on_delete=models.SET_NULL)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.servicio_id)
 
     def save(self, *args, **kwargs):

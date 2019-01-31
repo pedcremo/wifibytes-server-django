@@ -2,6 +2,7 @@
 from django.contrib import admin
 from .models import *
 from django import forms
+from django.utils.safestring import mark_safe
 from django.conf import settings
 from django.contrib import messages
 from wifibytes.omv_functions import cancelarSolicitud
@@ -103,10 +104,9 @@ class ClienteAdmin(admin.ModelAdmin):
 
     list_filter = ('fecha_registro', 'is_active')
 
-    def listar_servicios(self, obj):
-        return '<a href="/admin/cliente/servicio/?servicio_consumer__codcliente__exact=%s">Servicios</a>' % obj.codcliente
-    listar_servicios.allow_tags = True
-
+    def listar_servicios(self, obj):       
+        return mark_safe('<a href="/admin/cliente/servicio/?servicio_consumer__codcliente__exact=%s">Servicios</a>' % obj.codcliente)
+   
     if settings.DEBUG is False:
         def get_actions(self, request):
             actions = super(ClienteAdmin, self).get_actions(request)
@@ -122,7 +122,7 @@ class MobilsClientsAdmin(admin.ModelAdmin):
     def tarifa(self, obj):
         id = obj.codtarifa.codtarifa
         tarifa = obj.codtarifa.nombretarifa
-        return '<a href="/admin/catalogo/tarifa/%s">%s</a>' % (id, tarifa)
+        return mark_safe('<a href="/admin/catalogo/tarifa/%s">%s</a>' % (id, tarifa))
 
     tarifa.short_description = 'Tarifa'
     tarifa.allow_tags = True
@@ -131,8 +131,8 @@ class MobilsClientsAdmin(admin.ModelAdmin):
         id = obj.codcliente.codcliente
         nombre = obj.codcliente.nombre
         apellido = obj.codcliente.apellido
-        return '<a href="/admin/cliente/cliente/%s">%s</a>' % (
-            id, nombre + ' ' + apellido)
+        return mark_safe('<a href="/admin/cliente/cliente/%s">%s</a>' % (
+            id, nombre + ' ' + apellido))
 
     cliente.short_description = 'Cliente'
     cliente.allow_tags = True

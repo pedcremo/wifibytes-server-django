@@ -37,7 +37,7 @@ class Familia(models.Model):
     created_at = models.IntegerField(default=0, editable=False)
     updated_at = models.IntegerField(default=0, editable=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.nombre)
 
     class Meta:
@@ -91,7 +91,7 @@ class Marca(models.Model):
     Marca = models.CharField(max_length=100, blank=False, null=False)
     id = models.IntegerField(primary_key=True, editable=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.Marca
 
     def save(self, *args, **kwargs):
@@ -110,7 +110,7 @@ class Pantalla(models.Model):
     num_pantalla = models.FloatField(blank=False, null=False)
     id = models.IntegerField(primary_key=True, editable=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.num_pantalla)
 
     def save(self, *args, **kwargs):
@@ -129,7 +129,7 @@ class Procesador(models.Model):
     num_procesador = models.CharField(max_length=100, blank=False, null=False)
     id = models.IntegerField(primary_key=True, editable=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.num_procesador)
 
     def save(self, *args, **kwargs):
@@ -148,7 +148,7 @@ class Ram(models.Model):
     num_ram = models.CharField(max_length=100, blank=False, null=False)
     id = models.IntegerField(primary_key=True, editable=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.num_ram)
 
     def save(self, *args, **kwargs):
@@ -167,7 +167,7 @@ class Camara(models.Model):
     num_camara = models.FloatField(blank=False, null=False)
     id = models.IntegerField(primary_key=True, editable=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.num_camara)
 
     def save(self, *args, **kwargs):
@@ -261,7 +261,7 @@ class Articulo(models.Model):
     created_at = models.IntegerField(default=0, editable=False)
     updated_at = models.IntegerField(default=0, editable=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.referencia) + " - " + str(self.descripcion)
 
     def save(self, *args, **kwargs):
@@ -341,7 +341,7 @@ class Tarifa(models.Model):
             subtarifa_tarifa=self)
         return subtarifas
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.codtarifa)
 
     def save(self, *args, **kwargs):
@@ -396,7 +396,7 @@ class Subtarifa(models.Model):
     created_at = models.IntegerField(default=0, editable=False)
     updated_at = models.IntegerField(default=0, editable=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.subtarifa_id)
 
     def save(self, *args, **kwargs):
@@ -450,7 +450,7 @@ class Template1(models.Model):
         blank=True, null=True)
     idioma = models.ForeignKey('internationalization.Idioma', null=True, on_delete=models.SET_NULL)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.id)
 
     def save(self, *args, **kwargs):
@@ -500,7 +500,7 @@ class Template2(models.Model):
         blank=True, null=True)
     idioma = models.ForeignKey('internationalization.Idioma', null=True, on_delete=models.SET_NULL)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.id)
 
     def save(self, *args, **kwargs):
@@ -547,7 +547,7 @@ class Template3(models.Model):
         upload_to="Templates", verbose_name="Imagen4", blank=True, null=True)
     idioma = models.ForeignKey('internationalization.Idioma', null=True, on_delete=models.SET_NULL)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.id)
 
     def save(self, *args, **kwargs):

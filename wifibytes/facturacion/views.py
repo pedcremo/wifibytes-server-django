@@ -504,8 +504,9 @@ class FormasPagoViewSet(viewsets.ModelViewSet):
 
 
 def ultimospedidosdashboard(request):
-
+    print('ARREEEE')
     pedidos = PedidoCli.objects.all().order_by('-idpedido')[:5]
+    
     orders = []
     for pedido in pedidos:
         if pedido.estado == 0:

@@ -12,7 +12,7 @@ class Omv(models.Model):
     activo = models.BooleanField(
         verbose_name=("Activo"), null=False, default=0)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.nombre
 
     def save(self, *args, **kwargs):
@@ -38,7 +38,7 @@ class UserApiOmv(models.Model):
     codigo_omv = models.ForeignKey(
         Omv, verbose_name=("Codigo OMV"), related_name='UserOmv_Omv',on_delete=models.PROTECT)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.uid)
 
     def save(self, *args, **kwargs):
@@ -60,7 +60,7 @@ class TypeCallApi(models.Model):
         primary_key=True, verbose_name=("ID"), editable=False)
     nombre = models.CharField(verbose_name=("nombre"), max_length=120)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.nombre)
 
     def save(self, *args, **kwargs):
@@ -91,7 +91,7 @@ class CallApi(models.Model):
     trans_call = models.IntegerField(
         verbose_name=("Tipo de Transacción"), choices=trans_list, null=True, blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.typecall.nombre)
 
     def save(self, *args, **kwargs):
@@ -115,7 +115,7 @@ class ParamCallApi(models.Model):
     requerido = models.BooleanField(
         verbose_name=("Requerido"), default=None, blank=False, null=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.id)
 
     def save(self, *args, **kwargs):
@@ -138,7 +138,7 @@ class ParamCallBackApi(models.Model):
         verbose_name=("param nombre"), max_length=120)
 
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.id)
 
     def save(self, *args, **kwargs):

@@ -70,7 +70,7 @@ class DatosEmpresa(models.Model):
         ).first()
         return config
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.datos_empresa_id)
 
     class Meta:
@@ -108,7 +108,7 @@ class InfoEmpresa(models.Model):
     updated_at = models.IntegerField(default=0, editable=False)
     created_at = models.IntegerField(default=0, editable=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.info_empresa_id)
 
     class Meta:
@@ -138,7 +138,7 @@ class TextosContrato(models.Model):
         textos = Texto.objects.filter(textos_contrato_fk=self.pk).order_by('-created_at')
         return textos
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.textos_contrato_id)
 
     class Meta:
@@ -174,7 +174,7 @@ class Texto(models.Model):
     updated_at = models.IntegerField(default=0, editable=False)
     created_at = models.IntegerField(default=0, editable=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.texto_id)
 
     class Meta:
@@ -219,7 +219,7 @@ class DatosEmail(models.Model):
     updated_at = models.IntegerField(default=0, editable=False)
     created_at = models.IntegerField(default=0, editable=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.datos_email_id)
 
     class Meta:

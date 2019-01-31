@@ -27,7 +27,7 @@ class Causa(models.Model):
     activo = models.BooleanField(verbose_name=("Causa Actual"), null=False, default=0,blank=False)
     valido_altrebit = models.BooleanField(verbose_name=("Causa Actual"), null=False,blank=False, default=0)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.codcausa)
 
     def save(self, *args, **kwargs):

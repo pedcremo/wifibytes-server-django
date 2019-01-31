@@ -50,7 +50,7 @@ class RangoICC(models.Model):
                     lst_registrados.append(icc)
         return lst_registrados
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.rango_icc_id)
 
     class Meta:

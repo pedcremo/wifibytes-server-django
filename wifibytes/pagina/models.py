@@ -13,7 +13,7 @@ class Home(models.Model):
     activo = models.BooleanField(default=False,  editable=True, null=False)
     idioma = models.ForeignKey('internationalization.Idioma', null=True,on_delete=models.SET_NULL)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.id)
 
     class Meta:
@@ -57,7 +57,7 @@ class TarifaDescriptorGenerico(models.Model):
     activo = models.BooleanField(default=False,  editable=True, null=False)
     idioma = models.ForeignKey('internationalization.Idioma', null=True,on_delete=models.SET_NULL)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.id)
 
     class Meta:
@@ -81,7 +81,7 @@ class PaletaColores(models.Model):
     titulo = models.CharField(verbose_name=("titulo"), max_length=100, blank=False)
     hexadecimal = models.CharField(verbose_name=("hexadecimal"), max_length=100, blank=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.titulo)
 
     def save(self, *args, **kwargs):
@@ -106,7 +106,7 @@ class TxtContacto(models.Model):
     activo = models.BooleanField(default=False,  editable=True, null=False)
     idioma = models.ForeignKey('internationalization.Idioma', null=True,on_delete=models.SET_NULL)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.id)
 
     def save(self, *args, **kwargs):

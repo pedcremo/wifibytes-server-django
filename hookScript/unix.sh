@@ -1,6 +1,5 @@
 #!/bin/bash
-
-#`/bin/rm -f /tmp/logHook`
+# FULL PATH IS REQUIRED BECAUSE WE NO HAVE VARIABLE CONTEXT PATH WHEN WE CALL THE SCRIPT
 OUTPUT="$(/usr/bin/whoami)"
 echo "${OUTPUT}" > /tmp/logHook
 `cd ..`

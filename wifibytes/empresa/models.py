@@ -46,7 +46,7 @@ class Empresa(models.Model):
     codcuentarem = models.CharField(
         verbose_name=("Codigo cuenta rem"), max_length=6)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.id)
 
     def save(self, *args, **kwargs):

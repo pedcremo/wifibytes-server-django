@@ -5,7 +5,7 @@ from django import forms
 from django.conf import settings
 from django.forms import ModelForm
 from suit.widgets import EnclosedInput
-
+from django.utils.safestring import mark_safe
 
 class LineaPedidoForm(ModelForm):
     class Meta:
@@ -119,8 +119,8 @@ class LineasFacturasCliInline(admin.TabularInline):
 
     def linea_url(self, obj):
         if obj.pk:
-            return '<a href="%s%s">Editar</a>' % (
-                '/admin/facturacion/lineasfacturascli/', obj.pk)
+            return mark_safe('<a href="%s%s">Editar</a>' % (
+                '/admin/facturacion/lineasfacturascli/', obj.pk))
         return ''
 
     linea_url.allow_tags = True
@@ -137,7 +137,7 @@ class FacturaClienteAdmin(admin.ModelAdmin):
 
     def factura_pdf(self, obj):
         if obj.pk:
-            return '<a href="%s%s">Descargar</a>' % ('/facturapdf/', obj.pk)
+            return mark_safe('<a href="%s%s">Descargar</a>' % ('/facturapdf/', obj.pk))
         return ''
     factura_pdf.allow_tags = True
     factura_pdf.short_description = "Factura en PDF"

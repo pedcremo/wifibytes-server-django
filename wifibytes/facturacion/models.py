@@ -28,7 +28,7 @@ class Consumo(models.Model):
     totaleuros = models.FloatField(
         verbose_name=("Total Euros"),  blank=True, default=0.0)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.codpago)
 
     def save(self, *args, **kwargs):
@@ -57,7 +57,7 @@ class FormasPago(models.Model):
     )
     activa = models.BooleanField(default=False, blank=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.nombre)
 
     class Meta:
@@ -87,7 +87,7 @@ class FormasEnvio(models.Model):
         verbose_name="Descripción [VA]", null=True, blank=True)
     precio = models.FloatField(verbose_name="Precio")
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.nombre)
 
     class Meta:
@@ -287,7 +287,7 @@ class PedidoCli(models.Model):
     class Meta:
         verbose_name = "Pedido"
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.idpedido)
 
     def save(self, *args, **kwargs):
@@ -431,7 +431,7 @@ class Impuesto(models.Model):
         validators=[MinValueValidator(0.5), MaxValueValidator(1000.5)],
         blank=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.codimpuesto)
 
     def save(self, *args, **kwargs):
@@ -501,7 +501,7 @@ class LineaPedidoCli(models.Model):
         validators=[MinValueValidator(0.5), MaxValueValidator(1000.5)],
         null=True, blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return 'art: %s - > lin: %s ped: %s ' % (
             str(self.referencia), str(self.idlinea), str(self.idpedido))
 
@@ -574,7 +574,7 @@ class facturasCli(models.Model):
     tpv = models.BooleanField(default=False)
     tasaconv = models.FloatField(null=False, blank=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.idfactura)
 
     def save(self, *args, **kwargs):
@@ -653,7 +653,7 @@ class lineasfacturascli(models.Model):
     referencia = models.ForeignKey('catalogo.Articulo',
                                    null=False, blank=False,on_delete=models.PROTECT)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(str(self.idlinea) + ' - ' + str(self.idfactura))
 
     def save(self, *args, **kwargs):
