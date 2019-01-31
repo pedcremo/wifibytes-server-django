@@ -61,11 +61,13 @@ class PushFromGitRepoAPI(APIView):
         
         SITE_ROOT = dirname(DJANGO_ROOT)
         HOME_ROOT = dirname(SITE_ROOT)
-        
-        #output = subprocess.call(SITE_ROOT+"/hookScript/unix.sh")
-        command = [SITE_ROOT+"/hookScript/unix.sh"]
+        SCRIPT_PATH = 'NONE'
 
+        #HARD WIRED . NOT PORTABLE. WE NEED CHECK PLATFORM CODE
+        command = [SITE_ROOT+"/hookScript/unix.sh"]
+        
         try:
+
                 process = Popen(command, stdout=PIPE, stderr=STDOUT)
                 output = process.stdout.read()
                 exitstatus = process.poll()

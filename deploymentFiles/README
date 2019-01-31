@@ -3,5 +3,21 @@ Production envireonment EC2 aws instance with nginx as httpserver + uwsgi + djan
 The postgresql database is executed in a separate RDS aws instance
 
 
-Install and configure nginx. Put 
+
+For backend deployment I need:
+
+/home/USER/supervisord.conf
+/home/USER/uwsgi.ini
+/etc/nginx/sites-available/wifibytes-backend.nginx.conf
+
+The examples are not general configurations should be customized for your solution is only a concrete example
+Install and configure nginx, supervisord and be sure uwsgi python packege is installed in your pthon env. 
+
+
+For frontend deployment I need:
+
+/etc/nginx/sites-available/wifibytes-frontend.nginx.conf
+
+
+ 
 

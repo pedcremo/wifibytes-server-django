@@ -489,6 +489,7 @@ class FormasPagoViewSet(viewsets.ModelViewSet):
     """
     queryset = FormasPago.objects.all().order_by('nombre')
     serializer_class = FormaspagoSerializer
+    permission_classes = (AllowAny,)
     paginate_by = 500
     paginate_by_param = 'page_size'
     max_paginate_by = 500
