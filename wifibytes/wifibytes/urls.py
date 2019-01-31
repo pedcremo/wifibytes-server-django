@@ -19,6 +19,7 @@ from empresa.views import *
 from empresa.models import *
 
 from facturacion.views import *
+
 from facturacion.models import *
 
 from omv.views import *
@@ -183,9 +184,11 @@ urlpatterns = [
     re_path(r'^tinymce/', include('tinymce.urls')),
     path('admin/', admin.site.urls), #PERE CHANGED
 
-    re_path(r'pedidosdashboard/$', FormasPagoViewSet.as_view('ultimospedidosdashboard'), name="pedidosdashboard"),
-    re_path(r'lineasdashboard/$', nuevaAlta.as_view(), name="lineasdashboard"), #PERE MODIFIED
-    re_path(r'clientesdashboard/$', nuevaAlta.as_view(), name="clientesdashboard"), #PERE MODIFIED
+    #re_path(r'pedidosdashboard/$', FormasPagoViewSet.as_view('ultimospedidosdashboard'), name="pedidosdashboard"),
+    re_path(r'pedidosdashboard/$', ultimospedidosdashboard, name="pedidosdashboard"),
+    #facturacion.views.ultimospedidosdashboard
+    re_path(r'lineasdashboard/$', ultimaslineasdashboard, name="lineasdashboard"), #PERE MODIFIED
+    re_path(r'clientesdashboard/$', ultimosclientesdashboard, name="clientesdashboard"), #PERE MODIFIED
     #re_path(r'^media/(?P<path>.*)$', 'django.views.static.serve',
     #    {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}), #PERE CHANGED
     re_path(r'^documentacion-omv/$', DocOmvView, name='documentacion_omv'),

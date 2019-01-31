@@ -493,9 +493,10 @@ class FormasPagoViewSet(viewsets.ModelViewSet):
     paginate_by = 500
     paginate_by_param = 'page_size'
     max_paginate_by = 500
-
+   
     def get_serializer_context(self):
         query = self.request.query_params
+        print('MERDA')
         if 'lang' in list(query.keys()):
             lang = query['lang']
         else:
@@ -504,7 +505,7 @@ class FormasPagoViewSet(viewsets.ModelViewSet):
 
 
 def ultimospedidosdashboard(request):
-    print('ARREEEE')
+    
     pedidos = PedidoCli.objects.all().order_by('-idpedido')[:5]
     
     orders = []

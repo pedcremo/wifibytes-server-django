@@ -37,8 +37,7 @@
 
 {% block content %}
 <script type="text/javascript">
-$( document ).ready(function() {
-
+$( document ).ready(function() {    
     data = $.ajax({
         url: "{% url 'pedidosdashboard' %}",
         dataType:"json",
