@@ -16,7 +16,7 @@ class FormaspagoSerializer(ModelSerializer):
     class Meta:
         model = FormasPago
         depth = 0
-        fields = ('codpago', 'nombre', 'descripcion', 'cod_eneboo')
+        fields = ('codpago', 'nombre', 'descripcion', 'cod_eneboo','activa')
         # supported langs: es, va
         # fields_i18: nombre_*, descripcion_*
         # exclude: activa

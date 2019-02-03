@@ -83,5 +83,6 @@ def jwt_response_payload_handler(token, id_consumer, user=None, request=None):
     return {
         'token': token,
         'id_consumer': id_consumer,
+        'email':consumer.email,
         'cifnif': consumer.cifnif
     }

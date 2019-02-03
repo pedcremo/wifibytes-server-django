@@ -496,7 +496,7 @@ class FormasPagoViewSet(viewsets.ModelViewSet):
    
     def get_serializer_context(self):
         query = self.request.query_params
-        print('MERDA')
+        
         if 'lang' in list(query.keys()):
             lang = query['lang']
         else:
