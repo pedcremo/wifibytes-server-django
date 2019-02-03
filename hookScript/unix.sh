@@ -5,6 +5,6 @@ echo "${OUTPUT}" > /tmp/logHook
 `cd ..`
 OUTPUT="$(/usr/bin/git pull)"
 echo "${OUTPUT}" >> /tmp/logHook
-`cd`
+`cd /home/wifibytes`
 OUTPUT="$(/usr/bin/supervisorctl restart all &)"
 #echo "${OUTPUT}" >> /tmp/logHook
