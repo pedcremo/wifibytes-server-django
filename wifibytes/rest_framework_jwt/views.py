@@ -7,7 +7,7 @@ from rest_framework_jwt.settings import api_settings
 
 from .serializers import (
     JSONWebTokenSerializer, RefreshJSONWebTokenSerializer,
-    VerifyJSONWebTokenSerializer
+    VerifyJSONWebTokenSerializer,CustomJWTSerializer
 )
 
 jwt_response_payload_handler = api_settings.JWT_RESPONSE_PAYLOAD_HANDLER
@@ -100,6 +100,7 @@ class RefreshJSONWebToken(JSONWebTokenAPIView):
     serializer_class = RefreshJSONWebTokenSerializer
 
 
-obtain_jwt_token = ObtainJSONWebToken.as_view()
+#obtain_jwt_token = ObtainJSONWebToken.as_view()
+obtain_jwt_token = ObtainJSONWebToken.as_view(serializer_class=CustomJWTSerializer)
 refresh_jwt_token = RefreshJSONWebToken.as_view()
 verify_jwt_token = VerifyJSONWebToken.as_view()
