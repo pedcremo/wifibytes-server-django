@@ -118,31 +118,35 @@ class ClienteViewSet(mixins.RetrieveModelMixin,
 
             if lang == 'va':
                 context = {
-                    'title': 'Altrebit',
+                    'title': 'Wifibytes',
                     'title_message': 'Benvingut!',
-                    'content_message': 'Altrebit, altra forma de fer comunicació',
-                    'center_message': "El teu nom d'usuari: %s" % user.codcliente,
+                    'content_message': 'Wifibytes, altra forma de fer comunicació. El teu proveïdor integral de comunicacions',
+                    'center_message': "El teu nom d'usuari: %s <br/>Podràs utilitzar este codi o el teu email per autenticar-te" % user.codcliente,
                 }
                 subject = 'Benvingut!'
             else:
                 context = {
-                    'title': 'Altrebit',
+                    'title': 'Wifibytes',
                     'title_message': 'Bienvenido!',
-                    'content_message': 'Altrebit, otra forma de hacer comunicación',
-                    'center_message': 'Tu nombre de usuario: %s' % user.codcliente,
+                    'content_message': 'Wifibytes, otra forma de hacer comunicación. Tu proveedor integralde telecomunicaiones',
+                    'center_message': 'Tu nombre de usuario: %s <br/>Podrás utilizar este código o tu email para autenticarte' % user.codcliente,
                 }
                 subject = 'Bienvenido!'
 
-            context['logo'] = 'http://wifibytes-front.wearecactus.com/images/altrebit-logo.png'
-            context['urlWeb'] = 'http://wifibytes-front.wearecactus.com/'
+            context['logo'] = 'https://backend.wifibytes.com/media/logo/wifibytes-logo.png'
+            context['urlWeb'] = 'http://wifibytes.com/'
 
             #message = render_to_string('email/welcome.html', context,
             #                           context_instance=RequestContext(request)).encode('utf8')
             message = render_to_string('email/welcome.html', context)
             email_instance = Email()
 
-            email_instance.sendemail(user.email, message,
+            try:
+                email_instance.sendemail(user.email, message,
                                      subject, True)
+            except:
+                pass
+            
             ###############
 
             return Response(self.serializer_class(user).data, status=status.HTTP_201_CREATED)
@@ -714,7 +718,7 @@ class ClienteNoRegistradoView(APIView):
             return Response({'message': 'Error: cifnif or email needed'},
                             status=status.HTTP_400_BAD_REQUEST)
 
-        newpass = ''.join(random.choice(string.lowercase) for i in range(10))
+        newpass = ''.join(random.choice(string.ascii_lowercase) for i in range(10))
         dict_data = {'codcliente': user.codcliente, 'password': newpass,
                      'is_active': 'True'}
 
