@@ -9,7 +9,7 @@ from datos_empresa.models import DatosEmpresa
 class Email:
 
     # el email donde AltreBit Recive los correos
-    EMAIL = 'dani@wearecactus.com'
+    EMAIL = 'info@wifibytes.com'
 
     def __init__(self, *args, **kwargs):
         ########### EMAIL CONF ############
