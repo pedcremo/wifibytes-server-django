@@ -155,7 +155,7 @@ class ClienteViewSet(mixins.RetrieveModelMixin,
             return Response(self.serializer_class(user).data, status=status.HTTP_201_CREATED)
 
         message = 'Falta algún paramentro requerido'
-        return Response(data={"message": message, "errors": serializer.errors, "isRegistred": False},
+        return Response(data={"message": message, "errors": serializer.errors, "isRegistered": False},
                         status=status.HTTP_400_BAD_REQUEST)
 
     def retrieve(self, request, pk=None):
@@ -639,24 +639,24 @@ class ClienteAPIView(APIView):
             if (Cliente.objects
                        .filter(cifnif=serializerA.validated_data.get('cifnif', ""))
                        .exists()):
-                message = 'El dni introducido ya existe en la base de datos'
-                return Response(data={"message": message, "isRegistred": True},
+                message = 'EEl dni introducido ya existe en la base de datos'
+                return Response(data={"message": message, "isRegistered": True},
                                 status=status.HTTP_400_BAD_REQUEST)
 
             # comprobamos si el email ya existe
             if (Cliente.objects
                        .filter(email__iexact=serializerA.validated_data.get('email', ""))
                        .exists()):
-                message = 'El email introducido ya existe en la base de datos'
-                return Response(data={"message": message, "isRegistred": True},
+                message = 'EEl email introducido ya existe en la base de datos'
+                return Response(data={"message": message, "isRegistered": True},
                                 status=status.HTTP_400_BAD_REQUEST)
 
             user = serializerA.save()
             user_response = ClienteSerializer(user)
             return Response(user_response.data, status=201)
         else:
-            message = 'Falta algún paramentro requerido'
-            return Response(data={"message": message, "isRegistred": False},
+            message = 'FFalta algún paramentro requerido'
+            return Response(data={"message": message, "isRegistered": False},
                             status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, format=None):
