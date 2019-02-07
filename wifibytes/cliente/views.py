@@ -28,7 +28,7 @@ from wifibytes.omv_functions import getpool, getCDR, altaCliente, altaLinea, get
 from wifibytes.omv_functions import portabilidadLinea, enviarDocumento
 from wifibytes.functions import calculate_checksum, get_full_image_url
 from wifibytes.utils import generate_pdf
-
+import logging
 # import email
 # from smtplib import SMTPException
 # from email.mime.multipart import MIMEMultipart
@@ -47,6 +47,8 @@ from schwifty import IBAN
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'wifibytes.settings.local'
 
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 
 class DireccionesViewSet(viewsets.ModelViewSet):
 
@@ -99,7 +101,7 @@ class ClienteViewSet(mixins.RetrieveModelMixin,
                        .filter(cifnif=serializer.validated_data.get('cifnif', ""))
                        .exists()):
                 message = 'El dni introducido ya existe en la base de datos'
-                return Response(data={"message": message, "isRegistred": True},
+                return Response(data={"message": message, "isRegistered": True},
                                 status=status.HTTP_400_BAD_REQUEST)
 
             # comprobamos si el email ya existe
@@ -107,7 +109,7 @@ class ClienteViewSet(mixins.RetrieveModelMixin,
                        .filter(email__iexact=serializer.validated_data.get('email', ""))
                        .exists()):
                 message = 'El email introducido ya existe en la base de datos'
-                return Response(data={"message": message, "isRegistred": True},
+                return Response(data={"message": message, "isRegistered": True},
                                 status=status.HTTP_400_BAD_REQUEST)
             
             user = serializer.save()
@@ -145,6 +147,7 @@ class ClienteViewSet(mixins.RetrieveModelMixin,
                 email_instance.sendemail(user.email, message,
                                      subject, True)
             except:
+                logger.error('Register user has failed to sent and Email to '+user.email+' Something went wrong!')
                 pass
             
             ###############
