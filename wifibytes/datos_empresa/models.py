@@ -97,14 +97,14 @@ class InfoEmpresa(models.Model):
     )
     datos_empresa_fk = models.ForeignKey(
         DatosEmpresa, verbose_name='Datos Empresa',
-        related_name='datos_empresa_fk', null=False,on_delete=models.PROTECT
+        related_name='datos_empresa_fk', null=False,on_delete=models.CASCADE
     )
     key = models.CharField(max_length=200, null=True, blank=True)
     content = HTMLField(null=True, blank=True)
     image = models.FileField(
         verbose_name=("Info Empresa Imagen"),
         upload_to='info_empresa_image', null=True, blank=True)
-    idioma = models.ForeignKey('internationalization.Idioma', null=True,on_delete=models.SET_NULL)
+    idioma = models.ForeignKey('internationalization.Idioma', null=True,on_delete=models.CASCADE)
     updated_at = models.IntegerField(default=0, editable=False)
     created_at = models.IntegerField(default=0, editable=False)
 
@@ -165,12 +165,12 @@ class Texto(models.Model):
     )
     textos_contrato_fk = models.ForeignKey(
         TextosContrato, verbose_name='Textos Contrato',
-        related_name='textos_contrato_fk', null=False,on_delete=models.PROTECT
+        related_name='textos_contrato_fk', null=False,on_delete=models.CASCADE
     )
     key = models.CharField(max_length=200, null=True, blank=True)
     title = models.CharField(max_length=300, null=True, blank=True)
     content = models.TextField(max_length=10000, blank=True, null=True)
-    idioma = models.ForeignKey('internationalization.Idioma', null=True,on_delete=models.SET_NULL)
+    idioma = models.ForeignKey('internationalization.Idioma', null=True,on_delete=models.CASCADE)
     updated_at = models.IntegerField(default=0, editable=False)
     created_at = models.IntegerField(default=0, editable=False)
 
@@ -196,7 +196,7 @@ class DatosEmail(models.Model):
     )
     datos_empresa_fk = models.ForeignKey(
         DatosEmpresa, verbose_name='Datos Empresa',
-        null=False,on_delete=models.PROTECT
+        null=False,on_delete=models.CASCADE
     )
     email_receiver = models.CharField(
         max_length=50, null=True, blank=True,

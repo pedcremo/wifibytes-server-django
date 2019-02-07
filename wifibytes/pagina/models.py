@@ -11,7 +11,7 @@ class Home(models.Model):
     caja_derecha_titulo = models.CharField(verbose_name=("caja_derecha_titulo"), max_length=100, blank=False)
     caja_derecha_texto = HTMLField()
     activo = models.BooleanField(default=False,  editable=True, null=False)
-    idioma = models.ForeignKey('internationalization.Idioma', null=True,on_delete=models.SET_NULL)
+    idioma = models.ForeignKey('internationalization.Idioma', null=True,on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.id)
@@ -55,7 +55,7 @@ class TarifaDescriptorGenerico(models.Model):
     caja_4_texto = HTMLField()
     caja_4_icono = models.FileField(upload_to="pagina_tarifas")
     activo = models.BooleanField(default=False,  editable=True, null=False)
-    idioma = models.ForeignKey('internationalization.Idioma', null=True,on_delete=models.SET_NULL)
+    idioma = models.ForeignKey('internationalization.Idioma', null=True,on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.id)
@@ -104,7 +104,7 @@ class TxtContacto(models.Model):
     codigo_postal = models.CharField(verbose_name=("codigo_postal"), max_length=100, blank=False)
     calle = models.CharField(verbose_name=("calle"), max_length=100, blank=False)
     activo = models.BooleanField(default=False,  editable=True, null=False)
-    idioma = models.ForeignKey('internationalization.Idioma', null=True,on_delete=models.SET_NULL)
+    idioma = models.ForeignKey('internationalization.Idioma', null=True,on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.id)

@@ -19,7 +19,7 @@ class Familia(models.Model):
     nombre = models.CharField(verbose_name="Nombre [ES]", max_length=200, blank=False)
     nombre_va = models.CharField(verbose_name="Nombre [VA]", max_length=200, blank=True)
     color = models.ForeignKey('pagina.PaletaColores',
-                              related_name='Familia_PaletaColores', on_delete=models.PROTECT)
+                              related_name='Familia_PaletaColores', on_delete=models.CASCADE)
     icono = models.FileField(upload_to="familia")
     pretitulo = models.CharField(verbose_name="Pretitulo [ES]", max_length=200, blank=False)
     pretitulo_va = models.CharField(verbose_name="Pretitulo [VA]", max_length=200, blank=True)
@@ -199,7 +199,7 @@ class Articulo(models.Model):
 
     slug = models.SlugField(editable=False)
     codfamilia = models.ForeignKey(Familia, related_name='familia_codfamilia',
-                                   null=False, blank=False, on_delete=models.PROTECT)
+                                   null=False, blank=False, on_delete=models.CASCADE)
     descripcion = models.CharField(verbose_name="Descripción [ES]",
                                    max_length=250, blank=False, null=False)
     descripcion_va = models.CharField(verbose_name="Descripción [VA]",
@@ -231,16 +231,16 @@ class Articulo(models.Model):
     visible = models.BooleanField(default=False, blank=False, null=False)
 
     marca = models.ForeignKey(Marca, related_name='Articulo_Marca',
-                              blank=False, on_delete=models.PROTECT)
+                              blank=False, on_delete=models.CASCADE)
     pantalla = models.ForeignKey(Pantalla, related_name='Articulo_Pantalla',
-                                 blank=True, null=True, on_delete=models.SET_NULL)
+                                 blank=True, null=True, on_delete=models.CASCADE)
     procesador = models.ForeignKey(Procesador,
                                    related_name='Articulo_Procesador',
-                                   blank=True, null=True, on_delete=models.SET_NULL)
+                                   blank=True, null=True, on_delete=models.CASCADE)
     ram = models.ForeignKey(Ram, related_name='Articulo_Ram', blank=True,
-                            null=True, on_delete=models.SET_NULL)
+                            null=True, on_delete=models.CASCADE)
     camara = models.ForeignKey(Camara, related_name='Articulo_Camara',
-                               blank=True, null=True, on_delete=models.SET_NULL)
+                               blank=True, null=True, on_delete=models.CASCADE)
     destacado = models.BooleanField(default=False,  editable=True, null=False)
 
     # Campos exclusivos Eneboo
@@ -324,7 +324,7 @@ class Tarifa(models.Model):
     activo = models.BooleanField(verbose_name="Activo", null=False, default=0)
     destacado = models.BooleanField(default=False, editable=True, null=False)
     color = models.ForeignKey('pagina.PaletaColores',
-                              related_name='Tarifa_PaletaColores', null=True, on_delete=models.SET_NULL)
+                              related_name='Tarifa_PaletaColores', null=True, on_delete=models.CASCADE)
     created_at = models.IntegerField(default=0, editable=False)
     updated_at = models.IntegerField(default=0, editable=False)
 
@@ -387,12 +387,12 @@ class Subtarifa(models.Model):
         null=True)
     subtarifa_omv = models.ForeignKey(
         'omv.Omv', verbose_name="Omv asociado a Tarifa",
-        null=True, blank=True, on_delete=models.SET_NULL)
+        null=True, blank=True, on_delete=models.CASCADE)
     tipo_tarifa = models.IntegerField(
         null=False, default=0, blank=False, choices=rate_type)
     subtarifa_tarifa = models.ForeignKey(
         Tarifa, related_name='subtarifa_tarifa', verbose_name="Tarifa",
-        blank=False, on_delete=models.PROTECT)
+        blank=False, on_delete=models.CASCADE)
     created_at = models.IntegerField(default=0, editable=False)
     updated_at = models.IntegerField(default=0, editable=False)
 
@@ -421,7 +421,7 @@ class Subtarifa(models.Model):
 class Template1(models.Model):
     id = models.IntegerField(primary_key=True, editable=False)
     articulo = models.ForeignKey(
-        "catalogo.Articulo", related_name='template1_articulo', on_delete=models.PROTECT)
+        "catalogo.Articulo", related_name='template1_articulo', on_delete=models.CASCADE)
     pretitulo = models.CharField(verbose_name=(
         "pretitulo"), max_length=100, null=True, blank=True)
     caja_1_titulo = models.CharField(verbose_name=(
@@ -448,7 +448,7 @@ class Template1(models.Model):
     imagen_fondo_cuerpo = models.FileField(
         upload_to="Templates", verbose_name="imagen_fondo_cuerpo",
         blank=True, null=True)
-    idioma = models.ForeignKey('internationalization.Idioma', null=True, on_delete=models.SET_NULL)
+    idioma = models.ForeignKey('internationalization.Idioma', null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.id)
@@ -469,7 +469,7 @@ class Template1(models.Model):
 class Template2(models.Model):
     id = models.IntegerField(primary_key=True, editable=False)
     articulo = models.ForeignKey(
-        "catalogo.Articulo", related_name='template2_articulo',  on_delete=models.PROTECT)
+        "catalogo.Articulo", related_name='template2_articulo',  on_delete=models.CASCADE)
     pretitulo = models.CharField(verbose_name=(
         "pretitulo"), max_length=100, null=True, blank=True)
     caja_1_titulo = models.CharField(verbose_name=(
@@ -498,7 +498,7 @@ class Template2(models.Model):
     imagen_fondo_cuerpo = models.FileField(
         upload_to="Templates", verbose_name="imagen_fondo_cuerpo",
         blank=True, null=True)
-    idioma = models.ForeignKey('internationalization.Idioma', null=True, on_delete=models.SET_NULL)
+    idioma = models.ForeignKey('internationalization.Idioma', null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.id)
@@ -519,7 +519,7 @@ class Template2(models.Model):
 class Template3(models.Model):
     id = models.IntegerField(primary_key=True, editable=False)
     articulo = models.ForeignKey(
-        "catalogo.Articulo", related_name='template3_articulo', on_delete=models.PROTECT)
+        "catalogo.Articulo", related_name='template3_articulo', on_delete=models.CASCADE)
     pretitulo = models.CharField(verbose_name=(
         "pretitulo"), max_length=100, blank=True, null=True)
     franja_1_texto = HTMLField(blank=True, null=True)
@@ -545,7 +545,7 @@ class Template3(models.Model):
         upload_to="Templates", verbose_name="Imagen3", blank=True, null=True)
     imagen4 = models.FileField(
         upload_to="Templates", verbose_name="Imagen4", blank=True, null=True)
-    idioma = models.ForeignKey('internationalization.Idioma', null=True, on_delete=models.SET_NULL)
+    idioma = models.ForeignKey('internationalization.Idioma', null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.id)

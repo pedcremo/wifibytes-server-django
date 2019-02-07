@@ -21,7 +21,7 @@ class Pais(models.Model):
 class Comunidad(models.Model):
     codcomunidad = models.IntegerField(primary_key=True,
                                        null=False, editable=False)
-    codpais = models.ForeignKey(Pais, null=False, blank=False,on_delete=models.PROTECT)
+    codpais = models.ForeignKey(Pais, null=False, blank=False,on_delete=models.CASCADE)
     nombre = models.CharField(max_length=100, null=True, blank=True)
 
     class Meta:
@@ -47,8 +47,8 @@ class Provincia(models.Model):
     idprovincia = models.IntegerField(
         primary_key=True, null=False, editable=False)
     provincia = models.CharField(max_length=50, null=False, blank=False)
-    codpais = models.ForeignKey(Pais, null=False, blank=False,on_delete=models.PROTECT)
-    codcomunidad = models.ForeignKey(Comunidad, null=True, blank=True,on_delete=models.SET_NULL)
+    codpais = models.ForeignKey(Pais, null=False, blank=False,on_delete=models.CASCADE)
+    codcomunidad = models.ForeignKey(Comunidad, null=True, blank=True,on_delete=models.CASCADE)
     codigo = models.CharField(max_length=2, null=True, blank=True)
 
     class Meta:

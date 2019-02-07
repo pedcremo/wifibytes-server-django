@@ -39,7 +39,7 @@ class GruposCliente(models.Model):
     codtarifa = models.ForeignKey(
         Tarifa,
         related_name='GruposClientes_Tarifa',
-        verbose_name=("Codigo tarifa"),on_delete=models.PROTECT
+        verbose_name=("Codigo tarifa"),on_delete=models.CASCADE
     )
 
     nombre = models.CharField(
@@ -125,13 +125,13 @@ class Cliente(models.Model):
 
     codcuentadom = models.ForeignKey(
         'cliente.CuentasbcoCli', verbose_name="Cuenta Domiciliacion",
-        null=True,on_delete=models.SET_NULL)
+        null=True,on_delete=models.CASCADE)
     debaja = models.NullBooleanField(default=None, editable=False,
                                      null=True)  # para facturar
 
     consumer_user = models.OneToOneField(
         User, related_name='rel_Codcliente', editable=False,
-        verbose_name=("Consumer User"), on_delete=models.SET_NULL, null=True)
+        verbose_name=("Consumer User"), on_delete=models.CASCADE, null=True)
 
     observaciones = HTMLField(null=True, blank=True)
 
@@ -166,15 +166,17 @@ class Cliente(models.Model):
         return str(self.nombre) + " " + str(self.apellido)
 
     def save(self, *args, **kwargs):
+       
         self.updated_at = int(format(datetime.now(), 'U'))
-
+       
         if not self.created_at:
             self.created_at = int(format(datetime.now(), 'U'))
             self.fecha_registro = thetime.datetime.utcnow().replace(
                 tzinfo=utc, microsecond=0) + timedelta(days=30)
 
-            if not self.codcliente:  # si el usuario no esta importado
+            if not self.codcliente:  # si el usuario no esta importado       
                 no = Cliente.objects.count()
+                
                 if no == 0:
                     self.codcliente = 900000
                 else:
@@ -202,8 +204,9 @@ class Cliente(models.Model):
             user.set_password(self.password)
             user.save()
             self.password = ''
-
+        
         super(Cliente, self).save(*args, **kwargs)
+        
 
 
 class CuentasbcoCli(models.Model):
@@ -220,7 +223,7 @@ class CuentasbcoCli(models.Model):
         verbose_name=("Entidad"), max_length=150, null=True, blank=True)
     horamod = models.DateTimeField(
         verbose_name=("Fecha Modificación"), null=True, blank=True)
-    codcliente = models.ForeignKey(Cliente,  related_name='cuentasbco_cliente',on_delete=models.PROTECT)
+    codcliente = models.ForeignKey(Cliente,  related_name='cuentasbco_cliente',on_delete=models.CASCADE)
 
     codigocuenta = models.CharField(
         verbose_name=("Codigo Cuenta"), max_length=30, blank=False, null=True)
@@ -281,7 +284,7 @@ class DirClientes(models.Model):
     id = models.IntegerField(primary_key=True, editable=False)
     codcliente = models.ForeignKey(
         Cliente, verbose_name=("Codigo Cliente"),
-        related_name='DirClientes_Cliente',on_delete=models.PROTECT)
+        related_name='DirClientes_Cliente',on_delete=models.CASCADE)
     domenvio = models.BooleanField(
         default=False, verbose_name=("Domicilio de Envio"), blank=False,
         null=False)
@@ -305,7 +308,7 @@ class DirClientes(models.Model):
     provincia = models.CharField(
         verbose_name=("Provincia"), max_length=100, null=True, blank=True)
     idprovincia = models.ForeignKey('geo.Provincia', related_name="dir_prov",
-                                    verbose_name="Id Provincia", null=True,on_delete=models.SET_NULL)
+                                    verbose_name="Id Provincia", null=True,on_delete=models.CASCADE)
     apartado = models.CharField(
         verbose_name=("Apartado"), max_length=10, null=True, blank=True)
     codpostal = models.CharField(
@@ -378,10 +381,10 @@ class MobilsClients(models.Model):
         related_name='MobilsClients_Cliente',on_delete=models.PROTECT)
     codcuenta = models.ForeignKey(
         CuentasbcoCli, verbose_name=("Cuenta Cliente"),
-        related_name='MobilsClients_CuentasbcoCli', null=True, blank=True,on_delete=models.SET_NULL)
+        related_name='MobilsClients_CuentasbcoCli', null=True, blank=True,on_delete=models.CASCADE)
     codtarifa = models.ForeignKey(
         Tarifa, verbose_name=("Codigo Tarifa"),
-        related_name='MobilsClients_Tarifa',on_delete=models.PROTECT)
+        related_name='MobilsClients_Tarifa',on_delete=models.CASCADE)
     fechaContrato = models.DateField(
         verbose_name=("Fecha Contrato"), null=True, blank=True)
     imageContrato = models.FileField(
@@ -393,7 +396,7 @@ class MobilsClients(models.Model):
     buzon_voz_procesing = models.BooleanField(default=False, null=False)
     coddir = models.ForeignKey(
         DirClientes, verbose_name=("Datos de Facturación"),
-        related_name="MobilsClients_DirClientes", null=True, blank=True,on_delete=models.SET_NULL)
+        related_name="MobilsClients_DirClientes", null=True, blank=True,on_delete=models.CASCADE)
     origen = models.IntegerField(null=False, blank=False, choices=tipoOrigen,
                                  default=0)
     tipoTarifaAntigua = models.IntegerField(verbose_name=(
@@ -471,14 +474,14 @@ class Servicio(models.Model):
                                           default=False)
     servicio_consumer = models.ForeignKey(Cliente, null=False,
                                           verbose_name=("Cliente"),
-                                          blank=False,on_delete=models.PROTECT)
+                                          blank=False,on_delete=models.CASCADE)
     servicio_direccion = models.ForeignKey(DirClientes, null=True,
                                            verbose_name=("Dirección"),
-                                           blank=False,on_delete=models.SET_NULL)
+                                           blank=False,on_delete=models.CASCADE)
     servicio_tarifa = models.ForeignKey('catalogo.Tarifa', null=False,
                                         verbose_name=("Tarifa"),
-                                        blank=False,on_delete=models.PROTECT)
-    servicio_cuenta = models.ForeignKey(CuentasbcoCli, null=True, blank=False,on_delete=models.SET_NULL)
+                                        blank=False,on_delete=models.CASCADE)
+    servicio_cuenta = models.ForeignKey(CuentasbcoCli, null=True, blank=False,on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.servicio_id)

@@ -18,7 +18,7 @@ class Consumo(models.Model):
         null=False, editable=False)
     codcliente = models.ForeignKey(
         Cliente, verbose_name=("Codigo Cliente"),
-        related_name='Consumo_Cliente',on_delete=models.PROTECT)
+        related_name='Consumo_Cliente',on_delete=models.CASCADE)
     fecha_mes = models.DateField(
         verbose_name=("Fecha"), null=True, blank=True)
     dia_inicio = models.DateField(
@@ -117,7 +117,7 @@ class PedidoCli(models.Model):
     idpedido = models.IntegerField(primary_key=True, editable=False)
 
     codcliente = models.ForeignKey(Cliente, verbose_name=("Codigo Cliente"),
-                                   related_name='PedidoCli_Cliente',on_delete=models.PROTECT)
+                                   related_name='PedidoCli_Cliente',on_delete=models.CASCADE)
 
     cifnif = models.CharField(verbose_name=("CIFNIF"), max_length=20,
                               null=True, blank=True, editable=True)
@@ -130,7 +130,7 @@ class PedidoCli(models.Model):
     #    blank=True, editable=True)
 
     coddir = models.ForeignKey(DirClientes, verbose_name=("Codigo Dirección"),
-                               related_name='PedidoCli_DirClientes',on_delete=models.PROTECT)
+                               related_name='PedidoCli_DirClientes',on_delete=models.CASCADE)
 
     direccion = models.CharField(verbose_name=(
         "Dirección"), max_length=100,  null=True, blank=True, editable=True)
@@ -163,7 +163,7 @@ class PedidoCli(models.Model):
 
     coddirEnvio = models.ForeignKey(DirClientes,
                                     verbose_name=("Codigo Dirección Envío"),
-                                    related_name='PedidoCli_DirClientesEnvio',on_delete=models.PROTECT)
+                                    related_name='PedidoCli_DirClientesEnvio',on_delete=models.CASCADE)
 
     direccionEnvio = models.CharField(verbose_name=("Dirección de Envío"),
                                       max_length=200,  null=True,
@@ -187,7 +187,7 @@ class PedidoCli(models.Model):
 
     codpago = models.ForeignKey(
         FormasPago, verbose_name=("Formas de Pago - TPV"),
-        null=True, blank=True,on_delete=models.SET_NULL)
+        null=True, blank=True,on_delete=models.CASCADE)
 
     codigo = models.CharField(
         verbose_name=("Codigo"), max_length=13, null=True, blank=True)
@@ -263,10 +263,10 @@ class PedidoCli(models.Model):
     fecha = models.DateField(verbose_name=("Fecha"), null=True, blank=True)
     formaEnvio = models.ForeignKey(FormasEnvio,
                                    verbose_name=("Forma de envío"),
-                                   related_name='PedidoCli_FormasEnvio',on_delete=models.PROTECT)
+                                   related_name='PedidoCli_FormasEnvio',on_delete=models.CASCADE)
 
     formaPago = models.ForeignKey(FormasPago, verbose_name=("Forma de pago"),
-                                  related_name='PedidoCli_FormasPago',on_delete=models.PROTECT)
+                                  related_name='PedidoCli_FormasPago',on_delete=models.CASCADE)
 
     estado = models.IntegerField(verbose_name=("Estado del pedido"),
                                  choices=estados, null=False, blank=False,
@@ -461,7 +461,7 @@ class LineaPedidoCli(models.Model):
         null=True, blank=True, editable=True)
 
     referencia = models.ForeignKey(Articulo, verbose_name=("referencia"),
-                                   related_name='LineaPedidoCli_Articulo',on_delete=models.PROTECT)
+                                   related_name='LineaPedidoCli_Articulo',on_delete=models.CASCADE)
 
     cantidad = models.FloatField(
         verbose_name=("cantidad"),
@@ -477,14 +477,14 @@ class LineaPedidoCli(models.Model):
         verbose_name=("descripcion"), max_length=100, null=True, blank=True)
 
     idpedido = models.ForeignKey(PedidoCli, verbose_name=("idpedido"),
-                                 related_name='LineaPedidoCli_PedidoCli',on_delete=models.PROTECT)
+                                 related_name='LineaPedidoCli_PedidoCli',on_delete=models.CASCADE)
 
     idlineapresupuesto = models.IntegerField(
         verbose_name=("idlineapresupuesto"), default=0, editable=False)
 
     codimpuesto = models.ForeignKey(Impuesto, verbose_name=("codimpuesto"),
                                     related_name='LineaPedidoCli_Impuesto',
-                                    default='IVA18%',on_delete=models.PROTECT)
+                                    default='IVA18%',on_delete=models.CASCADE)
 
     cerrada = models.BooleanField(default=False, verbose_name=("cerrada"))
 
@@ -530,13 +530,13 @@ class LineaPedidoCli(models.Model):
 
 class facturasCli(models.Model):
     idfactura = models.IntegerField(primary_key=True, null=False)
-    idpedido = models.ForeignKey(PedidoCli, null=True, blank=False,on_delete=models.SET_NULL)
+    idpedido = models.ForeignKey(PedidoCli, null=True, blank=False,on_delete=models.CASCADE)
     codigo = models.CharField(max_length=12, null=False, blank=False)
     numero = models.CharField(max_length=12, null=False, blank=False)
     totaleuros = models.FloatField(null=False, blank=False)
     hora = models.TimeField(null=False, blank=False)
     direccion = models.CharField(max_length=100, null=False, blank=False)
-    codpago = models.ForeignKey(FormasPago, null=False, blank=False,on_delete=models.PROTECT)
+    codpago = models.ForeignKey(FormasPago, null=False, blank=False,on_delete=models.CASCADE)
     codejercicio = models.CharField(max_length=4, null=False, blank=False)
     total = models.FloatField(null=False, blank=False)
     ciudad = models.CharField(max_length=100, null=True, blank=True)
@@ -544,18 +544,18 @@ class facturasCli(models.Model):
     automatica = models.BooleanField(default=True)
     nombrecliente = models.CharField(max_length=100, null=False, blank=False)
     observaciones = models.TextField(null=True, blank=True)
-    codcliente = models.ForeignKey('cliente.Cliente', null=True, blank=True,on_delete=models.SET_NULL)
+    codcliente = models.ForeignKey('cliente.Cliente', null=True, blank=True,on_delete=models.CASCADE)
     totaliva = models.FloatField(null=False, blank=False)
-    idprovincia = models.ForeignKey('geo.Provincia', null=True, blank=True,on_delete=models.SET_NULL)
+    idprovincia = models.ForeignKey('geo.Provincia', null=True, blank=True,on_delete=models.CASCADE)
     fecha = models.DateField(null=False, blank=False)
     neto = models.FloatField(null=False, blank=False)
-    codpais = models.ForeignKey('geo.Pais', null=True, blank=True,on_delete=models.SET_NULL)
+    codpais = models.ForeignKey('geo.Pais', null=True, blank=True,on_delete=models.CASCADE)
     deabono = models.BooleanField(default=False)
     editable = models.BooleanField(default=False)
     codalmacen = models.CharField(max_length=4, null=True, blank=True)
     coddir = models.ForeignKey(
         'cliente.DirClientes', related_name="factura_direccion", null=True,
-        blank=True,on_delete=models.SET_NULL)
+        blank=True,on_delete=models.CASCADE)
     cifnif = models.CharField(max_length=20, null=False, blank=False)
     nogenerarasiento = models.BooleanField(default=True)
     idfacturarect = models.IntegerField(null=True, blank=True)
@@ -635,7 +635,7 @@ class facturasCli(models.Model):
 
 class lineasfacturascli(models.Model):
     idlinea = models.IntegerField(primary_key=True, null=False, editable=False)
-    idfactura = models.ForeignKey(facturasCli, null=False, blank=False,on_delete=models.PROTECT)
+    idfactura = models.ForeignKey(facturasCli, null=False, blank=False,on_delete=models.CASCADE)
     pvptotal = models.FloatField(null=False, blank=False, default=0)
     cantidad = models.FloatField(null=False, blank=False, default=0)
     irpf = models.FloatField(null=True, blank=True, default=0)
@@ -651,7 +651,7 @@ class lineasfacturascli(models.Model):
     idliquidacio = models.IntegerField(null=True, blank=True)
     pvpunitario = models.FloatField(null=False, blank=False, default=0)
     referencia = models.ForeignKey('catalogo.Articulo',
-                                   null=False, blank=False,on_delete=models.PROTECT)
+                                   null=False, blank=False,on_delete=models.CASCADE)
 
     def __str__(self):
         return str(str(self.idlinea) + ' - ' + str(self.idfactura))

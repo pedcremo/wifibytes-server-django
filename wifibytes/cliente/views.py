@@ -96,7 +96,7 @@ class ClienteViewSet(mixins.RetrieveModelMixin,
 
             # comprobamos si el dni ya existe
             if (Cliente.objects
-                       .filter(cifnif=serializer.data.get('cifnif', ""))
+                       .filter(cifnif=serializer.validated_data.get('cifnif', ""))
                        .exists()):
                 message = 'El dni introducido ya existe en la base de datos'
                 return Response(data={"message": message, "isRegistred": True},
@@ -104,14 +104,14 @@ class ClienteViewSet(mixins.RetrieveModelMixin,
 
             # comprobamos si el email ya existe
             if (Cliente.objects
-                       .filter(email__iexact=serializer.data.get('email', ""))
+                       .filter(email__iexact=serializer.validated_data.get('email', ""))
                        .exists()):
                 message = 'El email introducido ya existe en la base de datos'
                 return Response(data={"message": message, "isRegistred": True},
                                 status=status.HTTP_400_BAD_REQUEST)
-
+            
             user = serializer.save()
-
+            
             # --> SEND EMAIL WITH USER NAME
             query = self.request.query_params
             lang = query.get('lang', 'es')
@@ -136,9 +136,9 @@ class ClienteViewSet(mixins.RetrieveModelMixin,
             context['logo'] = 'http://wifibytes-front.wearecactus.com/images/altrebit-logo.png'
             context['urlWeb'] = 'http://wifibytes-front.wearecactus.com/'
 
-            message = render_to_string('email/welcome.html', context,
-                                       context_instance=RequestContext(request)).encode('utf8')
-
+            #message = render_to_string('email/welcome.html', context,
+            #                           context_instance=RequestContext(request)).encode('utf8')
+            message = render_to_string('email/welcome.html', context)
             email_instance = Email()
 
             email_instance.sendemail(user.email, message,
@@ -218,7 +218,7 @@ class CuentaViewSet(viewsets.ModelViewSet):
         # check fields
         if serializer.is_valid():
             try:
-                iban = IBAN(serializer.data.get('iban', None))
+                iban = IBAN(serializer.validated_data.get('iban', None))
                 cuenta = serializer.save()
                 cuenta_s = self.serializer_class(cuenta)
                 return Response(
@@ -630,7 +630,7 @@ class ClienteAPIView(APIView):
         if serializerA.is_valid():
             # comprobamos si el dni ya existe
             if (Cliente.objects
-                       .filter(cifnif=serializerA.data.get('cifnif', ""))
+                       .filter(cifnif=serializerA.validated_data.get('cifnif', ""))
                        .exists()):
                 message = 'El dni introducido ya existe en la base de datos'
                 return Response(data={"message": message, "isRegistred": True},
@@ -638,7 +638,7 @@ class ClienteAPIView(APIView):
 
             # comprobamos si el email ya existe
             if (Cliente.objects
-                       .filter(email__iexact=serializerA.data.get('email', ""))
+                       .filter(email__iexact=serializerA.validated_data.get('email', ""))
                        .exists()):
                 message = 'El email introducido ya existe en la base de datos'
                 return Response(data={"message": message, "isRegistred": True},
