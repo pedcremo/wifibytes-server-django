@@ -730,10 +730,11 @@ class ClienteNoRegistradoView(APIView):
                                        partial=True)
 
         if serializer.is_valid():
-            serializer.save()
+            #serializer.save()
             message = "Actualización Exitosa"
             email_instance = Email()
             if email_instance.sendemail_updatepass(newpass, user.email, user.codcliente):
+                serializer.save() #We send email if we have send it the email
                 return Response({'message': message},
                                 status=status.HTTP_200_OK)
             else:

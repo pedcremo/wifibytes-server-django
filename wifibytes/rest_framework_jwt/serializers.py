@@ -49,11 +49,10 @@ class JSONWebTokenSerializer(Serializer):
         credentials = {
             self.username_field: attrs.get(self.username_field),
             'password': attrs.get('password')
-        }
-        print('Aci 1')
+        }       
         if all(credentials.values()):
             user = authenticate(**credentials)
-            print('Aci 2')
+       
             if user:
                 if not user.is_active:
                     msg = _('User account is disabled.')

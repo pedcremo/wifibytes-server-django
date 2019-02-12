@@ -43,10 +43,10 @@ How to run the project:
     sudo apt-get install -y postgresql-doc-9.3 postgresql-server-dev-9.3
 
 6.- Migrate BBDD (Not until postgres installed. Get into folder wifibytes where manage.py is installed) READ PROBLEM with reportLab
-    python3 manage.py migrate --settings=wifibytes.settings.local
+    python manage.py migrate --settings=wifibytes.settings.local
 
 7.- Create super user
-    python3 manage.py createsuperuser --settings=wifibytes.settings.local
+    python manage.py createsuperuser --settings=wifibytes.settings.local
 
 8.- Run server
     python manage.py runserver --settings=wifibytes.settings.local
