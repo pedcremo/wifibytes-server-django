@@ -72,7 +72,8 @@ class Email:
         return ret
 
     def sendemail(self, email, body, subject, template=False):
-
+        #READ https://docs.aws.amazon.com/ses/latest/DeveloperGuide/examples-send-using-smtp.html python example
+        #how to use AWS simple email service to send emails
         # Quien recive
         RECEIVERS = email
         SUBJECT = subject
@@ -80,7 +81,9 @@ class Email:
         ###################################
 
         msg = MIMEMultipart()
-        msg['From'] = self.USER
+        #HARD FIX
+        #msg['From'] = self.USER
+        msg['From'] = self.EMAIL
         msg['To'] = RECEIVERS
         msg['Subject'] = SUBJECT
 
@@ -98,10 +101,14 @@ class Email:
             smtpObj.ehlo()
             smtpObj.starttls()
             smtpObj.ehlo()
+            print("credentials user:%s password:%s",self.USER,self.PASSWORD)
             smtpObj.login(self.USER, self.PASSWORD)
-            smtpObj.sendmail(self.USER, RECEIVERS, msg.as_string())
+            #HARD BAD 
+            #smtpObj.sendmail(self.USER, RECEIVERS, msg.as_string())
+            smtpObj.sendmail(self.EMAIL, RECEIVERS, msg.as_string())
             smtpObj.quit()
             print("Successfully sent email")
             return True
-        except SMTPException:
+        except SMTPException as e:
             print("Error: unable to send email")
+            print(str(e))
