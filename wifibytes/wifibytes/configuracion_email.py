@@ -1,24 +1,26 @@
 # encoding:utf-8
 import smtplib
+from email.utils import formataddr
 from smtplib import SMTPException
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+
 from datos_empresa.models import DatosEmpresa
 
 
 class Email:
 
     # el email donde AltreBit Recive los correos
-    EMAIL = 'info@wifibytes.com'
+    #EMAIL = 'info@wifibytes.com'
 
     def __init__(self, *args, **kwargs):
         ########### EMAIL CONF ############
         company = DatosEmpresa.objects.filter(datos_empresa_default=True).first()
         email_conf = company.configuracion_email
 
-        # Quien Recibe los emails
+        # A nombre de quien se envian los emails
         self.EMAIL = email_conf.email_receiver
-
+        self.NAME_EMAIL = email_conf.emailname_receiver
         # Quien Envia
         self.USER = email_conf.email_sender
         self.PASSWORD = email_conf.email_sender_password
@@ -83,7 +85,8 @@ class Email:
         msg = MIMEMultipart()
         #HARD FIX
         #msg['From'] = self.USER
-        msg['From'] = self.EMAIL
+        msg['From'] = formataddr((self.NAME_EMAIL, self.EMAIL))
+        #msg['From'] = self.EMAIL
         msg['To'] = RECEIVERS
         msg['Subject'] = SUBJECT
 

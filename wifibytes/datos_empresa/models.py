@@ -200,13 +200,16 @@ class DatosEmail(models.Model):
     )
     email_receiver = models.CharField(
         max_length=50, null=True, blank=True,
-        verbose_name='Email Receptor')
+        verbose_name='Email Envio')
+    emailname_receiver = models.CharField(
+        max_length=50, null=True, blank=True,
+        verbose_name='Envio nombre')        
     email_sender = models.CharField(
         max_length=50, null=True, blank=True,
-        verbose_name='Email Envio')
+        verbose_name='Usuario SMTP')
     email_sender_password = models.CharField(
         max_length=50, null=True, blank=True,
-        verbose_name='Password Email Envio')
+        verbose_name='Password SMTP')
     server = models.CharField(
         max_length=50, null=True, blank=True,
         verbose_name='Servidor')
