@@ -30,7 +30,7 @@ class DatosEmpresaAdmin(admin.ModelAdmin):
     creation_date.short_description = 'Fecha Creación'
 
     search_fields = ('datos_empresa_id',)
-    readonly_fields = ('creation_date',)
+    readonly_fields = ('creation_date','logo_thumb','icon_logo_thumb','mapa_cobertura_thumb')
 
     suit_form_tabs = (
         ('general', 'General'),
@@ -53,9 +53,9 @@ class DatosEmpresaAdmin(admin.ModelAdmin):
                 'name', 'cifnif', 'phone',
                 'city', 'province', 'country', 'zipcode',
                 'address', 'location_lat', 'location_long',
-                'logo', 'icon_logo', 'mapa_cobertura',
+                'logo','logo_thumb','icon_logo','icon_logo_thumb','mapa_cobertura','mapa_cobertura_thumb',
                 'social_facebook', 'social_twitter',
-                'datos_empresa_default', 'creation_date'
+                'datos_empresa_default', 'creation_date',
             ]
         }),
     ]

@@ -31,5 +31,5 @@ def get_full_image_url(request, path):
     secure = 'http://'
     if request.is_secure():
         secure = 'https://'
-
+    
     return "%s%s/%s" % (secure, request.get_host(), path)

@@ -40,7 +40,7 @@ class DatosEmpresaSerializer(ModelSerializer):
     textos = serializers.SerializerMethodField('_textos')
 
     def _logo(self, obj):
-        if obj.logo:
+        if obj.logo:            
             return get_full_image_url(
                 self.context['request'], obj.logo.url)
         else:

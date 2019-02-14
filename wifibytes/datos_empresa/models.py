@@ -3,7 +3,7 @@ from datetime import datetime
 from django.utils.dateformat import format
 from tinymce.models import HTMLField
 import uuid
-
+from django.utils.safestring import mark_safe
 
 class DatosEmpresa(models.Model):
     datos_empresa_id = models.UUIDField(
@@ -57,6 +57,22 @@ class DatosEmpresa(models.Model):
 
     updated_at = models.IntegerField(default=0, editable=False)
     created_at = models.IntegerField(default=0, editable=False)
+
+    def logo_thumb(self):
+        url='./media/'+str(self.logo)
+        return mark_safe('<img src="%s" width="250"/>' % url)
+    logo_thumb.short_description = 'Thumb logo'
+    
+    def icon_logo_thumb(self):
+        url='http://127.0.0.1:8000/media/'+str(self.icon_logo)
+        return mark_safe('<img src="%s" width="250"/>' % url)
+    icon_logo_thumb.short_description = 'Thumb icon logo'
+    
+    def mapa_cobertura_thumb(self):
+        url='http://127.0.0.1:8000/media/'+str(self.mapa_cobertura)
+        return mark_safe('<img src="%s" width="250"/>' % url)
+    logo_thumb.short_description = 'Thumb mapa cobertura'
+    
 
     @property
     def textos(self):
