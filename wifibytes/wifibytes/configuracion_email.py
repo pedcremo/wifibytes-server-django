@@ -100,6 +100,7 @@ class Email:
             msg.attach(MIMEText(TEXT))
 
         try:
+            print("server:%s port:%s",self.SERVER,self.PORT)
             smtpObj = smtplib.SMTP(self.SERVER, self.PORT)
             smtpObj.ehlo()
             smtpObj.starttls()

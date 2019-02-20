@@ -40,6 +40,13 @@ class TarifaDescriptorGenericoSerializer(ModelSerializer):
     caja_3_icono = SerializerMethodField('get_caja_3_icono_url')
     caja_4_icono = SerializerMethodField('get_caja_4_icono_url')
 
+    lang = serializers.SerializerMethodField('_lang')
+
+    def _lang(self, obj):
+        if obj.idioma:
+            return str(obj.idioma.codigo)
+        return None
+    
     def get_image(self, image):
         if image:
             return get_full_image_url(
